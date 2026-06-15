@@ -1,0 +1,220 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>会員情報変更 - Yahoo!ショッピング風（チーム制作サンプル）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-top">
+            <div class="container header-top-inner">
+                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
+                <nav class="header-top-nav">
+                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
+                    <a href="mypage.html">マイページ</a>
+                    <a href="#">注文履歴</a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <div class="container header-main-inner">
+                <a href="index.html" class="logo"><span class="logo-y">Yahoo!</span><span class="logo-s">ショッピング</span></a>
+
+                <div class="search-bar">
+                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
+                    <button type="submit" class="search-btn" aria-label="検索">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="margin-right: 4px;"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
+                        <span>検索する</span>
+                    </button>
+                </div>
+
+                <div class="header-actions">
+                    <a href="cart.html" class="action-item-btn">
+                        <span class="action-icon">🛒</span>
+                        <span class="action-label">カート</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="#" class="action-item-btn">
+                        <span class="action-icon">❤️</span>
+                        <span class="action-label">お気に入り</span>
+                    </a>
+                    <a href="#" class="action-item-btn">
+                        <span class="action-icon">⏱️</span>
+                        <span class="action-label">注文履歴</span>
+                    </a>
+                    <a href="mypage.html" class="action-item-btn">
+                        <span class="action-icon">👤</span>
+                        <span class="action-label">マイページ</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <nav class="header-nav">
+            <div class="container">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">おすすめ</a></li>
+                    <li><a href="#" class="nav-link">グルメ館</a></li>
+                    <li><a href="#" class="nav-link">父の日</a></li>
+                    <li><a href="product-detail.html" class="nav-link">ファッション</a></li>
+                    <li><a href="#" class="nav-link">コスメ</a></li>
+                    <li><a href="#" class="nav-link">日用品</a></li>
+                    <li><a href="#" class="nav-link">マンガ・本</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-bg-gray">
+        <div class="container">
+            <div class="breadcrumb" style="margin-bottom: 20px;">
+                <a href="index.html">トップ</a> ＞ <a href="mypage.html">マイページ</a> ＞ <span>会員情報変更</span>
+            </div>
+
+            <div class="ys-main-layout">
+
+                <aside class="ys-sidebar">
+                    <div class="sidebar-box">
+                        <h3 class="sidebar-title" style="color: #ff5a00; font-weight: 700;">マイページメニュー</h3>
+                        <ul class="sidebar-menu-list">
+                            <li><a href="mypage.html"><span>マイページトップ</span></a></li>
+                            <li><a href="edit-profile.html" style="font-weight: 700; color: #ff5a00; background: #fff5f0;"><span>定額確認・会員情報変更</span></a></li>
+                            <li><a href="#"><span>注文履歴</span><span class="arrow">＞</span></a></li>
+                            <li><a href="#"><span>お買い物あんしん補償</span><span class="arrow">＞</span></a></li>
+                            <li><a href="#"><span>PayPay・カード・補償</span><span class="arrow">＞</span></a></li>
+                            <li><a href="#"><span>お気に入り商品</span><span class="arrow">＞</span></a></li>
+                            <li><a href="#"><span>クーポン一覧</span><span class="arrow">＞</span></a></li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <div class="ys-content-area">
+                    <form id="profileForm" onsubmit="return handleSave(event)">
+                        <div class="profile-grid" style="grid-template-columns: 1fr; gap: 24px;">
+
+                            <div class="profile-card" style="box-shadow: var(--shadow-card); padding: 24px;">
+                                <div class="card-header-row" style="border-bottom: 2px solid #ff5a00; padding-bottom: 12px; margin-bottom: 20px;">
+                                    <h2 style="font-size: 1.2rem; font-weight: 700; color: #111;">📝 会員情報の変更・修正</h2>
+                                </div>
+
+                                <div style="display: flex; flex-direction: column; gap: 20px;">
+                                    <div class="card-body-field">
+                                        <label style="font-size: 0.9rem; font-weight: 700; color: #333;">ユーザー名 <span style="color:#ff3b30; font-size:0.75rem;">(必須)</span></label>
+                                        <input type="text" id="usernameInput" value="サンプル" style="max-width: 400px; padding: 12px;" placeholder="ユーザー名を入力してください">
+                                        <span class="error-message" id="usernameError">ユーザー名は必須です</span>
+                                    </div>
+
+                                    <div class="card-body-field">
+                                        <label style="font-size: 0.9rem; font-weight: 700; color: #333;">メールアドレス <span style="color:#ff3b30; font-size:0.75rem;">(必須)</span></label>
+                                        <input type="email" id="emailInput" value="sample@example.com" style="max-width: 400px; padding: 12px;" placeholder="example@example.com">
+                                        <span class="error-message" id="emailError">正しいメールアドレスを入力してください</span>
+                                    </div>
+
+                                    <div class="card-body-field">
+                                        <label style="font-size: 0.9rem; font-weight: 700; color: #333;">郵便番号</label>
+                                        <input type="text" id="zipInput" value="060-0001" style="max-width: 200px; padding: 12px;" placeholder="123-4567">
+                                        <span class="error-message" id="zipError">郵便番号の形式が正しくありません (例: 123-4567)</span>
+                                    </div>
+
+                                    <div class="card-body-field">
+                                        <label style="font-size: 0.9rem; font-weight: 700; color: #333;">お届け先住所</label>
+                                        <input type="text" id="addressInput" value="北海道札幌市中央区北1条西..." style="padding: 12px;" placeholder="市区町村、番地、建物名など">
+                                        <span class="error-message" id="addressError">住所を入力してください</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div style="display: flex; gap: 16px; justify-content: center; margin-top: 30px;">
+                            <button type="button" class="profile-save-btn" style="background: #e4e7ec; color: #333;" onclick="location.href='mypage.html'">キャンセル</button>
+                            <button type="submit" class="profile-save-btn" style="background: #ff5a00;">変更内容を保存する</button>
+                        </div>
+                        <div style="text-align: center;">
+                            <p id="successMessage" style="color: #1a6e3a; font-weight: 700; margin-top: 16px; display: none;">✓ 会員情報を正常に保存しました！マイページに戻ります...</p>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-col">
+                <p class="footer-logo">Yahoo!ショッピング風サイト</p>
+                <p class="footer-tagline">毎日の生活をもっと豊かに、おトクに。</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">運営チーム</h4>
+                <ul class="footer-links">
+                    <li><a href="#">会社概要・チーム紹介</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Yahoo!ショッピング風チーム制作プロジェクト. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        function handleSave(event) {
+            event.preventDefault();
+            let hasError = false;
+
+            const username = document.getElementById('usernameInput');
+            const email = document.getElementById('emailInput');
+            const zip = document.getElementById('zipInput');
+            const address = document.getElementById('addressInput');
+
+            const usernameError = document.getElementById('usernameError');
+            const emailError = document.getElementById('emailError');
+            const zipError = document.getElementById('zipError');
+            const addressError = document.getElementById('addressError');
+            const successMessage = document.getElementById('successMessage');
+
+            [username, email, zip, address].forEach(input => input.classList.remove('input-error-border'));
+            [usernameError, emailError, zipError, addressError].forEach(err => err.style.display = 'none');
+            successMessage.style.display = 'none';
+
+            if (username.value.trim() === '') {
+                username.classList.add('input-error-border');
+                usernameError.style.display = 'block';
+                hasError = true;
+            }
+            if (!email.value.includes('@')) {
+                email.classList.add('input-error-border');
+                emailError.style.display = 'block';
+                hasError = true;
+            }
+            if (zip.value.trim() !== '' && !zip.value.match(/^\d{3}-\d{4}$/)) {
+                zip.classList.add('input-error-border');
+                zipError.style.display = 'block';
+                hasError = true;
+            }
+            if (address.value.trim() === '') {
+                address.classList.add('input-error-border');
+                addressError.style.display = 'block';
+                hasError = true;
+            }
+
+            if (!hasError) {
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    location.href = 'mypage.html'; // 保存に成功したら自動でマイページに戻るばい！
+                }, 2000);
+            }
+            return false;
+        }
+    </script>
+</body>
+</html>
