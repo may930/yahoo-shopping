@@ -1,0 +1,166 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイページ - Yahoo!ショッピング風（チーム制作サンプル）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="header-top">
+            <div class="container header-top-inner">
+                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
+                <nav class="header-top-nav">
+                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
+                    <a href="mypage.html">マイページ</a>
+                    <a href="#">注文履歴</a>
+                </nav>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <div class="container header-main-inner">
+                <a href="index.html" class="logo"><span class="logo-y">Yahoo!</span><span class="logo-s">ショッピング</span></a>
+
+                <div class="search-bar">
+                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
+                    <button type="submit" class="search-btn" aria-label="検索">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="margin-right: 4px;"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
+                        <span>検索する</span>
+                    </button>
+                </div>
+
+                <div class="header-actions">
+                    <a href="cart.html" class="action-item-btn">
+                        <span class="action-icon">🛒</span>
+                        <span class="action-label">カート</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="#" class="action-item-btn">
+                        <span class="action-icon">❤️</span>
+                        <span class="action-label">お気に入り</span>
+                    </a>
+                    <a href="#" class="action-item-btn">
+                        <span class="action-icon">⏱️</span>
+                        <span class="action-label">注文履歴</span>
+                    </a>
+                    <a href="mypage.html" class="action-item-btn">
+                        <span class="action-icon">👤</span>
+                        <span class="action-label">マイページ</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <nav class="header-nav">
+            <div class="container">
+                <ul class="nav-list">
+                    <li><a href="index.html" class="nav-link">おすすめ</a></li>
+                    <li><a href="#" class="nav-link">グルメ館</a></li>
+                    <li><a href="#" class="nav-link">父の日</a></li>
+                    <li><a href="product-detail.html" class="nav-link">ファッション</a></li>
+                    <li><a href="#" class="nav-link">コスメ</a></li>
+                    <li><a href="#" class="nav-link">日用品</a></li>
+                    <li><a href="#" class="nav-link">マンガ・本</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-bg-gray">
+        <div class="profile-banner-wrapper" style="background: #ffffff; border-bottom: 1px solid #e4e7ec; padding: 24px 0; margin-bottom: 24px; margin-top: -20px;">
+            <div class="container profile-banner-inner">
+                <div class="store-emoji" style="width: 64px; height: 64px; font-size: 2.2rem; background: #f0f2f5;">👤</div>
+                <div>
+                    <h1 style="font-size: 1.4rem; font-weight: 700; color: #111;">サンプル さんのマイページ</h1>
+                    <p style="font-size: 0.85rem; color: #666; margin-top: 4px;">Yahoo! JAPAN ID: sample_user_2026</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="ys-main-layout">
+
+                <aside class="ys-sidebar">
+                    <div class="sidebar-box">
+                        <h3 class="sidebar-title" style="color: #ff5a00; font-weight: 700;">マイページメニュー</h3>
+                        <ul class="sidebar-menu-list">
+                            <li><a href="mypage.html" style="font-weight: 700; color: #ff5a00; background: #fff5f0;"><span>マイページトップ</span></a></li>
+                            <li><a href="edit-profile.html"><span>定額確認・会員情報変更</span><span class="arrow">＞</span></a></li>
+                            <li><a href="#"><span>注文履歴</span><span class="arrow">＞</span></a></li>
+                            <li><a href="#"><span>お買い物あんしん補償</span><span class="arrow">＞</span></a></li>
+                            <li><a href="#"><span>PayPay・カード・補償</span><span class="arrow">＞</span></a></li>
+                            <li><a href="#"><span>お気に入り商品</span><span class="arrow">＞</span></a></li>
+                            <li><a href="#"><span>クーポン一覧</span><span class="arrow">＞</span></a></li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <div class="ys-content-area" style="display: flex; flex-direction: column; gap: 20px;">
+
+                    <div class="profile-card" style="box-shadow: var(--shadow-card);">
+                        <div class="card-header-row" style="align-items: center;">
+                            <h3 style="font-size: 1.1rem; font-weight: 700; color: #111;">👤 お客様の登録情報</h3>
+                            <a href="edit-profile.html" style="font-size: 0.85rem; color: #0066cc; text-decoration: none; font-weight: 500;">詳細・変更 ＞</a>
+                        </div>
+                        <div style="margin-top: 16px; display: grid; grid-template-columns: 120px 1fr; gap: 12px 24px; font-size: 0.9rem; line-height: 2;">
+                            <div style="color: #666; font-weight: 500;">ユーザー名</div>
+                            <div style="color: #111; font-weight: 700;">サンプル さん</div>
+
+                            <div style="color: #666; font-weight: 500;">メールアドレス</div>
+                            <div style="color: #111;">sample@example.com</div>
+
+                            <div style="color: #666; font-weight: 500;">お届け先住所</div>
+                            <div style="color: #111;">〒060-0001 北海道札幌市中央区北1条西...</div>
+                        </div>
+                    </div>
+
+                    <div class="profile-grid" style="grid-template-columns: 1fr 1fr; gap: 20px;">
+                        <div class="profile-card" style="box-shadow: var(--shadow-card);">
+                            <div class="card-header-row">
+                                <h3 style="font-size: 0.95rem; font-weight: 700;">💳 お支払い方法・連携</h3>
+                            </div>
+                            <p style="font-size: 0.85rem; color: #555; margin-top: 8px;">PayPay残高：<span style="font-weight: 700; color: #ff5a00;">未連携</span></p>
+                            <p style="font-size: 0.85rem; color: #555; margin-top: 4px;">登録済カード：なし</p>
+                            <a href="#" style="font-size: 0.8rem; color: #0066cc; text-decoration: none; display: inline-block; margin-top: 12px;">ウォレット管理を開く ＞</a>
+                        </div>
+
+                        <div class="profile-card card-highlight" style="box-shadow: var(--shadow-card);">
+                            <div class="card-header-row">
+                                <h3 style="font-size: 0.95rem; font-weight: 700;">🔥 お得なステータス</h3>
+                            </div>
+                            <p style="font-size: 0.85rem; color: #333; margin-top: 8px;">現在のPayPayポイント付与率：<span style="font-size: 1.2rem; font-weight: 700; color: #ff3b30;">毎日5%</span></p>
+                            <a href="#" style="font-size: 0.8rem; color: #ff5a00; text-decoration: none; display: inline-block; margin-top: 12px; font-weight: 700;">特典内訳をチェックする ＞</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-col">
+                <p class="footer-logo">Yahoo!ショッピング風サイト</p>
+                <p class="footer-tagline">毎日の生活をもっと豊かに、おトクに。</p>
+            </div>
+            <div class="footer-col">
+                <h4 class="footer-heading">運営チーム</h4>
+                <ul class="footer-links">
+                    <li><a href="#">会社概要・チーム紹介</a></li>
+                    <li><a href="#">プライバシーポリシー</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Yahoo!ショッピング風チーム制作プロジェクト. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>
