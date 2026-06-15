@@ -1373,3 +1373,309 @@ img {
         padding: 20px;
     }
 }
+
+/* =============================
+   CART PAGE CUSTOMS
+   ============================= */
+.cart-main {
+    padding-top: 30px;
+    padding-bottom: 80px;
+}
+
+.cart-page-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 24px;
+    border-bottom: 2px solid var(--color-black);
+    padding-bottom: 10px;
+}
+
+.cart-layout {
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    gap: 32px;
+    align-items: flex-start;
+}
+
+/* ストア枠・商品リスト */
+.cart-store-group {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-card);
+}
+
+.cart-store-header {
+    background: var(--color-gray-50);
+    padding: 12px 20px;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--color-gray-200);
+}
+
+.cart-item {
+    display: flex;
+    padding: 24px;
+    gap: 20px;
+    border-bottom: 1px solid var(--color-gray-100);
+    align-items: center;
+}
+
+    .cart-item:last-child {
+        border-bottom: none;
+    }
+
+.cart-item-img {
+    width: 80px;
+    height: 80px;
+    background: var(--color-gray-50);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    flex-shrink: 0;
+}
+
+.cart-item-info {
+    flex: 1;
+}
+
+.cart-item-title {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-black);
+    text-decoration: none;
+    line-height: 1.4;
+    display: block;
+    margin-bottom: 6px;
+}
+
+    .cart-item-title:hover {
+        color: var(--color-yahoo-main);
+        text-decoration: underline;
+    }
+
+.cart-item-spec {
+    font-size: 0.85rem;
+    color: var(--color-gray-600);
+}
+
+/* 右側：価格とボタンなどのアクション */
+.cart-item-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 12px;
+    min-width: 120px;
+}
+
+.cart-item-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--color-black);
+}
+
+.cart-qty-selector {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-sm);
+    background: white;
+}
+
+.cart-qty-btn {
+    width: 28px;
+    height: 28px;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+    .cart-qty-btn:hover {
+        background: var(--color-gray-50);
+    }
+
+.cart-qty-val {
+    width: 32px;
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+.cart-item-delete {
+    background: none;
+    border: none;
+    color: var(--color-gray-500);
+    font-size: 0.8rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+    .cart-item-delete:hover {
+        color: #e61919;
+    }
+
+.back-to-shopping {
+    display: inline-block;
+    margin-top: 12px;
+    font-size: 0.95rem;
+    color: #0066cc;
+    text-decoration: none;
+}
+
+    .back-to-shopping:hover {
+        text-decoration: underline;
+    }
+
+/* 右側サイドバー：お会計カード */
+.cart-summary-card {
+    background: var(--color-white);
+    border: 1px solid var(--color-gray-200);
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    box-shadow: var(--shadow-card);
+    position: sticky;
+    top: 20px;
+}
+
+.summary-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--color-black);
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.95rem;
+    color: var(--color-gray-700);
+    margin-bottom: 12px;
+}
+
+.shipping-cost {
+    color: #e61919;
+    font-weight: 700;
+}
+
+.summary-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--color-gray-200);
+    padding-top: 16px;
+    margin-top: 16px;
+    margin-bottom: 24px;
+}
+
+    .summary-total-row span:first-child {
+        font-weight: 700;
+    }
+
+#total-price {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #e61919;
+}
+
+/* 注文ボタン（Yahoo!オレンジデカボタン仕様） */
+.cart-btn-checkout {
+    width: 100%;
+    padding: 16px;
+    background: var(--color-yahoo-main);
+    color: var(--color-white);
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(255,90,0,0.25);
+    transition: all var(--transition);
+}
+
+    .cart-btn-checkout:hover {
+        background: #e04f00;
+    }
+
+    .cart-btn-checkout:active {
+        transform: scale(0.98);
+    }
+
+.summary-notice {
+    margin-top: 16px;
+    font-size: 0.75rem;
+    color: var(--color-gray-500);
+    line-height: 1.4;
+}
+
+/* カート画面のレスポンシブ */
+@media (max-width: 992px) {
+    .cart-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .cart-summary-card {
+        position: static;
+        margin-top: 16px;
+    }
+}
+
+/* カートボタン・アクションボタンのアイコンのズレを修正 */
+.header-actions .action-btn,
+.btn-cart-add {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+/* カートアイコン自体の位置の微調整 */
+.action-btn.cart-btn {
+    position: relative;
+}
+
+/* =============================
+   CART ICON BUGS FIX
+   ============================= */
+/* ヘッダーのアクションボタン（丸枠）の基本設定を固定 */
+.header-actions .action-btn {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 42px !important;
+    height: 42px !important;
+    border: 1px solid var(--color-gray-200) !important;
+    border-radius: 50% !important;
+    position: relative !important; /* これが超重要！赤い丸の基準点になるばい */
+    background-color: var(--color-white) !important;
+    padding: 0 !important;
+}
+
+    /* カートのマーク（SVG）の位置を丸枠のド真ん中に固定 */
+    .header-actions .action-btn svg {
+        margin: 0 !important;
+        position: static !important;
+        display: block !important;
+    }
+
+    /* 赤い数字の丸（バッジ）の位置を右上ぴったりに固定 */
+    .header-actions .action-btn .cart-count {
+        position: absolute !important;
+        top: -4px !important; /* 上の枠線からの距離 */
+        right: -4px !important; /* 右の枠線からの距離 */
+        background-color: #e61919 !important; /* Yahoo!っぽい赤 */
+        color: var(--color-white) !important;
+        font-size: 11px !important;
+        font-weight: 700 !important;
+        width: 18px !important;
+        height: 18px !important;
+        border-radius: 50% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        line-height: 1 !important;
+        z-index: 10 !important;
+    }
