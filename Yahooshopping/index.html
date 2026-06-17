@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yahoo!ショッピング風 - オンラインショップ（チーム制作最高クオリティ版）</title>
+    <title>Yahoo!ショッピング風 - オンラインショップ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -25,16 +25,19 @@
 
         <div class="header-main">
             <div class="container header-main-inner">
-                <a href="index.html" class="logo"><span class="logo-y">Yahoo!</span><span class="logo-s">ショッピング</span></a>
-
+                <a href="index.html" class="logo">
+                    <span class="logo-y">Yahoo!</span><span class="logo-s">ショッピング</span>
+                </a>
                 <div class="search-bar">
                     <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
                     <button type="submit" class="search-btn" aria-label="検索">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" style="margin-right: 4px;"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
                         <span>検索する</span>
                     </button>
                 </div>
-
                 <div class="header-actions">
                     <a href="cart.html" class="action-item-btn">
                         <span class="action-icon">🛒</span>
@@ -57,6 +60,7 @@
     <main class="main-bg-gray">
         <div class="container">
 
+            <!-- スライダー -->
             <div class="slider-wrapper">
                 <div class="slider-container" id="slider">
                     <div class="slide-item slide-blue">
@@ -84,12 +88,13 @@
                         </div>
                     </div>
                 </div>
-                <button class="slide-arrow arrow-left" id="prevBtn">&lt;</button>
-                <button class="slide-arrow arrow-right" id="nextBtn">&gt;</button>
+                <button class="slide-arrow arrow-left" id="prevBtn" aria-label="前へ">&lt;</button>
+                <button class="slide-arrow arrow-right" id="nextBtn" aria-label="次へ">&gt;</button>
             </div>
 
             <div class="ys-main-layout">
 
+                <!-- サイドバー -->
                 <aside class="ys-sidebar">
                     <div class="sidebar-box">
                         <h3 class="sidebar-title">カテゴリから探す</h3>
@@ -105,33 +110,66 @@
                     </div>
                 </aside>
 
+                <!-- メインコンテンツ -->
                 <div class="ys-content-area">
 
+                    <!-- ストアショートカット -->
                     <div class="store-icons-row">
-                        <a href="#" class="store-icon-item"><span class="store-emoji">🏢</span><span class="store-name">LOHACO</span></a>
-                        <a href="#" class="store-icon-item"><span class="store-emoji">🦓</span><span class="store-name">ZOZO</span></a>
-                        <a href="#" class="store-icon-item"><span class="store-emoji">❄️</span><span class="store-name">エアコン特集</span></a>
-                        <a href="#" class="store-icon-item"><span class="store-emoji">🍳</span><span class="store-name">グルメ館</span></a>
-                        <a href="#" class="store-icon-item"><span class="store-emoji">🪙</span><span class="store-name">ボーナス商品</span></a>
-                        <a href="#" class="store-icon-item"><span class="store-emoji">🗻</span><span class="store-name">ふるさと納税</span></a>
-                        <a href="#" class="store-icon-item"><span class="store-emoji">🎁</span><span class="store-name">ギフトを贈る</span></a>
+                        <a href="#" class="store-icon-item">
+                            <span class="store-emoji">🏢</span>
+                            <span class="store-name">LOHACO</span>
+                        </a>
+                        <a href="#" class="store-icon-item">
+                            <span class="store-emoji">🦓</span>
+                            <span class="store-name">ZOZO</span>
+                        </a>
+                        <a href="#" class="store-icon-item">
+                            <span class="store-emoji">❄️</span>
+                            <span class="store-name">エアコン特集</span>
+                        </a>
+                        <a href="#" class="store-icon-item">
+                            <span class="store-emoji">🍳</span>
+                            <span class="store-name">グルメ館</span>
+                        </a>
+                        <a href="#" class="store-icon-item">
+                            <span class="store-emoji">🪙</span>
+                            <span class="store-name">ボーナス商品</span>
+                        </a>
+                        <a href="#" class="store-icon-item">
+                            <span class="store-emoji">🗻</span>
+                            <span class="store-name">ふるさと納税</span>
+                        </a>
+                        <a href="#" class="store-icon-item">
+                            <span class="store-emoji">🎁</span>
+                            <span class="store-name">ギフトを贈る</span>
+                        </a>
                     </div>
 
+                    <!-- ユーザーステータス -->
                     <div class="user-status-grid">
                         <div class="status-card">
-                            <div class="status-header"><span class="user-avatar">👤</span> <span>サンプル さん</span></div>
-                            <div class="status-body"><p class="status-main-val">付与率 5%〜</p><a href="#" class="status-link">詳細を見る</a></div>
+                            <div class="status-header"><span>👤</span><span>サンプル さん</span></div>
+                            <div class="status-body">
+                                <p class="status-main-val">付与率 5%〜</p>
+                                <a href="#" class="status-link">詳細を見る</a>
+                            </div>
                         </div>
                         <div class="status-card">
-                            <div class="status-header"><span class="paypay-p-icon">P</span> <span>PayPayポイント</span></div>
-                            <div class="status-body"><p class="status-main-val text-muted">未連携</p><a href="#" class="status-link">詳細を見る</a></div>
+                            <div class="status-header"><span class="paypay-p-icon">P</span><span>PayPayポイント</span></div>
+                            <div class="status-body">
+                                <p class="status-main-val" style="color: var(--color-gray-400);">未連携</p>
+                                <a href="#" class="status-link">詳細を見る</a>
+                            </div>
                         </div>
                         <div class="status-card">
-                            <div class="status-header">🎫 <span>保有クーポン</span></div>
-                            <div class="status-body"><p class="status-main-val">保有 0枚</p><a href="#" class="status-link">一覧を見る</a></div>
+                            <div class="status-header"><span>🎫</span><span>保有クーポン</span></div>
+                            <div class="status-body">
+                                <p class="status-main-val">保有 0枚</p>
+                                <a href="#" class="status-link">一覧を見る</a>
+                            </div>
                         </div>
                         <div class="status-card card-highlight">
-                            <div class="status-header">🔥 <span>配布中クーポン</span></div>
+                            <div class="status-header"><span>🔥</span><span>配布中クーポン</span></div>
                             <div class="status-body">
                                 <div class="coupon-banner-mini">
                                     <strong>1,000円OFF</strong>
@@ -141,6 +179,7 @@
                         </div>
                     </div>
 
+                    <!-- 売れ筋ランキング -->
                     <section class="ranking-section">
                         <div class="section-header-row">
                             <h2 class="main-section-title">売れ筋人気ランキング</h2>
@@ -150,40 +189,55 @@
                         <div class="product-grid-3">
                             <div class="product-card rank-1">
                                 <div class="rank-badge">1</div>
-                                <a href="product-detail.html" class="product-img-wrap"><div class="product-img">👚</div></a>
+                                <a href="product-detail.html" class="product-img-wrap">
+                                    <div class="product-img">👚</div>
+                                </a>
                                 <div class="product-info">
                                     <p class="product-brand">BRAND A</p>
                                     <h3 class="product-name">フローラルプリント シフォンブラウス（透け感素材）</h3>
-                                    <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(128)</span></div>
+                                    <div class="product-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-count">(128)</span>
+                                    </div>
                                     <div class="product-price-row">
                                         <span class="product-price">¥4,590 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add" onclick="location.href='cart.html'">+</button>
+                                        <button class="btn-cart-add" onclick="location.href='cart.html'" aria-label="カートに追加">+</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="product-card rank-2">
                                 <div class="rank-badge">2</div>
-                                <a href="#" class="product-img-wrap"><div class="product-img">🎧</div></a>
+                                <a href="#" class="product-img-wrap">
+                                    <div class="product-img">🎧</div>
+                                </a>
                                 <div class="product-info">
                                     <p class="product-brand">BRAND B</p>
                                     <h3 class="product-name">高音質 ワイヤレスノイズキャンセリングイヤホン</h3>
-                                    <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(181)</span></div>
+                                    <div class="product-rating">
+                                        <span class="stars">★★★★☆</span>
+                                        <span class="rating-count">(181)</span>
+                                    </div>
                                     <div class="product-price-row">
                                         <span class="product-price">¥4,980 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add">+</button>
+                                        <button class="btn-cart-add" aria-label="カートに追加">+</button>
                                     </div>
                                 </div>
                             </div>
                             <div class="product-card rank-3">
                                 <div class="rank-badge">3</div>
-                                <a href="#" class="product-img-wrap"><div class="product-img">☕</div></a>
+                                <a href="#" class="product-img-wrap">
+                                    <div class="product-img">☕</div>
+                                </a>
                                 <div class="product-info">
                                     <p class="product-brand">BRAND C</p>
                                     <h3 class="product-name">こだわりの自家焙煎 プレミアムコーヒー豆 500g</h3>
-                                    <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(97)</span></div>
+                                    <div class="product-rating">
+                                        <span class="stars">★★★★★</span>
+                                        <span class="rating-count">(97)</span>
+                                    </div>
                                     <div class="product-price-row">
                                         <span class="product-price">¥2,400 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add">+</button>
+                                        <button class="btn-cart-add" aria-label="カートに追加">+</button>
                                     </div>
                                 </div>
                             </div>
@@ -215,32 +269,22 @@
     </footer>
 
     <script>
+        // スライダー制御
         const slider = document.getElementById('slider');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-
+        const slides = document.querySelectorAll('.slide-item');
         let currentIndex = 0;
-        const totalSlides = document.querySelectorAll('.slide-item').length;
 
-        function updateSlider() {
+        function goToSlide(index) {
+            currentIndex = (index + slides.length) % slides.length;
             slider.style.transform = `translateX(-${currentIndex * 100}%)`;
         }
 
-        nextBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            updateSlider();
-        });
+        document.getElementById('nextBtn').addEventListener('click', () => goToSlide(currentIndex + 1));
+        document.getElementById('prevBtn').addEventListener('click', () => goToSlide(currentIndex - 1));
 
-        prevBtn.addEventListener('click', () => {
-            currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
-            updateSlider();
-        });
-
-        // 5秒ごとに自動でスライドする機能もオマケでつけとくね！
-        setInterval(() => {
-            currentIndex = (currentIndex + 1) % totalSlides;
-            updateSlider();
-        }, 5000);
+        // 5秒ごとに自動スライド
+        setInterval(() => goToSlide(currentIndex + 1), 5000);
     </script>
+
 </body>
 </html>
