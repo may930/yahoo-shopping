@@ -812,3 +812,339 @@ body {
         gap: 12px;
     }
 }
+
+/* ==========================================================================
+   CART PAGE - NEW DELETE BUTTON DESIGN
+   ========================================================================== */
+.cart-item-delete {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background-color: var(--color-white);
+    color: #666666;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    height: fit-content;
+}
+
+    /* ホバーしたときにちょっと赤くなって「削除」っぽさを出すばい！ */
+    .cart-item-delete:hover {
+        background-color: #fff5f5;
+        border-color: #ff3b30;
+        color: #ff3b30;
+    }
+
+    .cart-item-delete svg {
+        flex-shrink: 0;
+    }
+
+/* 💡 商品画像のこだわりスタイル */
+.cart-item-img-box {
+    width: 90px;
+    height: 90px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid #e4e7ec; /* うっすらグレーの枠線で囲むと綺麗！ */
+    background-color: #f8f9fa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.cart-product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* 画像の縦横比を崩さずに枠いっぱいに収める魔法のプロパティばい！ */
+    transition: transform 0.2s ease;
+}
+
+/* マウスをのせると、画像がちょっとだけ拡大してワクワク感を演出！ */
+.cart-item:hover .cart-product-img {
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   👤 アカウント・個人情報登録・完了画面用 共通追加スタイル
+   ========================================================================== */
+
+/* 登録系画面のベース背景（カードを引き立てる薄グレー） */
+.register-body {
+    background-color: var(--color-gray-100, #f0f2f5);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 登録画面専用のスリムヘッダー */
+.register-header {
+    background-color: var(--color-white, #ffffff);
+    border-bottom: 1px solid var(--color-gray-200, #e4e7ec);
+    padding: 15px 0;
+}
+
+.register-header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.register-header .logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* メインコンテナ */
+.register-container {
+    max-width: 650px;
+    margin: 40px auto;
+    padding: 0 20px;
+    flex: 1;
+    width: 100%;
+}
+
+/* 白ベースの入力カードボックス */
+.register-box {
+    background: var(--color-white, #ffffff);
+    border: 1px solid var(--color-gray-200, #e4e7ec);
+    border-radius: 8px;
+    padding: 40px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.register-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--color-black, #111111);
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.register-subtitle {
+    font-size: 0.85rem;
+    color: var(--color-gray-600, #4a5568);
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* フォームのレイアウト構造 */
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* 姓名などの2カラム並び用 */
+.form-row-2col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--color-gray-800, #2d3748);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 必須・任意バッジ */
+.badge-required {
+    background-color: #ff3b30;
+    color: var(--color-white, #ffffff);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+.badge-optional {
+    background-color: var(--color-gray-400, #a0aec0);
+    color: var(--color-white, #ffffff);
+    font-size: 0.7rem;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: 500;
+}
+
+/* 入力フォームの標準スタイル */
+.form-input {
+    width: 100%;
+    padding: 12px 14px;
+    font-size: 0.95rem;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    background-color: var(--color-white, #ffffff);
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+    font-family: var(--font-sans, sans-serif);
+}
+
+    /* フォーカス時にYahoo!オレンジに光るばい！ */
+    .form-input:focus {
+        outline: none;
+        border-color: var(--color-yahoo-main, #ff5a00);
+        box-shadow: 0 0 0 3px rgba(255, 90, 0, 0.15);
+    }
+
+/* 郵便番号と自動入力ボタンの横並び */
+.zip-wrapper {
+    display: flex;
+    gap: 10px;
+}
+
+/* 住所自動入力ボタンなどのサブボタン */
+.btn-sub-action {
+    background-color: var(--color-white, #ffffff);
+    color: var(--color-gray-600, #4a5568);
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 0 16px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+}
+
+    .btn-sub-action:hover {
+        background-color: var(--color-gray-50, #f7f9fa);
+        border-color: var(--color-gray-400, #a0aec0);
+    }
+
+/* 性別ラジオボタン用レイアウト */
+.gender-group {
+    display: flex;
+    gap: 24px;
+    padding: 8px 0;
+}
+
+.gender-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    color: var(--color-gray-800, #2d3748);
+    cursor: pointer;
+}
+
+    .gender-label input[type="radio"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--color-yahoo-main, #ff5a00); /* ラジオボタンのYahoo化 */
+        cursor: pointer;
+    }
+
+/* 統一感のあるYahoo!風特大オレンジボタン */
+.submit-btn {
+    display: block;
+    width: 100%;
+    background: linear-gradient(180deg, #ff7d26 0%, var(--color-yahoo-main, #ff5a00) 100%);
+    color: var(--color-white, #ffffff);
+    border: none;
+    border-radius: 6px;
+    padding: 14px 20px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 3px 6px rgba(255, 90, 0, 0.2);
+    transition: all 0.2s ease;
+    margin-top: 16px;
+    font-family: var(--font-sans, sans-serif);
+}
+
+    .submit-btn:hover {
+        background: linear-gradient(180deg, #ff8936 0%, #ff660c 100%);
+        box-shadow: 0 4px 10px rgba(255, 90, 0, 0.3);
+        transform: translateY(-1px);
+    }
+
+/* --------------------------------------------------------------------------
+   🎉 入力完了画面専用スタイル
+   -------------------------------------------------------------------------- */
+.complete-box {
+    background: var(--color-white, #ffffff);
+    border: 1px solid var(--color-gray-200, #e4e7ec);
+    border-radius: 8px;
+    padding: 50px 40px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+/* 完了チェックマークの緑サークル */
+.success-icon-box {
+    width: 64px;
+    height: 64px;
+    background-color: var(--color-new-bg, #edf7f0);
+    color: var(--color-new, #1a6e3a);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px auto;
+}
+
+.complete-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-black, #111111);
+    margin-bottom: 16px;
+}
+
+.complete-text {
+    font-size: 0.95rem;
+    color: var(--color-gray-600, #4a5568);
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* 自動カウントダウンの案内枠 */
+.redirect-notice {
+    font-size: 0.8rem;
+    color: var(--color-gray-600, #4a5568);
+    background-color: var(--color-gray-50, #f7f9fa);
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-bottom: 24px;
+    display: inline-block;
+    border: 1px solid var(--color-gray-200, #e4e7ec);
+}
+
+.countdown-num {
+    font-weight: 700;
+    color: var(--color-yahoo-main, #ff5a00);
+}
+
+/* 白ベースの手動戻るボタン */
+.back-home-btn {
+    display: inline-block;
+    background-color: var(--color-white, #ffffff);
+    color: var(--color-black, #111111);
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    padding: 12px 30px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+    .back-home-btn:hover {
+        background-color: var(--color-gray-50, #f7f9fa);
+        border-color: var(--color-gray-400, #a0aec0);
+    }
