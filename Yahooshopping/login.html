@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>登録完了 - Yahoo!ショッピング風（チーム制作サンプル）</title>
+    <title>ログイン - Yahoo!ショッピング風</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    
 </head>
 <body class="register-body">
 
@@ -61,26 +60,24 @@
     </header>
 
     <main class="register-container">
-        <div class="complete-box">
+        <div class="register-box">
+            <h1 class="register-title">ログイン</h1>
+            <p class="register-subtitle">登録している携帯電話番号またはメールアドレスを入力してください。</p>
 
-            <div class="success-icon-box">
-                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                    <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
+            <form id="loginForm" class="form-grid">
+
+                <div class="form-group">
+                    <label for="loginIdentifier" class="form-label">携帯電話番号 または メールアドレス</label>
+                    <input type="text" id="loginIdentifier" class="form-input" placeholder="example@yahoo.co.jp または 09012345678" required>
+                </div>
+
+                <button type="submit" class="submit-btn" style="margin-top: 16px;">ログイン</button>
+            </form>
+
+            <div style="text-align: center; margin-top: 24px; font-size: 0.85rem;">
+                <p style="color: #666;">アカウントをお持ちでないですか？</p>
+                <a href="register.html" style="color: var(--color-link); text-decoration: none; font-weight: 700; display: inline-block; margin-top: 4px;">新規会員登録はこちら</a>
             </div>
-
-            <h1 class="complete-title">会員登録が完了しました！</h1>
-            <p class="complete-text">
-                ご登録ありがとうございます。<br>
-                これよりYahoo!ショッピング風サイトでのお買い物をお楽しみいただけます！
-            </p>
-
-            <div class="redirect-notice">
-                <span id="countdown" class="countdown-num">3</span> 秒後に自動的にトップページへ移動します。
-            </div>
-
-            <br>
-            <a href="index.html" class="back-home-btn">トップページへ戻る</a>
         </div>
     </main>
 
@@ -91,19 +88,18 @@
     </footer>
 
     <script>
-        // 💡 3秒後に自動遷移するカウントダウンタイマーばい！
-        let count = 3;
-        const countdownElement = document.getElementById('countdown');
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            // 普通のフォーム送信（画面リロード）を一旦止めるばい
+            event.preventDefault();
 
-        const timer = setInterval(() => {
-            count--;
-            countdownElement.textContent = count;
+            // ここで入力チェックとか本来はするっちゃけど、今回はそのままホームへ！
+            // ログイン成功した感を出すために、ちょっとだけアラートを出して遷移させるね
+            alert('ログインに成功しました！ホーム画面に戻ります。');
 
-            if (count <= 0) {
-                clearInterval(timer);
-                window.location.href = "index.html"; // ここでトップに飛ばすばい！
-            }
-        }, 1000);
+            // ホーム画面（index.html）へ移動！
+            location.href = 'index.html';
+        });
     </script>
+
 </body>
 </html>
