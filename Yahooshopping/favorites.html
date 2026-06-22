@@ -1,0 +1,329 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お気に入り商品 - Yahoo!ショッピング風</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="main-bg-gray">
+
+    <header class="header">
+        <div class="header-top">
+            <div class="container header-top-inner">
+                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
+                <nav class="header-top-nav">
+                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
+                </nav>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <div class="container header-main-inner">
+                <a href="index.html" class="logo">
+                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
+                </a>
+                <div class="search-bar">
+                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
+                    <button type="submit" class="search-btn" aria-label="検索">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                        <span>検索する</span>
+                    </button>
+                </div>
+                <div class="header-actions">
+                    <a href="cart.html" class="action-item-btn">
+                        <span class="action-icon">🛒</span>
+                        <span class="action-label">カート</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="favorites.html" class="action-item-btn">
+                        <span class="action-icon">❤</span>
+                        <span class="action-label">お気に入り</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="browsing-history.html" class="action-item-btn">
+                        <span class="action-icon">🕒</span>
+                        <span class="action-label">閲覧履歴</span>
+                    </a>
+                    <a href="order-history.html" class="action-item-btn">
+                        <span class="action-icon">⏱️</span>
+                        <span class="action-label">注文履歴</span>
+                    </a>
+                    <a href="mypage.html" class="action-item-btn">
+                        <span class="action-icon">👤</span>
+                        <span class="action-label">マイページ</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- メインコンテンツ -->
+    <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+
+        <!-- ページタイトルとお気に入り件数 -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 2px solid var(--color-primary); padding-bottom: 8px;">
+            <h1 style="font-size: 1.5rem; font-weight: 700; color: var(--color-black); margin: 0;">
+                ❤️ お気に入り商品
+            </h1>
+            <span style="font-size: 0.9rem; color: #666; font-weight: 500;">
+                現在のお気に入り：<strong style="color: var(--color-primary); font-size: 1.1rem;">3</strong> 件
+            </span>
+        </div>
+
+        <!-- お気に入り商品グリッド -->
+        <div class="product-grid-3">
+
+            <!-- お気に入り商品1 -->
+            <div class="product-card" id="fav-item-1" style="position: relative;">
+                <!-- 削除ボタン（ゴミ箱マーク） -->
+                <button onclick="removeFavorite('fav-item-1')" style="position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.9); border: 1px solid #e4e7ec; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 0.9rem;" title="お気に入りから削除">
+                    🗑️
+                </button>
+                <a href="product-detail.html" class="product-img-wrap">
+                    <div class="product-img">👚</div>
+                </a>
+                <div class="product-info">
+                    <p class="product-brand">BRAND A</p>
+                    <h3 class="product-name">フローラルプリント シフォンブラウス（透け感素材）</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(128)</span>
+                    </div>
+                    <div class="product-price-row" style="margin-top: 12px;">
+                        <span class="product-price">¥4,590 <span class="tax">税込</span></span>
+                        <!-- カートへ追加するボタンばい！ -->
+                        <button class="btn-sub-action" onclick="alert('カートに追加しました！')" style="padding: 6px 12px; font-size: 0.8rem; font-weight: 700;">🛒 カートに入れる</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- お気に入り商品2 -->
+            <div class="product-card" id="fav-item-2" style="position: relative;">
+                <button onclick="removeFavorite('fav-item-2')" style="position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.9); border: 1px solid #e4e7ec; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 0.9rem;" title="お気に入りから削除">
+                    🗑️
+                </button>
+                <a href="#" class="product-img-wrap">
+                    <div class="product-img">🎧</div>
+                </a>
+                <div class="product-info">
+                    <p class="product-brand">BRAND B</p>
+                    <h3 class="product-name">高音質 ワイヤレスノイズキャンセリングイヤホン</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="rating-count">(181)</span>
+                    </div>
+                    <div class="product-price-row" style="margin-top: 12px;">
+                        <span class="product-price">¥4,980 <span class="tax">税込</span></span>
+                        <button class="btn-sub-action" onclick="alert('カートに追加しました！')" style="padding: 6px 12px; font-size: 0.8rem; font-weight: 700;">🛒 カートに入れる</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- お気に入り商品3 -->
+            <div class="product-card" id="fav-item-3" style="position: relative;">
+                <button onclick="removeFavorite('fav-item-3')" style="position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.9); border: 1px solid #e4e7ec; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 0.9rem;" title="お気に入りから削除">
+                    🗑️
+                </button>
+                <a href="#" class="product-img-wrap" style="background-color: #fff9e6;">
+                    <div class="product-img">🍜</div>
+                </a>
+                <div class="product-info">
+                    <p class="product-brand">ガッツリ麺</p>
+                    <h3 class="product-name">濃厚ガッツリ豚骨醤油！本場ジロー系ラーメン（3食入）</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(215)</span>
+                    </div>
+                    <div class="product-price-row" style="margin-top: 12px;">
+                        <span class="product-price">¥3,480 <span class="tax">税込</span></span>
+                        <button class="btn-sub-action" onclick="alert('カートに追加しました！')" style="padding: 6px 12px; font-size: 0.8rem; font-weight: 700;">🛒 カートに入れる</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- お買い物を続けるボタン -->
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="index.html" class="btn-sub-action" style="text-decoration: none; padding: 12px 30px; font-weight: 500; display: inline-block;">
+                トップページに戻ってお買い物を続ける
+            </a>
+        </div>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2026 Yahoo!ショッピング風チーム制作プロジェクト. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 簡易的な削除アニメーションJavaScript -->
+    <script>
+        function removeFavorite(itemId) {
+            if(confirm('この商品をお気に入りから削除してもよろしいですか？')) {
+                const item = document.getElementById(itemId);
+                if(item) {
+                    // ふわっと消える演出を入れるとオシャレばい！
+                    item.style.transition = 'all 0.4s ease';
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        item.remove();
+                    }, 400);
+                }
+            }
+        }
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お気に入り商品 - Yahoo!ショッピング風</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="main-bg-gray">
+
+    <!-- ==========================================
+         共通ヘッダー（ここに共通コードを貼り付けてね！）
+         ========================================== -->
+    <div style="background: #fff; border-bottom: 1px solid #e4e7ec; padding: 15px 0; text-align: center; color: #666; width: 100%;">
+        [ ここに共通ヘッダーのHTMLをコピペしてください ]
+    </div>
+
+    <!-- メインコンテンツ -->
+    <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+        
+        <!-- ページタイトルとお気に入り件数 -->
+        <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 2px solid var(--color-primary); padding-bottom: 8px;">
+            <h1 style="font-size: 1.5rem; font-weight: 700; color: var(--color-black); margin: 0;">
+                ❤️ お気に入り商品
+            </h1>
+            <span style="font-size: 0.9rem; color: #666; font-weight: 500;">
+                現在のお気に入り：<strong style="color: var(--color-primary); font-size: 1.1rem;">3</strong> 件
+            </span>
+        </div>
+
+        <!-- お気に入り商品グリッド -->
+        <div class="product-grid-3">
+            
+            <!-- お気に入り商品1 -->
+            <div class="product-card" id="fav-item-1" style="position: relative;">
+                <!-- 削除ボタン（ゴミ箱マーク） -->
+                <button onclick="removeFavorite('fav-item-1')" style="position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.9); border: 1px solid #e4e7ec; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 0.9rem;" title="お気に入りから削除">
+                    🗑️
+                </button>
+                <a href="product-detail.html" class="product-img-wrap">
+                    <div class="product-img">👚</div>
+                </a>
+                <div class="product-info">
+                    <p class="product-brand">BRAND A</p>
+                    <h3 class="product-name">フローラルプリント シフォンブラウス（透け感素材）</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(128)</span>
+                    </div>
+                    <div class="product-price-row" style="margin-top: 12px;">
+                        <span class="product-price">¥4,590 <span class="tax">税込</span></span>
+                        <!-- カートへ追加するボタンばい！ -->
+                        <button class="btn-sub-action" onclick="alert('カートに追加しました！')" style="padding: 6px 12px; font-size: 0.8rem; font-weight: 700;">🛒 カートに入れる</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- お気に入り商品2 -->
+            <div class="product-card" id="fav-item-2" style="position: relative;">
+                <button onclick="removeFavorite('fav-item-2')" style="position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.9); border: 1px solid #e4e7ec; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 0.9rem;" title="お気に入りから削除">
+                    🗑️
+                </button>
+                <a href="#" class="product-img-wrap">
+                    <div class="product-img">🎧</div>
+                </a>
+                <div class="product-info">
+                    <p class="product-brand">BRAND B</p>
+                    <h3 class="product-name">高音質 ワイヤレスノイズキャンセリングイヤホン</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="rating-count">(181)</span>
+                    </div>
+                    <div class="product-price-row" style="margin-top: 12px;">
+                        <span class="product-price">¥4,980 <span class="tax">税込</span></span>
+                        <button class="btn-sub-action" onclick="alert('カートに追加しました！')" style="padding: 6px 12px; font-size: 0.8rem; font-weight: 700;">🛒 カートに入れる</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- お気に入り商品3 -->
+            <div class="product-card" id="fav-item-3" style="position: relative;">
+                <button onclick="removeFavorite('fav-item-3')" style="position: absolute; top: 8px; right: 8px; background: rgba(255,255,255,0.9); border: 1px solid #e4e7ec; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 10; font-size: 0.9rem;" title="お気に入りから削除">
+                    🗑️
+                </button>
+                <a href="#" class="product-img-wrap" style="background-color: #fff9e6;">
+                    <div class="product-img">🍜</div>
+                </a>
+                <div class="product-info">
+                    <p class="product-brand">ガッツリ麺</p>
+                    <h3 class="product-name">濃厚ガッツリ豚骨醤油！本場ジロー系ラーメン（3食入）</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(215)</span>
+                    </div>
+                    <div class="product-price-row" style="margin-top: 12px;">
+                        <span class="product-price">¥3,480 <span class="tax">税込</span></span>
+                        <button class="btn-sub-action" onclick="alert('カートに追加しました！')" style="padding: 6px 12px; font-size: 0.8rem; font-weight: 700;">🛒 カートに入れる</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- お買い物を続けるボタン -->
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="index.html" class="btn-sub-action" style="text-decoration: none; padding: 12px 30px; font-weight: 500; display: inline-block;">
+                トップページに戻ってお買い物を続ける
+            </a>
+        </div>
+
+    </main>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2026 Yahoo!ショッピング風チーム制作プロジェクト. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- 簡易的な削除アニメーションJavaScript -->
+    <script>
+        function removeFavorite(itemId) {
+            if(confirm('この商品をお気に入りから削除してもよろしいですか？')) {
+                const item = document.getElementById(itemId);
+                if(item) {
+                    // ふわっと消える演出を入れるとオシャレばい！
+                    item.style.transition = 'all 0.4s ease';
+                    item.style.opacity = '0';
+                    item.style.transform = 'scale(0.9)';
+                    setTimeout(() => {
+                        item.remove();
+                    }, 400);
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
