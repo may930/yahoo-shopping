@@ -16,242 +16,206 @@
             <div class="container header-top-inner">
                 <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
                 <nav class="header-top-nav">
-                    <a href="#">ログイン</a>
-                    <a href="#">会員登録</a>
-                    <a href="#">注文履歴</a>
+                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
                 </nav>
             </div>
         </div>
+
         <div class="header-main">
             <div class="container header-main-inner">
-                <a href="index.html" class="logo"><span class="logo-y">Yahoo!</span><span class="logo-s">ショッピング</span></a>
-
+                <a href="index.html" class="logo">
+                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
+                </a>
                 <div class="search-bar">
                     <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
-                    <button type="submit" aria-label="検索">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></svg>
-                        <span class="search-btn-text">検索する</span>
+                    <button type="submit" class="search-btn" aria-label="検索">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                        <span>検索する</span>
                     </button>
                 </div>
-
                 <div class="header-actions">
-                    <a href="#" class="action-btn" aria-label="お気に入り">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" /></svg>
-                    </a>
-                    <a href="cart.html" class="action-btn cart-btn" aria-label="カート">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></svg>
+                    <a href="cart.html" class="action-item-btn">
+                        <span class="action-icon">🛒</span>
+                        <span class="action-label">カート</span>
                         <span class="cart-count">3</span>
                     </a>
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></svg>
+                    <a href="favorites.html" class="action-item-btn">
+                        <span class="action-icon">❤</span>
+                        <span class="action-label">お気に入り</span>
                         <span class="cart-count">3</span>
+                    </a>
+                    <a href="browsing-history.html" class="action-item-btn">
+                        <span class="action-icon">🕒</span>
+                        <span class="action-label">閲覧履歴</span>
+                    </a>
+                    <a href="order-history.html" class="action-item-btn">
+                        <span class="action-icon">⏱️</span>
+                        <span class="action-label">注文履歴</span>
+                    </a>
+                    <a href="mypage.html" class="action-item-btn">
+                        <span class="action-icon">👤</span>
+                        <span class="action-label">マイページ</span>
                     </a>
                 </div>
             </div>
         </div>
-
-        <nav class="header-nav">
-            <div class="container">
-                <ul class="nav-list">
-                    <li><a href="index.html" class="nav-link">すべて</a></li>
-                    <li><a href="#" class="nav-link active">ファッション</a></li>
-                    <li><a href="#" class="nav-link">家電・スマホ</a></li>
-                    <li><a href="#" class="nav-link">コスメ・美容</a></li>
-                    <li><a href="#" class="nav-link">日用品・インテリア</a></li>
-                    <li><a href="#" class="nav-link">食品・スイーツ</a></li>
-                    <li><a href="#" class="nav-link">本・ゲーム</a></li>
-                    <li><a href="#" class="nav-link">セール・特集</a></li>
-                </ul>
-            </div>
-        </nav>
     </header>
 
-    <main class="container pd-main">
-
-        <div class="pd-breadcrumb">
-            <a href="index.html">ホーム</a> &gt; <a href="#">レディースファッション</a> &gt; <a href="#">トップス</a> &gt; <span>シャツ・ブラウス</span>
-        </div>
-
-        <div class="pd-layout">
-            <div class="pd-gallery">
-                <div class="pd-main-img-wrap">
-                    <div id="pdMainImg" class="pd-main-img">👚</div>
-                </div>
-                <div class="pd-thumbs-row">
-                    <div class="pd-thumb active" data-img="👚">👚</div>
-                    <div class="pd-thumb" data-img="👕">👕</div>
-                    <div class="pd-thumb" data-img="👗">👗</div>
-                </div>
+    <main class="main-bg-gray">
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">トップ</a> ＞ <a href="#">レディースファッション</a> ＞ <a href="#">トップス</a> ＞ <span>ブラウス</span>
             </div>
 
-            <div class="pd-info-panel">
-                <p class="pd-brand">BRAND A</p>
-                <h1 class="pd-title">フローラルプリント シフォンブラウス（透け感素材・長袖・5色展開）</h1>
-
-                <div class="pd-rating-row">
-                    <span class="stars">★★★★★</span>
-                    <span class="rating-val">4.7</span>
-                    <a href="#reviews-anchor" id="goToReviews" class="rating-count-link">（128件のレビュー）</a>
-                </div>
-
-                <div class="pd-price-box">
-                    <div class="pd-price-row">
-                        <span class="pd-current-price">¥4,590 <span class="tax">税込</span></span>
-                    </div>
-                    <div class="pd-store-info">
-                        <span class="pd-shipping-free">送料無料</span>（東京都は送料無料、一部地域除く）
-                        <p class="pd-store-name">ストア：<a href="#">超おトクショップYahoo!店</a> ⭐4.6</p>
+            <div class="pd-container">
+                <div class="pd-gallery">
+                    <div class="pd-main-view" id="pdMainImg">👚</div>
+                    <div class="pd-thumb-list">
+                        <div class="pd-thumb active" data-img="👚">👚</div>
+                        <div class="pd-thumb" data-img="✨">✨</div>
+                        <div class="pd-thumb" data-img="🧵">🧵</div>
                     </div>
                 </div>
 
-                <div class="pd-delivery-status">
-                    <span class="delivery-badge">優良配送</span>
-                    <p class="delivery-text"><strong>最短明日お届け</strong>（12:00までのご注文で本日発送）</p>
-                </div>
+                <div class="pd-info-panel">
+                    <p class="pd-brand">BRAND A</p>
+                    <h1 class="pd-title">フローラルプリント シフォンブラウス（透け感素材）</h1>
 
-                <div class="pd-option-group">
-                    <h3 class="pd-option-label">カラー: <span id="selectedColor" class="pd-selected-val">ホワイト</span></h3>
-                    <div class="pd-color-selector">
-                        <button class="pd-color-btn active" data-name="ホワイト" style="background-color: #fff; border: 1px solid #ccc;" title="ホワイト"></button>
-                        <button class="pd-color-btn" data-name="ブラック" style="background-color: #222;" title="ブラック"></button>
-                        <button class="pd-color-btn" data-name="サックスブルー" style="background-color: #add8e6;" title="サックスブルー"></button>
-                    </div>
-                </div>
-
-                <div class="pd-option-group">
-                    <h3 class="pd-option-label">サイズ: <span id="selectedSize" class="pd-selected-val">M</span></h3>
-                    <div class="pd-size-selector">
-                        <button class="pd-size-btn">S</button>
-                        <button class="pd-size-btn active">M</button>
-                        <button class="pd-size-btn">L</button>
-                        <button class="pd-size-btn" disabled>XL（売り切れ）</button>
-                    </div>
-                </div>
-
-                <div class="pd-option-group">
-                    <h3 class="pd-option-label">数量</h3>
-                    <div class="pd-qty-selector">
-                        <button id="qtyDown" class="pd-qty-btn">-</button>
-                        <span id="qtyVal" class="pd-qty-val">1</span>
-                        <button id="qtyUp" class="pd-qty-btn">+</button>
-                    </div>
-                </div>
-
-                <div class="pd-action-buttons-row">
-                    <button class="pd-btn-split pd-btn-add-cart" onclick="location.href='cart.html'">🛒 カートに入れる</button>
-                    <button class="pd-btn-split pd-btn-instant-buy">💳 今すぐ購入する</button>
-                </div>
-            </div>
-        </div>
-
-        <div id="reviews-anchor" class="pd-details-bottom">
-            <div class="pd-tabs-nav">
-                <button class="pd-custom-tab active" data-tab="info-rich">商品詳細説明</button>
-                <button class="pd-custom-tab" data-tab="spec-rich">サイズ表・仕様</button>
-                <button class="pd-custom-tab" data-tab="reviews-rich">カスタマーレビュー (128)</button>
-            </div>
-
-            <div id="tab-info-rich" class="pd-custom-content active">
-                <div class="info-rich-layout">
-                    <div class="info-rich-text">
-                        <h4>上品な透け感とフェミニンな小花柄で、毎日のコーデを格上げ。</h4>
-                        <p>風をふんわりとまとうようなリッチなシフォン素材を採用。派手すぎない上品なフローラルプリントなので、オフィスカジュアルから特別な日のデートまで幅広く大活躍します。</p>
-                        <ul class="info-bullets">
-                            <li><strong>安心のセット内容:</strong> 同色のインナーキャミソールがセットで付いてくるため、届いたその日から着用可能！</li>
-                            <li><strong>美シルエット設計:</strong> 手首をほっそり見せるギャザー袖と、インしても出してもきれいに決まる絶妙な身丈。</li>
-                        </ul>
-                    </div>
-                    <div class="info-rich-highlight">
-                        <div class="highlight-badge">POINT</div>
-                        <p>「サラッとした肌触りで夏前まで涼しく着られる」と、チーム制作の企画会議でも大絶賛されたイチオシアイテムです！</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="tab-spec-rich" class="pd-custom-content">
-                <div class="spec-rich-container">
-                    <p class="spec-intro-text">※測定方法によって1〜2cmの型崩れや誤差が生じる場合がございます。お手持ちの衣類と比較してサイズをお選びください。</p>
-                    <table class="rich-spec-table">
-                        <thead>
-                            <tr>
-                                <th>サイズ (cm)</th>
-                                <th>着丈</th>
-                                <th>肩幅</th>
-                                <th>胸囲</th>
-                                <th>袖丈</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="spec-size-label">S</td>
-                                <td>60</td>
-                                <td>36</td>
-                                <td>92</td>
-                                <td>56</td>
-                            </tr>
-                            <tr class="highlighted-row">
-                                <td class="spec-size-label">M（標準）</td>
-                                <td>62</td>
-                                <td>37</td>
-                                <td>96</td>
-                                <td>57</td>
-                            </tr>
-                            <tr>
-                                <td class="spec-size-label">L</td>
-                                <td>64</td>
-                                <td>38</td>
-                                <td>100</td>
-                                <td>58</td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="spec-material-box">
-                        <h5>【商品の基本仕様】</h5>
-                        <p><strong>品質素材：</strong> ポリエステル 100%（シフォン生地） / インナー：ポリエステル 100%</p>
-                        <p><strong>洗濯表示：</strong> 手洗い推奨、または洗濯ネットを使用しドライコースで洗濯してください。アイロンは低温当て布を使用。</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="tab-reviews-rich" class="pd-custom-content">
-                <div class="reviews-rich-summary">
-                    <div class="summary-score-card">
-                        <span class="big-score">4.7</span>
+                    <div class="pd-rating-row">
                         <span class="stars">★★★★★</span>
-                        <span class="total-reviews">128件の評価</span>
+                        <span class="rating-avg">4.7</span>
+                        <a href="#reviews-section" class="rating-link">レビュー128件を見る</a>
                     </div>
-                    <div class="summary-bars">
-                        <div class="rating-bar-row"><span>星5</span><div class="bar-bg"><div class="bar-fill" style="width: 80%;"></div></div><span>80%</span></div>
-                        <div class="rating-bar-row"><span>星4</span><div class="bar-bg"><div class="bar-fill" style="width: 15%;"></div></div><span>15%</span></div>
-                        <div class="rating-bar-row"><span>星3</span><div class="bar-bg"><div class="bar-fill" style="width: 4%;"></div></div><span>4%</span></div>
-                        <div class="rating-bar-row"><span>星2</span><div class="bar-bg"><div class="bar-fill" style="width: 1%;"></div></div><span>1%</span></div>
-                        <div class="rating-bar-row"><span>星1</span><div class="bar-bg"><div class="bar-fill" style="width: 0%;"></div></div><span>0%</span></div>
-                    </div>
-                </div>
 
-                <div class="review-list">
-                    <div class="review-item">
-                        <div class="review-meta">
-                            <span class="stars">★★★★★</span>
-                            <span class="review-user">りり**さん</span>
-                            <span class="review-date">2026/06/10</span>
-                        </div>
-                        <h5 class="review-title">めちゃくちゃヘビロテしてます！可愛い！</h5>
-                        <p class="review-text">ホワイトを購入しました。透け感がちょうどよくて、中にセットのキャミを着るだけでコーデが完成するので最高です。友達にもそれどこで買ったの？って聞かれました！</p>
+                    <div class="pd-price-box">
+                        <p class="pd-price">¥4,590 <span class="tax">税込</span></p>
+                        <p class="pd-points">➕ PayPayポイントが毎日5%貯まる！</p>
                     </div>
-                    <div class="review-item">
-                        <div class="review-meta">
-                            <span class="stars">★★★★☆</span>
-                            <span class="review-user">sota**さん</span>
-                            <span class="review-date">2026/05/28</span>
+
+                    <div class="pd-options">
+                        <div class="option-group">
+                            <label class="option-label">カラー: <span id="selectedColor">ホワイト</span></label>
+                            <div class="option-buttons">
+                                <button class="pd-color-btn active" data-name="ホワイト">ホワイト</button>
+                                <button class="pd-color-btn" data-name="ブラック">ブラック</button>
+                                <button class="pd-color-btn" data-name="ピンク">ピンク</button>
+                            </div>
                         </div>
-                        <h5 class="review-title">デザインや素材感はバッチリです</h5>
-                        <p class="review-text">プレゼント用に購入。シワになりにくいシフォン素材で扱いやすそうとのことでした。Mサイズでジャストサイズだったみたいです。</p>
+
+                        <div class="option-group">
+                            <label class="option-label">サイズ: <span id="selectedSize">M</span></label>
+                            <div class="option-buttons">
+                                <button class="pd-size-btn">S</button>
+                                <button class="pd-size-btn active">M</button>
+                                <button class="pd-size-btn">L</button>
+                                <button class="pd-size-btn" disabled>XL (売り切れ)</button>
+                            </div>
+                        </div>
+
+                        <div class="option-group">
+                            <label class="option-label">数量</label>
+                            <div class="pd-qty-selector">
+                                <button id="qtyDown" class="qty-btn">-</button>
+                                <span id="qtyVal" class="qty-val">1</span>
+                                <button id="qtyUp" class="qty-btn">+</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pd-actions">
+                        <button class="pd-btn-cart" onclick="location.href='cart.html'">🛒 カートに入れる</button>
                     </div>
                 </div>
             </div>
-        </div>
 
+            <!-- ==========================================
+                 新設：商品詳細説明エリア
+                 ========================================== -->
+            <section style="background: #fff; border: 1px solid #e4e7ec; border-radius: var(--radius-md); padding: 30px; margin-top: 30px; box-shadow: var(--shadow-card);">
+                <h2 style="font-size: 1.3rem; font-weight: 700; border-bottom: 2px solid var(--color-accent); padding-bottom: 8px; margin-bottom: 20px;">商品説明</h2>
+
+                <div style="line-height: 1.8; color: var(--color-black); font-size: 0.95rem;">
+                    <p style="margin-bottom: 16px; font-weight: 500;">
+                        上品な透け感のあるシフォン素材に、大人可愛いフローラルプリントをあしらった主役級ブラウス。
+                    </p>
+                    <p style="margin-bottom: 24px; color: #555;">
+                        軽やかで柔らかな肌触りのシフォン生地を使用しており、動くたびに美しく揺れるシルエットが女性らしさを引き立てます。インナーと合わせたレイヤードスタイルはもちろん、ジャケットのインナーとしても映える一枚です。お出かけからオフィススタイルまで幅広く着回せます。
+                    </p>
+
+                    <h3 style="font-size: 1rem; font-weight: 700; margin-bottom: 12px; color: var(--color-primary);">■ 商品仕様</h3>
+                    <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px; font-size: 0.9rem;">
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #e4e7ec; background: #f7f9fa; width: 150px; font-weight: 500;">素材</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e4e7ec;">ポリエステル 100%（シフォン生地）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #e4e7ec; background: #f7f9fa;">伸縮性 / 裏地</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e4e7ec;">伸縮性なし / 裏地なし（※キャミソール等のインナーの着用をおすすめします）</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 10px; border-bottom: 1px solid #e4e7ec; background: #f7f9fa;">お手入れ</td>
+                            <td style="padding: 10px; border-bottom: 1px solid #e4e7ec;">手洗い推奨、または洗濯ネットに入れて弱水流コース</td>
+                        </tr>
+                    </table>
+                </div>
+            </section>
+
+            <!-- ==========================================
+                 新設：口コミ（レビュー）エリア
+                 ========================================== -->
+            <section id="reviews-section" style="background: #fff; border: 1px solid #e4e7ec; border-radius: var(--radius-md); padding: 30px; margin-top: 30px; margin-bottom: 30px; box-shadow: var(--shadow-card);">
+                <h2 style="font-size: 1.3rem; font-weight: 700; border-bottom: 2px solid var(--color-accent); padding-bottom: 8px; margin-bottom: 20px;">商品レビュー・口コミ</h2>
+
+                <!-- 総合評価サマリー -->
+                <div style="display: flex; align-items: center; gap: 24px; background: #f7f9fa; padding: 20px; border-radius: var(--radius-sm); margin-bottom: 24px;">
+                    <div style="text-align: center; border-right: 1px solid #e4e7ec; padding-right: 24px;">
+                        <span style="font-size: 2.5rem; font-weight: 700; color: var(--color-black); line-height: 1;">4.7</span>
+                        <span style="display: block; font-size: 0.8rem; color: #666; margin-top: 4px;">総合評価（128件）</span>
+                    </div>
+                    <div>
+                        <div class="stars" style="font-size: 1.2rem; margin-bottom: 4px;">★★★★★</div>
+                        <p style="font-size: 0.85rem; color: #555; margin: 0;">購入したユーザーの94%が星4以上と評価しています。</p>
+                    </div>
+                </div>
+
+                <!-- 口コミ一覧 -->
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- 口コミ1件目 -->
+                    <div style="border-bottom: 1px solid #e4e7ec; padding-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div>
+                                <span class="stars" style="color: #ffcc00;">★★★★★</span>
+                                <strong style="margin-left: 8px; font-size: 0.95rem;">透け感が上品でめちゃくちゃ可愛い！</strong>
+                            </div>
+                            <span style="font-size: 0.8rem; color: #999;">2026/06/18</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #444; line-height: 1.6; margin: 0 0 8px 0;">
+                            ホワイトのMサイズを購入しました。写真通りの上品な花柄で、シフォンの揺れ感がすごく綺麗です！デニムに合わせてカジュアルダウンしても可愛いし、きれいめのスカートに合わせたらオフィスでも褒められました。ヘビロテ決定です！
+                        </p>
+                        <span style="font-size: 0.8rem; color: #777;">購入者：りりあちゃん さん（20代 / 女性）</span>
+                    </div>
+
+                    <!-- 口コミ2件目 -->
+                    <div style="border-bottom: 1px solid #e4e7ec; padding-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <div>
+                                <span class="stars" style="color: #ffcc00;">★★★★☆</span>
+                                <strong style="margin-left: 8px; font-size: 0.95rem;">形は綺麗だけどインナーは必須</strong>
+                            </div>
+                            <span style="font-size: 0.8rem; color: #999;">2026/06/10</span>
+                        </div>
+                        <p style="font-size: 0.9rem; color: #444; line-height: 1.6; margin: 0 0 8px 0;">
+                            ブラックを購入。サラッとした生地でこれからの季節にぴったりです。かなり透ける素材なので、中に着るキャミソールの色は選ぶ必要がありますが、デザイン自体はとても満足しています。
+                        </p>
+                        <span style="font-size: 0.8rem; color: #777;">購入者：ゲスト さん（30代 / 女性）</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
     </main>
 
     <footer class="footer">
@@ -259,22 +223,6 @@
             <div class="footer-col">
                 <p class="footer-logo">Yahoo!ショッピング風サイト</p>
                 <p class="footer-tagline">毎日の生活をもっと豊かに、おトクに。</p>
-            </div>
-            <div class="footer-col">
-                <h4 class="footer-heading">ショッピング</h4>
-                <ul class="footer-links">
-                    <li><a href="#">新着商品</a></li>
-                    <li><a href="#">ランキング</a></li>
-                    <li><a href="#">セール・特集</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h4 class="footer-heading">サポート</h4>
-                <ul class="footer-links">
-                    <li><a href="#">よくある質問</a></li>
-                    <li><a href="#">送料・配送について</a></li>
-                    <li><a href="#">お問い合わせ</a></li>
-                </ul>
             </div>
             <div class="footer-col">
                 <h4 class="footer-heading">運営チーム</h4>
@@ -290,23 +238,6 @@
     </footer>
 
     <script>
-        // リッチタブ切り替え
-        document.querySelectorAll('.pd-custom-tab').forEach(tab => {
-            tab.addEventListener('click', () => {
-                document.querySelectorAll('.pd-custom-tab').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.pd-custom-content').forEach(c => c.classList.remove('active'));
-
-                tab.classList.add('active');
-                document.getElementById('tab-' + tab.dataset.tab).classList.add('active');
-            });
-        });
-
-        // レビュー件数クリックでレビュータブを自動で開いてスクロール
-        document.getElementById('goToReviews').addEventListener('click', (e) => {
-            const reviewTabBtn = document.querySelector('[data-tab="reviews-rich"]');
-            if (reviewTabBtn) reviewTabBtn.click();
-        });
-
         // カラー選択
         document.querySelectorAll('.pd-color-btn').forEach(btn => {
             btn.addEventListener('click', () => {

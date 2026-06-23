@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新規登録 - Yahoo!ショッピング風（チーム制作サンプル）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="register-body">
+
+    <header class="header">
+        <div class="header-top">
+            <div class="container header-top-inner">
+                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
+                <nav class="header-top-nav">
+                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
+                </nav>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <div class="container header-main-inner">
+                <a href="index.html" class="logo">
+                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
+                </a>
+                <div class="search-bar">
+                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
+                    <button type="submit" class="search-btn" aria-label="検索">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                        <span>検索する</span>
+                    </button>
+                </div>
+                <div class="header-actions">
+                    <a href="cart.html" class="action-item-btn">
+                        <span class="action-icon">🛒</span>
+                        <span class="action-label">カート</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="favorites.html" class="action-item-btn">
+                        <span class="action-icon">❤</span>
+                        <span class="action-label">お気に入り</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="browsing-history.html" class="action-item-btn">
+                        <span class="action-icon">🕒</span>
+                        <span class="action-label">閲覧履歴</span>
+                    </a>
+                    <a href="order-history.html" class="action-item-btn">
+                        <span class="action-icon">⏱️</span>
+                        <span class="action-label">注文履歴</span>
+                    </a>
+                    <a href="mypage.html" class="action-item-btn">
+                        <span class="action-icon">👤</span>
+                        <span class="action-label">マイページ</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="register-container" style="max-width: 900px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: #ffffff; border: 1px solid #e4e7ec; border-radius: 8px; padding: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
+
+            <div class="register-promo-side" style="display: flex; flex-direction: column; justify-content: center;">
+                <div class="promo-banner" style="background: linear-gradient(135deg, #fff5ec 0%, #ffe0cc 100%); border: 1px dashed #ff5a00; border-radius: 8px; padding: 30px 20px; text-align: center; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                    <span class="promo-badge" style="background-color: #ff3b30; color: #ffffff; font-size: 0.75rem; font-weight: 700; padding: 4px 8px; border-radius: 4px; margin-bottom: 12px;">新規入会特典</span>
+                    <h3 class="promo-title" style="font-size: 1.2rem; font-weight: 700; color: #ff5a00; margin-bottom: 10px;">今すぐ使える！<br>最大半額クーポンプレゼント</h3>
+                    <p class="promo-text" style="font-size: 0.85rem; color: #555555; line-height: 1.6;">
+                        アカウント登録完了で、HCS!ショッピングで使えるお得な限定クーポンがその場で発行されます。
+                    </p>
+                </div>
+            </div>
+
+            <div class="register-form-side">
+                <h1 class="register-title">新規登録</h1>
+
+                <form action="profile-register.html" method="GET">
+
+                    <div class="form-group">
+                        <label for="phoneNumber" class="form-label">携帯電話番号</label>
+                        <input type="tel" id="phoneNumber" class="form-input" placeholder="09012345678" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="emailAddress" class="form-label">メールアドレス</label>
+                        <input type="email" id="emailAddress" class="form-input" placeholder="example@yahoo.co.jp" required>
+                    </div>
+
+                    <p style="font-size: 0.75rem; color: #666666; line-height: 1.5; margin-bottom: 24px;">
+                        「次へ」ボタンを押すことで、当サイトの<a href="#" style="color: #0066cc; text-decoration: none;">利用規約</a>および<a href="#" style="color: #0066cc; text-decoration: none;">プライバシーポリシー</a>に同意したものとみなされます。
+                    </p>
+
+                    <button type="submit" class="submit-btn">次へ</button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer" style="margin-top: auto;">
+        <div class="footer-bottom">
+            <p>© 2026 Yahoo!ショッピング風チーム制作プロジェクト. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

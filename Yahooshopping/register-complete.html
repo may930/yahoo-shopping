@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登録完了 - Yahoo!ショッピング風（チーム制作サンプル）</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+</head>
+<body class="register-body">
+
+    <header class="header">
+        <div class="header-top">
+            <div class="container header-top-inner">
+                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
+                <nav class="header-top-nav">
+                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
+                </nav>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <div class="container header-main-inner">
+                <a href="index.html" class="logo">
+                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
+                </a>
+                <div class="search-bar">
+                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
+                    <button type="submit" class="search-btn" aria-label="検索">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                        <span>検索する</span>
+                    </button>
+                </div>
+                <div class="header-actions">
+                    <a href="cart.html" class="action-item-btn">
+                        <span class="action-icon">🛒</span>
+                        <span class="action-label">カート</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="favorites.html" class="action-item-btn">
+                        <span class="action-icon">❤</span>
+                        <span class="action-label">お気に入り</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="browsing-history.html" class="action-item-btn">
+                        <span class="action-icon">🕒</span>
+                        <span class="action-label">閲覧履歴</span>
+                    </a>
+                    <a href="order-history.html" class="action-item-btn">
+                        <span class="action-icon">⏱️</span>
+                        <span class="action-label">注文履歴</span>
+                    </a>
+                    <a href="mypage.html" class="action-item-btn">
+                        <span class="action-icon">👤</span>
+                        <span class="action-label">マイページ</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="register-container">
+        <div class="complete-box">
+
+            <div class="success-icon-box">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+
+            <h1 class="complete-title">会員登録が完了しました！</h1>
+            <p class="complete-text">
+                ご登録ありがとうございます。<br>
+                これよりYahoo!ショッピング風サイトでのお買い物をお楽しみいただけます！
+            </p>
+
+            <div class="redirect-notice">
+                <span id="countdown" class="countdown-num">3</span> 秒後に自動的にトップページへ移動します。
+            </div>
+
+            <br>
+            <a href="index.html" class="back-home-btn">トップページへ戻る</a>
+        </div>
+    </main>
+
+    <footer class="footer" style="margin-top: auto;">
+        <div class="footer-bottom">
+            <p>© 2026 Yahoo!ショッピング風チーム制作プロジェクト. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // 💡 3秒後に自動遷移するカウントダウンタイマーばい！
+        let count = 3;
+        const countdownElement = document.getElementById('countdown');
+
+        const timer = setInterval(() => {
+            count--;
+            countdownElement.textContent = count;
+
+            if (count <= 0) {
+                clearInterval(timer);
+                window.location.href = "index.html"; // ここでトップに飛ばすばい！
+            }
+        }, 1000);
+    </script>
+</body>
+</html>
