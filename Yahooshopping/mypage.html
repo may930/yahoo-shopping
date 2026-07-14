@@ -16,7 +16,7 @@
             <div class="container header-top-inner">
                 <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
                 <nav class="header-top-nav">
-                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
+                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん（<a href="logout.html" class="header-logout-link" style="color: #666; text-decoration: none; font-size: 0.8rem;">ログアウト</a>）</span>
                 </nav>
             </div>
         </div>
@@ -64,7 +64,6 @@
         </div>
     </header>
 
-    <!-- プロフィールバナー -->
     <div class="profile-banner-wrapper">
         <div class="container profile-banner-inner">
             <div class="profile-banner-icon">👤</div>
@@ -79,7 +78,6 @@
         <div class="container">
             <div class="ys-main-layout">
 
-                <!-- サイドバー -->
                 <aside class="ys-sidebar">
                     <div class="sidebar-box">
                         <h3 class="sidebar-title" style="color: var(--color-primary);">マイページメニュー</h3>
@@ -89,14 +87,18 @@
                             <li><a href="favorites.html"><span>お気に入り商品</span><span class="arrow">＞</span></a></li>
                             <li><a href="support-top.html"><span>お問合せ</span><span class="arrow">＞</span></a></li>
                             <li><a href="#"><span>クーポン一覧</span><span class="arrow">＞</span></a></li>
+                            <li style="margin-top: 15px; border-top: 1px dashed #ddd; padding-top: 10px;">
+                                <a href="logout.html" class="sidebar-logout-btn" style="color: #ff3b30; font-weight: bold;">
+                                    <span>🚪 ログアウト</span>
+                                    <span class="arrow">＞</span>
+                                </a>
+                            </li>
                         </ul>
                     </div>
                 </aside>
 
-                <!-- メインコンテンツ -->
                 <div class="ys-content-area" style="display: flex; flex-direction: column; gap: 20px;">
 
-                    <!-- 登録情報カード -->
                     <div class="profile-card">
                         <div class="card-header-row">
                             <h3>👤 お客様の登録情報</h3>
@@ -114,7 +116,6 @@
                         </div>
                     </div>
 
-                    <!-- 支払い・ステータス -->
                     <div class="profile-grid">
                         <div class="profile-card">
                             <div class="card-header-row">
@@ -146,21 +147,59 @@
         </div>
     </main>
 
-    <footer class="footer">
-        <div class="container footer-inner">
-            <div class="footer-col">
-                <p class="footer-logo">Yahoo!ショッピング風サイト</p>
-                <p class="footer-tagline">毎日の生活をもっと豊かに、おトクに。</p>
+    <footer class="footer" style="padding-top: 30px;">
+        <div class="container footer-inner" style="display: flex; flex-direction: column; gap: 30px;">
+
+            <!-- 【追加】上段：アプリDL（QR）とSNS公式アカウントのエリア -->
+            <div class="footer-top-links" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 20px; flex-wrap: wrap; gap: 15px;">
+                <!-- App Store、Google Playへのサイト遷移が可能なQRを表示 -->
+                <div class="footer-app-qr" style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 50px; height: 50px; background: #ccc; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: bold; color: #333; border: 1px solid #aaa;">QRコード</div>
+                    <div>
+                        <p style="font-size: 0.85rem; font-weight: bold; margin: 0;">ショッピングアプリでお得にお買い物</p>
+                        <p style="font-size: 0.75rem; color: #666; margin: 2px 0 0 0;">App Store / Google Play で配信中</p>
+                    </div>
+                </div>
+                <!-- LINEのトップ画面、X(旧Twitter)アカウントに遷移可能 -->
+                <div class="footer-sns" style="display: flex; gap: 15px;">
+                    <a href="#" style="text-decoration: none; font-size: 0.85rem; color: #06C755; font-weight: bold;">💬 LINE公式アカウント</a>
+                    <a href="#" style="text-decoration: none; font-size: 0.85rem; color: #65BBE9; font-weight: bold;">Twitter公式アカウント</a>
+                </div>
             </div>
-            <div class="footer-col">
-                <h4 class="footer-heading">運営チーム</h4>
-                <ul class="footer-links">
-                    <li><a href="#">会社概要・チーム紹介</a></li>
-                    <li><a href="#">プライバシーポリシー</a></li>
-                </ul>
+
+            <!-- 中段：リンクの複数カラム -->
+            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
+                <div class="footer-col">
+                    <p class="footer-logo">Yahoo!ショッピング風サイト</p>
+                    <p class="footer-tagline">毎日の生活をもっと豊かに、おトクに。</p>
+                </div>
+
+                <!-- 【追加・整理】ガイドライン・規約・ポリシー関係 -->
+                <div class="footer-col">
+                    <h4 class="footer-heading">各種規約・ガイドライン</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">ヤフーショッピングを利用するにあたってのガイドライン</a></li>
+                        <li><a href="#">プライバシーセンター</a></li>
+                        <li><a href="#">利用規約</a></li>
+                        <li><a href="#">免責事項</a></li>
+                    </ul>
+                </div>
+
+                <!-- 【追加・整理】サポート・会社関係 -->
+                <div class="footer-col">
+                    <h4 class="footer-heading">サポート・企業情報</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">ヘルプ・お問い合わせ</a></li>
+                        <li><a href="#">ご意見・ご要望</a></li>
+                        <li><a href="#">採用情報</a></li>
+                        <li><a href="edit-profile.html">会社概要・チーム紹介</a></li>
+                        <li><a href="#">プライバシーポリシー</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="footer-bottom">
+
+        <div class="footer-bottom" style="margin-top: 30px;">
             <p>© 2026 Yahoo!ショッピング風チーム制作プロジェクト. All rights reserved.</p>
         </div>
     </footer>

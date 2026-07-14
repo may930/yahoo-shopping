@@ -71,12 +71,13 @@
             </div>
 
             <div class="pd-container">
-                <div class="pd-gallery">
-                    <div class="pd-main-view" id="pdMainImg">👚</div>
-                    <div class="pd-thumb-list">
-                        <div class="pd-thumb active" data-img="👚">👚</div>
-                        <div class="pd-thumb" data-img="✨">✨</div>
-                        <div class="pd-thumb" data-img="🧵">🧵</div>
+                <div class="pd-image-area">
+                    <img id="pdMainImg" src="Image/衣類レディース　フロントタック.png" alt="商品画像" class="pd-main-img" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+
+                    <div class="pd-thumb-grid" style="display: flex; gap: 10px; margin-top: 10px;">
+                        <div class="pd-thumb active" data-img="images/item-clothes.jpg" style="width: 60px; height: 60px; overflow: hidden; cursor: pointer;">
+                            <img src="Image/衣類レディース　フロントタック.png" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        </div>
                     </div>
                 </div>
 
@@ -266,11 +267,13 @@
         });
 
         // サムネイル切り替え
+        // サムネイル切り替え（画像対応版！）
         document.querySelectorAll('.pd-thumb').forEach(thumb => {
             thumb.addEventListener('click', () => {
                 document.querySelectorAll('.pd-thumb').forEach(t => t.classList.remove('active'));
                 thumb.classList.add('active');
-                document.getElementById('pdMainImg').textContent = thumb.dataset.img;
+                // 💡 .textContent だったところを .src に変えて、画像のURLを切り替えるようにしたばい！
+                document.getElementById('pdMainImg').src = thumb.dataset.img;
             });
         });
     </script>

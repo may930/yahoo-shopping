@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人気売れ筋ランキング - Yahoo!ショッピング風</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ランキング専用の追加スタイルばい！ */
+        .rank-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #fff;
+            z-index: 10;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        /* 1位：ゴールド */
+        .rank-1 {
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+        }
+        /* 2位：シルバー */
+        .rank-2 {
+            background: linear-gradient(135deg, #c0c0c0, #95a5a6);
+        }
+        /* 3位：ブロンズ */
+        .rank-3 {
+            background: linear-gradient(135deg, #cd7f32, #b87333);
+        }
+
+        /* カテゴリ切り替えタブのスタイル */
+        .rank-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--color-gray-200);
+            padding-bottom: 10px;
+            overflow-x: auto;
+        }
+
+        .rank-tab-btn {
+            background: #fff;
+            border: 1px solid var(--color-gray-200);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: var(--transition);
+        }
+
+            .rank-tab-btn.active {
+                background: var(--color-primary);
+                color: #fff;
+                border-color: var(--color-primary);
+            }
+    </style>
+</head>
+<body class="main-bg-gray">
+
+    <header class="header">
+        <div class="header-top">
+            <div class="container header-top-inner">
+                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
+                <nav class="header-top-nav">
+                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
+                </nav>
+            </div>
+        </div>
+
+        <div class="header-main">
+            <div class="container header-main-inner">
+                <a href="index.html" class="logo">
+                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
+                </a>
+                <div class="search-bar">
+                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
+                    <button type="submit" class="search-btn" aria-label="検索">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <circle cx="11" cy="11" r="8" />
+                            <path d="m21 21-4.35-4.35" />
+                        </svg>
+                        <span>検索する</span>
+                    </button>
+                </div>
+                <div class="header-actions">
+                    <a href="cart.html" class="action-item-btn">
+                        <span class="action-icon">🛒</span>
+                        <span class="action-label">カート</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="favorites.html" class="action-item-btn">
+                        <span class="action-icon">❤</span>
+                        <span class="action-label">お気に入り</span>
+                        <span class="cart-count">3</span>
+                    </a>
+                    <a href="browsing-history.html" class="action-item-btn">
+                        <span class="action-icon">🕒</span>
+                        <span class="action-label">閲覧履歴</span>
+                    </a>
+                    <a href="order-history.html" class="action-item-btn">
+                        <span class="action-icon">⏱️</span>
+                        <span class="action-label">注文履歴</span>
+                    </a>
+                    <a href="mypage.html" class="action-item-btn">
+                        <span class="action-icon">👤</span>
+                        <span class="action-label">マイページ</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container" style="margin-top: 30px; margin-bottom: 60px;">
+
+        <div style="text-align: center; margin-bottom: 35px;">
+            <h1 style="font-size: 2rem; font-weight: 700; color: var(--color-black); margin-bottom: 8px;">
+                🏆 リアルタイム売れ筋ランキング
+            </h1>
+            <p style="color: #666; font-size: 0.95rem;">今、売れている人気の商品を1時間ごとに更新中！</p>
+        </div>
+
+        <div class="rank-tabs">
+            <button class="rank-tab-btn active">総合</button>
+            <button class="rank-tab-btn">レディースファッション</button>
+            <button class="rank-tab-btn">メンズファッション</button>
+            <button class="rank-tab-btn">家電・スマホ</button>
+            <button class="rank-tab-btn">グルメ・ラーメン</button>
+        </div>
+
+        <div class="product-grid-3">
+
+            <div class="product-card" style="position: relative;">
+                <div class="rank-badge rank-1">👑1</div>
+                <a href="product-detail.html" class="product-img-wrap">
+                    <img src="images/item-clothes.jpg" alt="1位の商品" class="product-img" style="width: 100%; height: 200px; object-fit: cover; display: block;">
+                </a>
+                <div class="product-info">
+                    <p class="product-brand">BRAND A</p>
+                    <h3 class="product-name">フローラルプリント シフォンブラウス（透け感素材）</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(128)</span>
+                    </div>
+                    <div class="product-price-row" style="margin-top: 12px;">
+                        <span class="product-price">¥4,590 <span class="tax">税込</span></span>
+                        <span style="font-size: 0.75rem; color: #ff3b30; font-weight: 700; background: #ffebeb; padding: 2px 6px; border-radius: 4px;">送料無料</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" style="position: relative;">
+                <div class="rank-badge rank-2">🥈2</div>
+                <a href="#" class="product-img-wrap">
+                    <img src="images/item-audio.png" alt="2位の商品" class="product-img" style="width: 100%; height: 200px; object-fit: cover; display: block;">
+                </a>
+                <div class="product-info">
+                    <p class="product-brand">BRAND B</p>
+                    <h3 class="product-name">高音質 ワイヤレスノイズキャンセリングイヤホン</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★☆</span>
+                        <span class="rating-count">(181)</span>
+                    </div>
+                    <div class="product-price-row" style="margin-top: 12px;">
+                        <span class="product-price">¥4,980 <span class="tax">税込</span></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card" style="position: relative;">
+                <div class="rank-badge rank-3">🥉3</div>
+                <a href="#" class="product-img-wrap">
+                    <img src="images/item-ramen.jpg" alt="3位の商品" class="product-img" style="width: 100%; height: 200px; object-fit: cover; display: block;">
+                </a>
+                <div class="product-info">
+                    <p class="product-brand">ガッツリ麺</p>
+                    <h3 class="product-name">濃厚ガッツリ豚骨醤油！本場ジロー系ラーメン（3食入）</h3>
+                    <div class="product-rating">
+                        <span class="stars">★★★★★</span>
+                        <span class="rating-count">(215)</span>
+                    </div>
+                    <div class="product-price-row" style="margin-top: 12px;">
+                        <span class="product-price">¥3,480 <span class="tax">税込</span></span>
+                        <span style="font-size: 0.75rem; color: #ff9500; font-weight: 700; background: #fff5e6; padding: 2px 6px; border-radius: 4px;">ポイント5倍</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="index.html" class="btn-sub-action" style="text-decoration: none; padding: 12px 30px; font-weight: 500; display: inline-block;">
+                トップページに戻る
+            </a>
+        </div>
+
+    </main>
+
+    <footer class="footer">
+        <div class="footer-bottom">
+            <p>© 2026 Yahoo!ショッピング風チーム制作プロジェクト. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
