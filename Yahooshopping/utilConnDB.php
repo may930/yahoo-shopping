@@ -58,7 +58,6 @@ PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]
 );
 
-PG演2データベース – MySQL - 2025年度HCS
 
 - 4 -
 
