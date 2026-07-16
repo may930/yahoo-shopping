@@ -72,11 +72,14 @@
 
             <div class="pd-container">
                 <div class="pd-image-area">
-                    <img id="pdMainImg" src="Image/衣類レディース　フロントタック.png" alt="商品画像" class="pd-main-img" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                    <!--[cite: 5] -->
+                    <img id="pdMainImg" src="Image/衣類レディース フロントタック.png" alt="商品画像" class="pd-main-img" style="width: 100%; height: 100%; object-fit: cover; display: block;">
 
                     <div class="pd-thumb-grid" style="display: flex; gap: 10px; margin-top: 10px;">
-                        <div class="pd-thumb active" data-img="images/item-clothes.jpg" style="width: 60px; height: 60px; overflow: hidden; cursor: pointer;">
-                            <img src="Image/衣類レディース　フロントタック.png" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+                        <!--[cite: 5] -->
+                        <div class="pd-thumb active" data-img="Image/衣類レディース フロントタック.png" style="width: 60px; height: 60px; overflow: hidden; cursor: pointer;">
+                            <!--[cite: 5] -->
+                            <img src="Image/衣類レディース フロントタック.png" style="width: 100%; height: 100%; object-fit: cover; display: block;">
                         </div>
                     </div>
                 </div>
@@ -86,9 +89,9 @@
                     <h1 class="pd-title">フローラルプリント シフォンブラウス（透け感素材）</h1>
 
                     <div class="pd-rating-row">
-                        <span class="stars">★★★★★</span>
-                        <span class="rating-avg">4.7</span>
-                        <a href="#reviews-section" class="rating-link">レビュー128件を見る</a>
+                        <span class="stars" style="color: #ffcc00;">★★★★★</span>
+                        <span class="rating-avg" id="mainRatingAvg">4.7</span>
+                        <a href="#reviews-section" class="rating-link">レビュー<span id="mainReviewCount">128</span>件を見る</a>
                     </div>
 
                     <div class="pd-price-box">
@@ -132,9 +135,7 @@
                 </div>
             </div>
 
-            <!-- ==========================================
-                 新設：商品詳細説明エリア
-                 ========================================== -->
+            <!-- 商品詳細説明エリア -->
             <section style="background: #fff; border: 1px solid #e4e7ec; border-radius: var(--radius-md); padding: 30px; margin-top: 30px; box-shadow: var(--shadow-card);">
                 <h2 style="font-size: 1.3rem; font-weight: 700; border-bottom: 2px solid var(--color-accent); padding-bottom: 8px; margin-bottom: 20px;">商品説明</h2>
 
@@ -165,27 +166,100 @@
             </section>
 
             <!-- ==========================================
-                 新設：口コミ（レビュー）エリア
+                 口コミ（レビュー）エリア
                  ========================================== -->
             <section id="reviews-section" style="background: #fff; border: 1px solid #e4e7ec; border-radius: var(--radius-md); padding: 30px; margin-top: 30px; margin-bottom: 30px; box-shadow: var(--shadow-card);">
                 <h2 style="font-size: 1.3rem; font-weight: 700; border-bottom: 2px solid var(--color-accent); padding-bottom: 8px; margin-bottom: 20px;">商品レビュー・口コミ</h2>
 
                 <!-- 総合評価サマリー -->
-                <div style="display: flex; align-items: center; gap: 24px; background: #f7f9fa; padding: 20px; border-radius: var(--radius-sm); margin-bottom: 24px;">
-                    <div style="text-align: center; border-right: 1px solid #e4e7ec; padding-right: 24px;">
-                        <span style="font-size: 2.5rem; font-weight: 700; color: var(--color-black); line-height: 1;">4.7</span>
-                        <span style="display: block; font-size: 0.8rem; color: #666; margin-top: 4px;">総合評価（128件）</span>
+                <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; background: #f7f9fa; padding: 20px; border-radius: var(--radius-sm); margin-bottom: 24px;">
+                    <div style="display: flex; align-items: center; gap: 24px;">
+                        <div style="text-align: center; border-right: 1px solid #e4e7ec; padding-right: 24px;">
+                            <span style="font-size: 2.5rem; font-weight: 700; color: var(--color-black); line-height: 1;" id="summaryRatingAvg">4.7</span>
+                            <span style="display: block; font-size: 0.8rem; color: #666; margin-top: 4px;">総合評価（<span id="summaryReviewCount">128</span>件）</span>
+                        </div>
+                        <div>
+                            <div class="stars" style="font-size: 1.2rem; margin-bottom: 4px; color: #ffcc00;">★★★★★</div>
+                            <p style="font-size: 0.85rem; color: #555; margin: 0;">購入したユーザーの多くが高い評価を寄せています。</p>
+                        </div>
                     </div>
-                    <div>
-                        <div class="stars" style="font-size: 1.2rem; margin-bottom: 4px;">★★★★★</div>
-                        <p style="font-size: 0.85rem; color: #555; margin: 0;">購入したユーザーの94%が星4以上と評価しています。</p>
+
+                    <!-- レビューを書くボタン -->
+                    <button id="toggleFormBtn" style="padding: 10px 20px; background-color: var(--color-primary); color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                        ✍️ レビューを書く
+                    </button>
+                </div>
+
+                <!-- 口コミ投稿フォーム -->
+                <div id="reviewFormContainer" style="display: none; background: #fff; border: 2px dashed #ccc; border-radius: var(--radius-sm); padding: 20px; margin-bottom: 30px;">
+                    <h3 style="font-size: 1.1rem; margin-top: 0; margin-bottom: 16px; font-weight: 700; color: #333;">この商品のレビューを投稿する</h3>
+                    <form id="reviewSubmitForm" style="display: flex; flex-direction: column; gap: 16px;">
+
+                        <!-- 評価選択 -->
+                        <div>
+                            <label style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">評価（星の数） <span style="color: red;">*</span></label>
+                            <div style="display: flex; gap: 15px; font-size: 1.1rem;">
+                                <label style="cursor: pointer;"><input type="radio" name="rating" value="5" checked style="margin-right: 4px;"><span style="color: #ffcc00;">★★★★★</span> 5</label>
+                                <label style="cursor: pointer;"><input type="radio" name="rating" value="4" style="margin-right: 4px;"><span style="color: #ffcc00;">★★★★☆</span> 4</label>
+                                <label style="cursor: pointer;"><input type="radio" name="rating" value="3" style="margin-right: 4px;"><span style="color: #ffcc00;">★★★☆☆</span> 3</label>
+                                <label style="cursor: pointer;"><input type="radio" name="rating" value="2" style="margin-right: 4px;"><span style="color: #ffcc00;">★★☆☆☆</span> 2</label>
+                                <label style="cursor: pointer;"><input type="radio" name="rating" value="1" style="margin-right: 4px;"><span style="color: #ffcc00;">★☆☆☆☆</span> 1</label>
+                            </div>
+                        </div>
+
+                        <!-- ニックネームとタイトル -->
+                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                            <div style="flex: 1; min-width: 200px;">
+                                <label for="reviewerName" style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">ニックネーム <span style="color: red;">*</span></label>
+                                <input type="text" id="reviewerName" required placeholder="例：りりあちゃん さん" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                            </div>
+                            <div style="flex: 2; min-width: 280px;">
+                                <label for="reviewTitle" style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">評価タイトル <span style="color: red;">*</span></label>
+                                <input type="text" id="reviewTitle" required placeholder="例：とても気に入りました！" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                            </div>
+                        </div>
+
+                        <!-- 本文 -->
+                        <div>
+                            <label for="reviewContent" style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">レビュー本文 <span style="color: red;">*</span></label>
+                            <textarea id="reviewContent" rows="4" required placeholder="商品の着心地、サイズ感、気に入った点などを自由に書いてください" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea>
+                        </div>
+
+                        <!-- ボタン -->
+                        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px;">
+                            <button type="button" id="cancelFormBtn" style="padding: 8px 16px; background-color: #f0f2f5; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">キャンセル</button>
+                            <button type="submit" style="padding: 8px 24px; background-color: var(--color-accent); color: var(--color-black); border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">投稿する</button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 【進化】絞り込み ＆ 並び替え 操作ヘッダーエリア -->
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; border-bottom: 1px solid #e4e7ec; padding-bottom: 12px;">
+                    <!-- 絞り込みフィルタータブ -->
+                    <div style="display: flex; gap: 8px; overflow-x: auto;">
+                        <button class="review-filter-btn active" data-stars="all" style="padding: 6px 12px; border: 1px solid #ccc; background-color: #fff; border-radius: 20px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">すべて</button>
+                        <button class="review-filter-btn" data-stars="5" style="padding: 6px 12px; border: 1px solid #ccc; background-color: #fff; border-radius: 20px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">★5のみ</button>
+                        <button class="review-filter-btn" data-stars="4" style="padding: 6px 12px; border: 1px solid #ccc; background-color: #fff; border-radius: 20px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">★4のみ</button>
+                        <button class="review-filter-btn" data-stars="3" style="padding: 6px 12px; border: 1px solid #ccc; background-color: #fff; border-radius: 20px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">★3以下</button>
+                    </div>
+
+                    <!-- 並び替えセレクトボックス -->
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <label for="reviewSort" style="font-size: 0.85rem; color: #555; font-weight: 500; white-space: nowrap;">並び替え：</label>
+                        <select id="reviewSort" style="padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.85rem; cursor: pointer; background: #fff;">
+                            <option value="date-desc">投稿日の新しい順 (降順)</option>
+                            <option value="date-asc">投稿日の古い順 (昇順)</option>
+                            <option value="rating-desc">評価の高い順 (降順)</option>
+                            <option value="rating-asc">評価の低い順 (昇順)</option>
+                        </select>
                     </div>
                 </div>
 
-                <!-- 口コミ一覧 -->
-                <div style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- 口コミ一覧（動的にソートできるようにカスタム属性 data-date を設定） -->
+                <div id="reviewsList" style="display: flex; flex-direction: column; gap: 20px;">
+
                     <!-- 口コミ1件目 -->
-                    <div style="border-bottom: 1px solid #e4e7ec; padding-bottom: 20px;">
+                    <div class="review-item" data-rating="5" data-date="2026-06-18" style="border-bottom: 1px solid #e4e7ec; padding-bottom: 20px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <div>
                                 <span class="stars" style="color: #ffcc00;">★★★★★</span>
@@ -200,7 +274,7 @@
                     </div>
 
                     <!-- 口コミ2件目 -->
-                    <div style="border-bottom: 1px solid #e4e7ec; padding-bottom: 20px;">
+                    <div class="review-item" data-rating="4" data-date="2026-06-10" style="border-bottom: 1px solid #e4e7ec; padding-bottom: 20px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <div>
                                 <span class="stars" style="color: #ffcc00;">★★★★☆</span>
@@ -213,6 +287,11 @@
                         </p>
                         <span style="font-size: 0.8rem; color: #777;">購入者：ゲスト さん（30代 / 女性）</span>
                     </div>
+                </div>
+
+                <!-- 該当口コミなしメッセージ -->
+                <div id="noReviewMessage" style="display: none; text-align: center; padding: 30px; color: #666; font-size: 0.95rem;">
+                    選択された評価のレビューはまだありません。
                 </div>
             </section>
 
@@ -238,8 +317,9 @@
         </div>
     </footer>
 
+    <!-- JavaScript部 -->
     <script>
-        // カラー選択
+        // カラー選択[cite: 5]
         document.querySelectorAll('.pd-color-btn').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.pd-color-btn').forEach(b => b.classList.remove('active'));
@@ -248,7 +328,7 @@
             });
         });
 
-        // サイズ選択
+        // サイズ選択[cite: 5]
         document.querySelectorAll('.pd-size-btn:not(:disabled)').forEach(btn => {
             btn.addEventListener('click', () => {
                 document.querySelectorAll('.pd-size-btn').forEach(b => b.classList.remove('active'));
@@ -257,7 +337,7 @@
             });
         });
 
-        // 数量変更
+        // 数量変更[cite: 5]
         let qty = 1;
         document.getElementById('qtyUp').addEventListener('click', () => {
             if (qty < 9) { qty++; document.getElementById('qtyVal').textContent = qty; }
@@ -266,16 +346,227 @@
             if (qty > 1) { qty--; document.getElementById('qtyVal').textContent = qty; }
         });
 
-        // サムネイル切り替え
-        // サムネイル切り替え（画像対応版！）
+        // サムネイル切り替え[cite: 5]
         document.querySelectorAll('.pd-thumb').forEach(thumb => {
             thumb.addEventListener('click', () => {
                 document.querySelectorAll('.pd-thumb').forEach(t => t.classList.remove('active'));
                 thumb.classList.add('active');
-                // 💡 .textContent だったところを .src に変えて、画像のURLを切り替えるようにしたばい！
                 document.getElementById('pdMainImg').src = thumb.dataset.img;
             });
         });
+
+        // ==========================================
+        // ✍️ レビュー機能（絞り込み・新規追加・並び替え）
+        // ==========================================
+        const toggleFormBtn = document.getElementById('toggleFormBtn');
+        const reviewFormContainer = document.getElementById('reviewFormContainer');
+        const cancelFormBtn = document.getElementById('cancelFormBtn');
+        const reviewSubmitForm = document.getElementById('reviewSubmitForm');
+        const reviewsList = document.getElementById('reviewsList');
+        const noReviewMessage = document.getElementById('noReviewMessage');
+        const filterBtns = document.querySelectorAll('.review-filter-btn');
+        const reviewSortSelect = document.getElementById('reviewSort');
+
+        // レビュー件数・評価サマリー用の要素
+        const mainReviewCount = document.getElementById('mainReviewCount');
+        const mainRatingAvg = document.getElementById('mainRatingAvg');
+        const summaryReviewCount = document.getElementById('summaryReviewCount');
+        const summaryRatingAvg = document.getElementById('summaryRatingAvg');
+
+        // 集計用初期値（128件データ用）
+        let totalReviews = 128;
+        let totalScore = 4.7 * 128;
+        let currentFilter = 'all'; // 現在選択されているフィルター
+
+        // 1. フォームの開閉
+        toggleFormBtn.addEventListener('click', () => {
+            reviewFormContainer.style.display = reviewFormContainer.style.display === 'none' ? 'block' : 'none';
+        });
+        cancelFormBtn.addEventListener('click', () => {
+            reviewFormContainer.style.display = 'none';
+            reviewSubmitForm.reset();
+        });
+
+        // 2. レビュー新規投稿
+        reviewSubmitForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const ratingVal = parseInt(document.querySelector('input[name="rating"]:checked').value, 10);
+            const nameVal = document.getElementById('reviewerName').value;
+            const titleVal = document.getElementById('reviewTitle').value;
+            const contentVal = document.getElementById('reviewContent').value;
+
+            // 今日の日付を取得 (YYYY/MM/DD と ISO形式)
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const date = String(today.getDate()).padStart(2, '0');
+            const dateIso = `${year}-${month}-${date}`;
+            const dateStr = `${year}/${month}/${date}`;
+
+            const starString = '★'.repeat(ratingVal) + '☆'.repeat(5 - ratingVal);
+
+            // 新しい口コミ要素の作成
+            const newReview = document.createElement('div');
+            newReview.className = 'review-item';
+            newReview.setAttribute('data-rating', ratingVal);
+            newReview.setAttribute('data-date', dateIso); // ソート用の日付
+            newReview.style.borderBottom = '1px solid #e4e7ec';
+            newReview.style.paddingBottom = '20px';
+            newReview.style.animation = 'fadeIn 0.5s ease-out';
+
+            newReview.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                        <div>
+                            <span class="stars" style="color: #ffcc00;">${starString}</span>
+                            <strong style="margin-left: 8px; font-size: 0.95rem;">${escapeHTML(titleVal)}</strong>
+                        </div>
+                        <span style="font-size: 0.8rem; color: #999;">${dateStr}</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: #444; line-height: 1.6; margin: 0 0 8px 0;">
+                        ${escapeHTML(contentVal).replace(/\n/g, '<br>')}
+                    </p>
+                    <span style="font-size: 0.8rem; color: #777;">購入者：${escapeHTML(nameVal)}</span>
+                `;
+
+            // 一旦リストの最後（または適当な場所）に追加
+            reviewsList.appendChild(newReview);
+
+            // サマリー情報の更新
+            totalReviews += 1;
+            totalScore += ratingVal;
+            const newAvg = (totalScore / totalReviews).toFixed(1);
+
+            mainReviewCount.textContent = totalReviews;
+            summaryReviewCount.textContent = totalReviews;
+            mainRatingAvg.textContent = newAvg;
+            summaryRatingAvg.textContent = newAvg;
+
+            // フォームをリセット
+            reviewFormContainer.style.display = 'none';
+            reviewSubmitForm.reset();
+
+            // 新規投稿時は自動的に「新しい順」にリセットしてソート
+            reviewSortSelect.value = 'date-desc';
+            sortReviews();
+
+            // フィルターを「すべて」に戻す
+            setActiveFilter('all');
+        });
+
+        // エスケープ処理
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g,
+                tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag)
+            );
+        }
+
+        // 3. 絞り込みフィルターのイベント設定
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const starsFilter = btn.dataset.stars;
+                setActiveFilter(starsFilter);
+            });
+        });
+
+        function setActiveFilter(filterVal) {
+            currentFilter = filterVal; // 現在のフィルター状態を記録
+
+            filterBtns.forEach(btn => {
+                if (btn.dataset.stars === filterVal) {
+                    btn.classList.add('active');
+                    btn.style.backgroundColor = 'var(--color-accent)';
+                    btn.style.color = 'var(--color-black)';
+                    btn.style.borderColor = 'var(--color-accent)';
+                } else {
+                    btn.classList.remove('active');
+                    btn.style.backgroundColor = '#fff';
+                    btn.style.color = '#333';
+                    btn.style.borderColor = '#ccc';
+                }
+            });
+
+            const reviewItems = document.querySelectorAll('.review-item');
+            let visibleCount = 0;
+
+            reviewItems.forEach(item => {
+                const itemRating = parseInt(item.getAttribute('data-rating'), 10);
+
+                if (filterVal === 'all') {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else if (filterVal === '5' && itemRating === 5) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else if (filterVal === '4' && itemRating === 4) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else if (filterVal === '3' && itemRating <= 3) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            noReviewMessage.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        // 4. 【新設】並び替え処理（昇順・降順対応）
+        function sortReviews() {
+            const sortVal = reviewSortSelect.value;
+            const items = Array.from(reviewsList.querySelectorAll('.review-item'));
+
+            items.sort((a, b) => {
+                const ratingA = parseInt(a.getAttribute('data-rating'), 10);
+                const ratingB = parseInt(b.getAttribute('data-rating'), 10);
+                const dateA = new Date(a.getAttribute('data-date'));
+                const dateB = new Date(b.getAttribute('data-date'));
+
+                if (sortVal === 'date-desc') {
+                    // 日付の新しい順（降順）
+                    return dateB - dateA;
+                } else if (sortVal === 'date-asc') {
+                    // 日付の古い順（昇順）
+                    return dateA - dateB;
+                } else if (sortVal === 'rating-desc') {
+                    // 評価の高い順（降順）
+                    return ratingB - ratingA;
+                } else if (sortVal === 'rating-asc') {
+                    // 評価の低い順（昇順）
+                    return ratingA - ratingB;
+                }
+                return 0;
+            });
+
+            // ソートされた順番で親要素に再追加（自動で並び順が入れ替わります）
+            items.forEach(item => reviewsList.appendChild(item));
+
+            // 表示状態が崩れないよう、現在のフィルターを再適用する
+            setActiveFilter(currentFilter);
+        }
+
+        // セレクトボックス変更時にソート実行
+        reviewSortSelect.addEventListener('change', sortReviews);
+
+        // 初期セットアップ（すべて表示＆並び替え実行）
+        setActiveFilter('all');
+        sortReviews();
     </script>
+
+    <!-- アニメーション用のCSS -->
+    <style>
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </body>
 </html>

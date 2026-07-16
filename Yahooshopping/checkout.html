@@ -73,7 +73,7 @@
                     <h2 class="checkout-sec-title">1. お届け先住所</h2>
                     <div class="checkout-form-group">
                         <label class="checkout-label">お名前</label>
-                        <input type="text" class="form-input" placeholder="小野瀬 聡太" required>
+                        <input type="text" class="form-input" placeholder="HCS 太郎" required>
                     </div>
                     <div class="checkout-form-group" style="margin-top: 16px;">
                         <label class="checkout-label">ご住所</label>
@@ -120,7 +120,31 @@
                 </section>
 
                 <section class="checkout-section-card">
-                    <h2 class="checkout-sec-title">4. 注文商品</h2>
+                    <h2 class="checkout-sec-title">4. ギフト設定（任意）</h2>
+                    <div class="gift-selector-group">
+                        <label class="gift-checkbox-label" style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-weight: 500;">
+                            <input type="checkbox" id="isGift" name="isGift" onchange="toggleGiftOptions()"> ギフトラッピングを希望する
+                        </label>
+
+                        <div id="giftOptionsBox" style="display: none; margin-top: 16px; border-top: 1px dashed #ddd; padding-top: 16px;">
+                            <div class="checkout-form-group">
+                                <label class="checkout-label">ラッピングの種類</label>
+                                <select class="form-input" name="giftWrapping" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit;">
+                                    <option value="standard">通常ラッピング（無料）</option>
+                                    <option value="premium">プレミアムギフトバッグ（+￥300）</option>
+                                    <option value="birthday">お誕生日専用ラッピング（無料）</option>
+                                </select>
+                            </div>
+                            <div class="checkout-form-group" style="margin-top: 16px;">
+                                <label class="checkout-label">メッセージカード（任意のメッセージを入力してください）</label>
+                                <textarea class="form-input" name="giftMessage" rows="3" placeholder="のし・メッセージカードの内容など（例：お誕生日おめでとう！）" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-family: inherit; resize: vertical;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="checkout-section-card">
+                    <h2 class="checkout-sec-title">5. 注文商品</h2>
                     <div class="checkout-item-list">
 
                         <div class="checkout-product-item">
@@ -183,11 +207,22 @@
             const checkbox = document.getElementById('sameAsShipping');
             const billingBox = document.getElementById('billingAddressBox');
 
-            // チェックが入っとる時は隠す、外れたら入力欄を出すばい！
             if (checkbox.checked) {
                 billingBox.style.display = 'none';
             } else {
                 billingBox.style.display = 'block';
+            }
+        }
+
+        // ギフト設定の表示・非表示を切り替える関数ばい！
+        function toggleGiftOptions() {
+            const checkbox = document.getElementById('isGift');
+            const giftBox = document.getElementById('giftOptionsBox');
+
+            if (checkbox.checked) {
+                giftBox.style.display = 'block';
+            } else {
+                giftBox.style.display = 'none';
             }
         }
     </script>
