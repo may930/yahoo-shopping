@@ -69,14 +69,16 @@
             <h1 class="register-title">ログイン</h1>
             <p class="register-subtitle">登録している携帯電話番号またはメールアドレスを入力してください。</p>
 
-            <form id="loginForm" class="form-grid">
+            <form id="loginForm" action="login.php" class="form-grid" method="post">
 
                 <div class="form-group">
-                    <label for="loginIdentifier" class="form-label">携帯電話番号 または メールアドレス</label>
-                    <input type="text" id="loginIdentifier" class="form-input" placeholder="example@yahoo.co.jp または 09012345678" required>
+                    <label for="loginIdentifier" class="form-label">携帯電話番号(ハイフンなし) または メールアドレス</label>
+                    <input type="text" name="login_info"  id="loginIdentifier" class="form-input"  placeholder="(例) example@yahoo.co.jp"  >
+
+                    <div id="error-message" style="color: #ff3333; font-size: 0.85rem; margin-top: 8px; font-weight: bold;"></div>
                 </div>
 
-                <button type="submit" class="submit-btn" style="margin-top: 16px;">ログイン</button>
+                <button type="submit" name="cmdBtn1" class="submit-btn" style="margin-top: 16px;">ログイン</button>
             </form>
 
             <div style="text-align: center; margin-top: 24px; font-size: 0.85rem;">
@@ -93,18 +95,14 @@
     </footer>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            // 普通のフォーム送信（画面リロード）を一旦止めるばい
-            event.preventDefault();
-
-            // ここで入力チェックとか本来はするっちゃけど、今回はそのままホームへ！
-            // ログイン成功した感を出すために、ちょっとだけアラートを出して遷移させるね
-            alert('ログインに成功しました！ホーム画面に戻ります。');
-
-            // ホーム画面（index.html）へ移動！
-            location.href = 'index.html';
-        });
+        // URLのパラメータ（?以降）を解析する
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        // もし「error」というパラメータが存在したら
+        if (urlParams.has('error')) {
+            const errorDiv = document.getElementById('error-message');
+            errorDiv.textContent = '登録情報が見つかりませんでした';
+        }
     </script>
-
 </body>
 </html>

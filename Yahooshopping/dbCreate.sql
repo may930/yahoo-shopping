@@ -289,10 +289,10 @@ create table views_history (
 /*  insert into (テーブル名) values(データ名, データ名, データ名);  */
 
 /*user_account(ユーザID, 名前, 電話番号, メアド, パス, ユーザ名, 性別, 生年月日, 郵便番号, 住所, 入会日時, 退会日時)*/
-insert into user_account values('1', '松本翔聖', '090-1647-3912', 'arukusandbag@gmail.com', '1645', '歩くサンドバッグ', '男', '2005/07/24', '062-0031', '北海道札幌市豊平区西岡1条10丁目1-1-3', current_timestamp, null);
+insert into user_account values('1', '松本翔聖', '09016473912', 'arukusandbag@gmail.com', '1645', '歩くサンドバッグ', '男', '2005/07/24', '062-0031', '北海道札幌市豊平区西岡1条10丁目1-1-3', current_timestamp, null);
 
 /*producer(出品者ID, 電話番号, メアド, パス, 会社名, 郵便番号, 住所, 代表者名, ストア名, ストア名(フリガナ), ストア紹介, 関連ストア, 備考, 入会日時, 退会日時, ストア営業日)*/
-insert into producer values('1', '011-831-5511', '20247077-matsumotoshoki@hcs.ac.jp', 'killbye0921', '北海道情報専門学校', '003-0806', '北海道札幌市白石区菊水6条3丁目4-28', '宮西哲生', '宮西のかわいいラボ', 'ミヤニシノカワイイラボ', 'かわいいものを販売しています', 'なし', '発送に1週間ほどお時間いただきます。ご了承ください。', current_timestamp, null, '土日のみ');
+insert into producer values('1', '0118315511', '20247077-matsumotoshoki@hcs.ac.jp', 'killbye0921', '北海道情報専門学校', '003-0806', '北海道札幌市白石区菊水6条3丁目4-28', '宮西哲生', '宮西のかわいいラボ', 'ミヤニシノカワイイラボ', 'かわいいものを販売しています', 'なし', '発送に1週間ほどお時間いただきます。ご了承ください。', current_timestamp, null, '土日のみ');
 
 /*category(カテゴリID, カテゴリ名, 親カテゴリID)*/
 insert into category values('1', '食品', null);
