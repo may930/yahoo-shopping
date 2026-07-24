@@ -70,47 +70,58 @@
             <h1 class="register-title">お客様情報の登録</h1>
             <p class="register-subtitle">お買い物や配送に必要な情報を入力してください。</p>
 
-            <form action="register-complete.html" method="GET" class="form-grid">
+            <form action="account_registration.php" method="post" class="form-grid">
 
                 <div class="form-group">
                     <label class="form-label">お名前（漢字）<span class="badge-required">必須</span></label>
                     <div class="form-row-2col">
-                        <input type="text" class="form-input" placeholder="姓" required>
-                        <input type="text" class="form-input" placeholder="名" required>
+                        <input type="text" name="name_first" class="form-input" placeholder="姓" required>
+                        <input type="text" name="name_second" class="form-input" placeholder="名" required>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">お名前（カナ）<span class="badge-required">必須</span></label>
                     <div class="form-row-2col">
-                        <input type="text" class="form-input" placeholder="セイ" required pattern="[\u30A1-\u30FC]+">
-                        <input type="text" class="form-input" placeholder="メイ" required pattern="[\u30A1-\u30FC]+">
+                        <input type="text" name="name_kana_first" class="form-input" placeholder="セイ" required pattern="[\u30A1-\u30FC]+">
+                        <input type="text" name="name_kana_second" class="form-input" placeholder="メイ" required pattern="[\u30A1-\u30FC]+">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="form-label">性別<span class="badge-optional">任意</span></label>
                     <div class="gender-group">
-                        <label class="gender-label"><input type="radio" name="gender" value="male">男性</label>
-                        <label class="gender-label"><input type="radio" name="gender" value="female">女性</label>
-                        <label class="gender-label"><input type="radio" name="gender" value="other" checked>選択しない</label>
+                        <label class="gender-label"><input type="radio" name="sex" value="male">男性</label>
+                        <label class="gender-label"><input type="radio" name="sex" value="female">女性</label>
+                        <label class="gender-label"><input type="radio" name="sex" value="other" checked>選択しない</label>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="userZip" class="form-label">郵便番号<span class="badge-required">必須</span></label>
+                    <label for="userZip" class="form-label">郵便番号(ハイフン含む)<span class="badge-required">必須</span></label>
                     <div class="zip-wrapper">
-                        <input type="text" id="userZip" class="form-input" style="max-width: 200px;" placeholder="060-0001" required>
+                        <input type="text" name="zipcode" id="userZip" class="form-input" style="max-width: 200px;" placeholder="060-0001" required>
                         <button type="button" class="btn-sub-action" onclick="autoFillAddress()">住所を自動入力</button>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="userAddress" class="form-label">ご住所<span class="badge-required">必須</span></label>
-                    <input type="text" id="userAddress" class="form-input" placeholder="北海道札幌市中央区北1条西..." required>
+                    <input type="text" name="address" id="userAddress" class="form-input" placeholder="北海道札幌市中央区北1条西..." required>
                 </div>
 
-                <button type="submit" class="submit-btn">入力内容を登録する</button>
+                <div class="form-group">
+                    <label for="password" class="form-label">パスワード<span class="badge-required">必須</span></label>
+                    <input type="text" name="password" id="password" class="form-input"  required>
+                </div>
+
+
+                <div class="form-group">
+                    <input type="hidden" name="phone_Number" value="<?php echo htmlspecialchars($_POST['phone_Number']); ?>">
+                    <input type="hidden" name="mail_address" value="<?php echo htmlspecialchars($_POST['mail_address']); ?>">
+                </div>
+
+                <button type="submit" name="cmdBtn1" class="submit-btn">入力内容を登録する</button>
             </form>
         </div>
     </main>
