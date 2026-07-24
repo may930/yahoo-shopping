@@ -1976,7 +1976,16 @@ body {
 .product-img {
     width: 100%;
     height: 200px; /* 画像の高さを200pxに固定するばい！ */
-    object-fit: cover; /* 縦横比を崩さずに枠いっぱいに広げる魔法 */
+    object-fit: contain; /* 縦横比を崩さずに枠いっぱいに広げる魔法 */
     display: block;
     background-color: #f7f9fa; /* 画像が読み込まれる前の薄いグレー背景 */
+}
+
+.product-grid {
+    display: grid;
+    /* 1行にちょうど5列並べる設定 */
+    grid-template-columns: repeat(5, 1fr); 
+    /* カード同士の間隔（縦横16pxあける） */
+    gap: 16px; 
+    margin-top: 20px;
 }

@@ -10,7 +10,7 @@ class UtilConnDB {
 private $dbHostName = 'localhost';
 private $dbUserName = 's20247077'; // ユーザ名(各自の学籍番号)
 private $dbPassword = '20050724'; // パスワード(各自の生年月日)
-private $dbDBName = 'yahooshopping_db'; // データベース名
+private $dbDBName = 'yahoo_shopping'; // データベース名
 /*
 * DBを生成する
 */
@@ -19,7 +19,7 @@ $dbSW = true;
 try {
 $pdo = new PDO(
 'mysql:host=' . $this->dbHostName
-. ';dbname='
+. ';dbname=' . $this->dbDBName
 . ';charset=utf8mb4',
 $this->dbUserName,
 $this->dbPassword,
@@ -30,7 +30,7 @@ PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]
 );
 $sql = 'CREATE DATABASE ' . $this->dbDBName
-. ' default character set utf8';
+. ' default character set utf8mb4';
 $count = $pdo->exec($sql);
 if ($count == 0) { // SQL文実行失敗
 throw new PDOException(); // catch へ移動
@@ -58,11 +58,8 @@ PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 ]
 );
 
-PG演2データベース – MySQL - 2025年度HCS
 
-- 4 -
-
-$pdo->beginTransaction(); // トランザクション開始
+//$pdo->beginTransaction(); // トランザクション開始
 } catch (PDOException $e) {
 }
 return $pdo;

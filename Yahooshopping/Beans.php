@@ -1,15 +1,17 @@
 <?php
 /* srchBeans.php(検索データ) 
 @author 自分の名前 
-@version 2.0 
+@version 2.1 
 @date 作成日
-
 */
 class Beans
 {
     /* 変数 */
     private $user_id;
-    private $name;
+    private $name_first;
+    private $name_second;
+    private $name_kana_first;
+    private $name_kana_second;    
     private $phone_number;
     private $mail_address;
     private $password;
@@ -90,11 +92,21 @@ class Beans
     private $send_time;
     private $view_time;
 
+    // 🔑 出品者判定フラグを追加！
+    private $is_producer = false;
+
     /* コンストラクタ */
     public function __construct()
+<<<<<<< HEAD
+    {
+        $this->is_producer = false;
+=======
     { //「_(アンダースコア)」2個
         $user_id = 0;
-        $name = '';
+        $name_first = '';
+        $name_second = '';
+        $name_kana_first = '';
+        $name_kana_second = '';
         $phone_number = '';
         $mail_address = '';
         $password = '';
@@ -174,13 +186,20 @@ class Beans
         $is_read = 0;
         $send_time = null;
         $view_time = null;    
+>>>>>>> 813e1ccaed9b0fc6594f8315ceb06fdf948aaac3
     }
 
     /* クリアメソッド */
     public function BeansClear()
     {
+<<<<<<< HEAD
+        $this->is_producer = false;
+=======
         $user_id = 0;
-        $name = '';
+        $name_first = '';
+        $name_second = '';
+        $name_kana_first = '';
+        $name_kana_second = '';
         $phone_number = '';
         $mail_address = '';
         $password = '';
@@ -260,6 +279,7 @@ class Beans
         $is_read = 0;
         $send_time = null;
         $view_time = null;    
+>>>>>>> 813e1ccaed9b0fc6594f8315ceb06fdf948aaac3
     }
 
     public function getuser_id() 
@@ -271,14 +291,43 @@ class Beans
         $this->user_id = $user_id;
     }
 
-    public function getname() 
+    public function getname_first() 
     {
-        return $this->name;
+        return $this->name_first;
     }           
-    public function setname($name) 
+    public function setname_first($name_first) 
     {
-        $this->name = $name;
+        $this->name_first = $name_first;
     }
+
+    public function getname_second() 
+    {
+        return $this->name_second;
+    }           
+    public function setname_second($name_second) 
+    {
+        $this->name_second = $name_second;
+    }
+
+
+    public function getname_kana_first() 
+    {
+        return $this->name_kana_first;
+    }           
+    public function setname_kana_first($name_kana_first) 
+    {
+        $this->name_kana_first = $name_kana_first;
+    }
+
+    public function getname_kana_second() 
+    {
+        return $this->name_kana_second;
+    }           
+    public function setname_kana_second($name_kana_second) 
+    {
+        $this->name_kana_second = $name_kana_second;
+    }
+
 
     public function getphone_number() 
     {
@@ -293,7 +342,11 @@ class Beans
     {
         return $this->mail_address;
     }           
-    public function mail_address($mail_address) 
+<<<<<<< HEAD
+    // 🔧 修正: setmail_address に修正
+=======
+>>>>>>> 813e1ccaed9b0fc6594f8315ceb06fdf948aaac3
+    public function setmail_address($mail_address) 
     {
         $this->mail_address = $mail_address;
     }
@@ -989,6 +1042,16 @@ class Beans
     public function setview_time($view_time) 
     {
         $this->view_time = $view_time;
+    }
+
+    // 🔑 追加：出品者フラグの Getter / Setter
+    public function getis_producer() 
+    {
+        return $this->is_producer;
+    }           
+    public function setis_producer($is_producer) 
+    {
+        $this->is_producer = $is_producer;
     }
 
 }
