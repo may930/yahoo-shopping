@@ -59,9 +59,7 @@ PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
 );
 
 
-- 4 -
-
-$pdo->beginTransaction(); // トランザクション開始
+//$pdo->beginTransaction(); // トランザクション開始
 } catch (PDOException $e) {
 }
 return $pdo;
