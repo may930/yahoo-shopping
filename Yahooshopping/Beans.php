@@ -1,9 +1,8 @@
 <?php
 /* srchBeans.php(検索データ) 
 @author 自分の名前 
-@version 2.0 
+@version 2.1 
 @date 作成日
-
 */
 class Beans
 {
@@ -90,176 +89,19 @@ class Beans
     private $send_time;
     private $view_time;
 
+    // 🔑 出品者判定フラグを追加！
+    private $is_producer = false;
+
     /* コンストラクタ */
     public function __construct()
-    { //「_(アンダースコア)」2個
-        $user_id = 0;
-        $name = '';
-        $phone_number = '';
-        $mail_address = '';
-        $password = '';
-        $sex = '';
-        $birthday = null;
-        $zipcode = '';
-        $address = '';
-        $created_at = null;
-        $deleted_at = null;
-        $producer_id = 0;
-        $company_name = null;
-        $representative_name = '';
-        $store_name = '';
-        $store_name_kana = '';
-        $introduction = '';
-        $related_store = '';
-        $notes = '';
-        $store_open_day = null;
-        $category_id = 0;
-        $category_name = '';
-        $parent_category_id = null;
-        $product_id = 0;
-        $product_name = '';
-        $information = '';
-        $variation_id = null;
-        $variation_name = '';
-        $option_id = 0;
-        $option_name = '';
-        $price = 0;
-        $stock = 0;
-        $image_id = 0;
-        $image_url = '';
-        $display_order = 0;
-        $coupon_id = 0;
-        $coupon_name = '';
-        $discount_rate = 0;
-        $is_discount = 0;
-        $min_order_amount = 0;
-        $maximum_discount = 0;
-        $start_date = null;
-        $end_date = null;
-        $is_infinite = 0;
-        $max_use = 0;
-        $created_at = null;
-        $used_at = null;
-        $get_at = null;
-        $address_id = 0;
-        $shipping_name = '';
-        $cart_id = 0;
-        $quantity = 0;
-        $order_id = 0;
-        $order_date = null;
-        $coupon_discount_amount = 0;
-        $total_price = 0;
-        $pay = '';
-        $shipping_status = '';
-        $order_detail_id = 0;
-        $review_id = 0;
-        $rating = 0;
-        $title = '';
-        $comment = '';
-        $views_count = 0;
-        $like_count = 0;
-        $product_favorites_id = 0;
-        $add_at = null;
-        $producer_favorites_id = 0;
-        $inquiry_category_id = 0;
-        $inquiry_category_name = '';
-        $inquiry_id = 0;
-        $inquiry_contents = '';
-        $user_mailaddress = '';
-        $inquiry_at = null;
-        $privacy = 0;
-        $inquiry_history_id = 0;
-        $contents = '';
-        $sender = 0;
-        $is_read = 0;
-        $send_time = null;
-        $view_time = null;    
+    {
+        $this->is_producer = false;
     }
 
     /* クリアメソッド */
     public function BeansClear()
     {
-        $user_id = 0;
-        $name = '';
-        $phone_number = '';
-        $mail_address = '';
-        $password = '';
-        $sex = '';
-        $birthday = null;
-        $zipcode = '';
-        $address = '';
-        $created_at = null;
-        $deleted_at = null;
-        $producer_id = 0;
-        $company_name = null;
-        $representative_name = '';
-        $store_name = '';
-        $store_name_kana = '';
-        $introduction = '';
-        $related_store = '';
-        $notes = '';
-        $store_open_day = null;
-        $category_id = 0;
-        $category_name = '';
-        $parent_category_id = null;
-        $product_id = 0;
-        $product_name = '';
-        $information = '';
-        $variation_id = null;
-        $variation_name = '';
-        $option_id = 0;
-        $option_name = '';
-        $price = 0;
-        $stock = 0;
-        $image_id = 0;
-        $image_url = '';
-        $display_order = 0;
-        $coupon_id = 0;
-        $coupon_name = '';
-        $discount_rate = 0;
-        $is_discount = 0;
-        $min_order_amount = 0;
-        $maximum_discount = 0;
-        $start_date = null;
-        $end_date = null;
-        $is_infinite = 0;
-        $max_use = 0;
-        $created_at = null;
-        $used_at = null;
-        $get_at = null;
-        $address_id = 0;
-        $shipping_name = '';
-        $cart_id = 0;
-        $quantity = 0;
-        $order_id = 0;
-        $order_date = null;
-        $coupon_discount_amount = 0;
-        $total_price = 0;
-        $pay = '';
-        $shipping_status = '';
-        $order_detail_id = 0;
-        $review_id = 0;
-        $rating = 0;
-        $title = '';
-        $comment = '';
-        $views_count = 0;
-        $like_count = 0;
-        $product_favorites_id = 0;
-        $add_at = null;
-        $producer_favorites_id = 0;
-        $inquiry_category_id = 0;
-        $inquiry_category_name = '';
-        $inquiry_id = 0;
-        $inquiry_contents = '';
-        $user_mailaddress = '';
-        $inquiry_at = null;
-        $privacy = 0;
-        $inquiry_history_id = 0;
-        $contents = '';
-        $sender = 0;
-        $is_read = 0;
-        $send_time = null;
-        $view_time = null;    
+        $this->is_producer = false;
     }
 
     public function getuser_id() 
@@ -293,7 +135,8 @@ class Beans
     {
         return $this->mail_address;
     }           
-    public function mail_address($mail_address) 
+    // 🔧 修正: setmail_address に修正
+    public function setmail_address($mail_address) 
     {
         $this->mail_address = $mail_address;
     }
@@ -989,6 +832,16 @@ class Beans
     public function setview_time($view_time) 
     {
         $this->view_time = $view_time;
+    }
+
+    // 🔑 追加：出品者フラグの Getter / Setter
+    public function getis_producer() 
+    {
+        return $this->is_producer;
+    }           
+    public function setis_producer($is_producer) 
+    {
+        $this->is_producer = $is_producer;
     }
 
 }

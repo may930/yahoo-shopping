@@ -1,3 +1,21 @@
+<?php
+session_start();
+
+// 🔒 1. 未ログインチェック（producer_id があるか）
+if (empty($_SESSION['user']['producer_id']) && empty($_SESSION['producer']['producer_id'])) {
+    header('Location: login.html');
+    exit();
+}
+
+// 🔑 2. ログイン中の「producer_id」と「store_name（ショップ名）」を取得
+if (!empty($_SESSION['user']['producer_id'])) {
+    $producer_id = $_SESSION['user']['producer_id'];
+    $storeName   = $_SESSION['user']['store_name'] ?? '出品者';
+} else {
+    $producer_id = $_SESSION['producer']['producer_id'];
+    $storeName   = $_SESSION['producer']['store_name'] ?? '出品者';
+}
+?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -52,6 +70,20 @@
         .admin-user-info {
             font-size: 0.9rem;
             color: #ecf0f1;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logout-btn {
+            color: #bdc3c7;
+            text-decoration: underline;
+            font-size: 0.8rem;
+            transition: color 0.2s;
+        }
+
+        .logout-btn:hover {
+            color: #fff;
         }
 
         .admin-container {
@@ -156,7 +188,9 @@
                 HCS! ストアマネージャー <span>出品者専用</span>
             </a>
             <div class="admin-user-info">
-                ログイン中: <strong>サントリー公式ストア</strong> 様
+                <!-- 🔑 ログイン中のショップ名を動的表示！ -->
+                <span>ログイン中: <strong><?= htmlspecialchars($storeName, ENT_QUOTES, 'UTF-8') ?></strong> 様</span>
+                <a href="logout.php" class="logout-btn">ログアウト</a>
             </div>
         </div>
     </header>
@@ -166,7 +200,7 @@
         
         <div class="welcome-box">
             <h1>ストア管理ダッシュボード</h1>
-            <p>ご希望の操作メニューを選択してください。</p>
+            <p>ようこそ、<?= htmlspecialchars($storeName, ENT_QUOTES, 'UTF-8') ?> 様。ご希望の操作メニューを選択してください。</p>
         </div>
 
         <!-- 4つの主要メニュー -->
@@ -186,11 +220,11 @@
                 <div class="card-desc">お客様からの質問への回答・履歴管理を行います</div>
             </a>
 
-            <!-- 3. 商品登録 -->
+            <!-- 3. 商品登録・編集 -->
             <a href="admin_product_register.php" class="admin-menu-card">
                 <div class="card-icon">📝</div>
-                <div class="card-title">商品登録</div>
-                <div class="card-desc">新しい商品の出品・情報や価格の編集を行います</div>
+                <div class="card-title">商品管理・登録</div>
+                <div class="card-desc">自店舗の商品の出品・情報や価格の編集を行います</div>
             </a>
 
             <!-- 4. ストア構築 -->
@@ -200,10 +234,6 @@
                 <div class="card-desc">店舗看板・バナー設置やショップ設定を行います</div>
             </a>
 
-        </div>
-
-        <div class="site-back-link">
-            <a href="index.php">← ショッピングサイト（購入者画面）に戻る</a>
         </div>
 
     </div>

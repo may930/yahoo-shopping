@@ -1,11 +1,27 @@
 <?php
+session_start();
 require_once 'db.php';
+
+// 🔒 1. 未ログインチェック（セッションに producer_id がなければログイン画面へ）
+if (empty($_SESSION['user']['producer_id']) && empty($_SESSION['producer']['producer_id'])) {
+    header('Location: login.html');
+    exit();
+}
+
+// 🔑 2. ログイン中の「producer_id」と「store_name（ショップ名）」を取得
+if (!empty($_SESSION['user']['producer_id'])) {
+    $producer_id = $_SESSION['user']['producer_id'];
+    $storeName   = $_SESSION['user']['store_name'] ?? '出品者';
+} else {
+    $producer_id = $_SESSION['producer']['producer_id'];
+    $storeName   = $_SESSION['producer']['store_name'] ?? '出品者';
+}
 
 $message = '';
 $error = '';
 
 // ==========================================
-// 1. 画像非同期アップロード処理 (Ajax/Fetch)
+// 3. 画像非同期アップロード処理 (Ajax/Fetch)
 // ==========================================
 if (isset($_GET['action']) && $_GET['action'] === 'upload_image') {
     header('Content-Type: application/json');
@@ -31,7 +47,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'upload_image') {
             $destPath = $uploadDir . $newFileName;
 
             if (move_uploaded_file($fileTmpPath, $destPath)) {
-                // DB保存用のパス（例: localhost/Yahooshopping/Image/xxx.png）
+                // DB保存用のパス
                 $dbImagePath = "localhost/Yahooshopping/" . $destPath;
                 echo json_encode(['success' => true, 'image_url' => $dbImagePath, 'preview_url' => $destPath]);
                 exit;
@@ -43,10 +59,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'upload_image') {
 }
 
 // ==========================================
-// 2. 商品登録処理
+// 4. 商品登録処理
 // ==========================================
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $producer_id  = 1; // ログイン中の出品者ID（仮）
     $category_id  = isset($_POST['category_id']) ? intval($_POST['category_id']) : 0;
     $product_name = trim($_POST['product_name'] ?? '');
     $information  = trim($_POST['information'] ?? '');
@@ -62,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             $pdo->beginTransaction();
 
-            // 1. product テーブル挿入
+            // ① product テーブル挿入（ログイン中出品者の producer_id を保存）
             $sql_prod = "INSERT INTO product (producer_id, category_id, product_name, information) 
                          VALUES (:producer_id, :category_id, :product_name, :information)";
             $stmt_prod = $pdo->prepare($sql_prod);
@@ -75,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $new_product_id = $pdo->lastInsertId();
 
-            // 2. product_attributes_options & product_images 挿入
+            // ② product_attributes_options & product_images 挿入
             $sql_opt = "INSERT INTO product_attributes_options (variation_id, option_name, price, stock) 
                         VALUES (:variation_id, :option_name, :price, :stock)";
             $stmt_opt = $pdo->prepare($sql_opt);
@@ -120,7 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// カテゴリ取得
+// カテゴリ一覧の取得
 try {
     $stmt_cat = $pdo->query("SELECT category_id, category_name FROM category ORDER BY category_id ASC");
     $categories = $stmt_cat->fetchAll();
@@ -143,6 +158,7 @@ try {
         .admin-header { background-color: #2c3e50; color: #fff; padding: 15px 0; }
         .admin-header-inner { display: flex; justify-content: space-between; align-items: center; }
         .admin-logo { font-size: 1.2rem; font-weight: bold; color: #fff; text-decoration: none; }
+        .admin-user-info { font-size: 0.85rem; color: #ecf0f1; margin-right: 15px; }
         .admin-container { max-width: 950px; margin: 30px auto; padding: 0 20px; }
         
         .form-card { background: #fff; border-radius: 8px; padding: 30px; border: 1px solid #e0e6ed; box-shadow: 0 2px 5px rgba(0,0,0,0.03); margin-bottom: 25px; }
@@ -158,7 +174,7 @@ try {
         .variant-card { background: #f8f9fa; border: 1px solid #e0e6ed; border-radius: 8px; padding: 15px; margin-bottom: 15px; }
         .variant-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 15px; margin-bottom: 12px; }
         
-        /* 🛠️ ドラッグ＆ドロップエリア */
+        /* ドラッグ＆ドロップエリア */
         .drop-zone {
             border: 2px dashed #0056b3;
             border-radius: 6px;
@@ -192,7 +208,11 @@ try {
     <header class="admin-header">
         <div class="container admin-header-inner">
             <a href="admin_top.php" class="admin-logo">HCS! ストアマネージャー</a>
-            <div><a href="admin_top.php" style="color: #fff; text-decoration: none; font-size: 0.9rem;">← TOPに戻る</a></div>
+            <div style="display: flex; align-items: center;">
+                <!-- ログイン中のストア名を表示 -->
+                <span class="admin-user-info">ログイン中: <strong><?= htmlspecialchars($storeName, ENT_QUOTES, 'UTF-8') ?></strong> 様</span>
+                <a href="admin_top.php" style="color: #fff; text-decoration: none; font-size: 0.9rem;">← TOPに戻る</a>
+            </div>
         </div>
     </header>
 
@@ -264,7 +284,6 @@ try {
                                 <img src="" class="preview-img" alt="プレビュー">
                                 <input type="file" accept="image/*" style="display: none;" onchange="handleFileSelect(this)">
                             </div>
-                            <!-- アップロード後にDB登録用のURLがここに入る -->
                             <input type="hidden" name="image_url[]" class="image-url-input">
                         </div>
 
@@ -341,7 +360,7 @@ try {
                     textP.textContent = '✅ アップロード完了！(クリックで変更)';
                     previewImg.src = data.preview_url;
                     previewImg.style.display = 'block';
-                    hiddenInput.value = data.image_url; // DB保存用のパスを設定
+                    hiddenInput.value = data.image_url;
                 } else {
                     alert(data.message || 'アップロードに失敗しました');
                     textP.textContent = '📁 画像ファイルをここにドロップ または クリックして選択';
