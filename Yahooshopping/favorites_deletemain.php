@@ -21,8 +21,6 @@ if ($favorite_deleteitem > 0) {
     $pdo = $utilConnDB->connect();
 
     try {
-        // トランザクション開始
-        $pdo->beginTransaction(); 
 
         /* SQL実行 */
         $recCount = $favorite_SQL->itemdelete($pdo, $beans);
@@ -30,13 +28,16 @@ if ($favorite_deleteitem > 0) {
         if ($recCount > 0) {
             // 成功時コミット
             $pdo->commit();
+            // ★ DBから最新の一覧を再取得してセッションを更新する
+            $_SESSION['favoriteList'] = $favorite_SQL->selectprodut($pdo);
         } else {
             // 失敗時ロールバック
-            //$pdo->rollBack();
+            
+            $pdo->rollBack();
         }
     } catch (Exception $e) {
         if ($pdo->inTransaction()) {
-            //$pdo->rollBack();
+            $pdo->rollBack();
         }
     } finally {
         /* DB切断 */

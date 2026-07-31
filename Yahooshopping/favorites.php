@@ -10,12 +10,13 @@
     }
 
 
-    $count = 0;
-    foreach ($favoriteList as $Beans):
-        $itemcount = $Beans->getproduct_favorites_id();
-        $count = $count + 1;
-    endforeach;
+    // $count = 0;
+    // foreach ($favoriteList as $Beans):
+    //     $itemcount = $Beans->getproduct_favorites_id();
+    //     $count = $count + 1;
+    // endforeach;
 
+    $count = count($favoriteList);
 ?>
 
 
@@ -149,7 +150,7 @@
                         </button>
 
                         <!--商品を削除するボタン-->
-                        <button type="button" class="btn-delete" onclick="removeFavorite(<?php echo $productId; ?>)">🗑️</button>
+                        <button type="button" class="btn-delete" onclick="removeFavorite('<?php echo $productId; ?>')">🗑️</button>
                     </div>
 
                 </div>
@@ -176,43 +177,47 @@
 
     <!-- スクリプト処理 -->
     <script>
-        // ① お気に入り商品の並び替えロジック
-        function sortFavorites() {
-         
-            const sortVal = document.getElementById('sort-favorites').value;
-            const grid = document.querySelector('.product-grid');
-            // お気に入り商品を配列として取得
-            const items = Array.from(grid.querySelectorAll('.product-card'));
+        // ① お気に入り件数を動的に更新する関数（★追加）
+        function updateFavoriteCount() {
+                // 現在画面に残っている商品カードの数を数える
+                const currentCount = document.querySelectorAll('.product-card').length;
 
-            // 各商品の `data-added-at`（追加日時）を元に比較してソート
-            items.sort((a, b) => {
-                const dateA = new Date(a.getAttribute('data-added-at'));
-                const dateB = new Date(b.getAttribute('data-added-at'));
-                const diff = dateB - dateA;
-
-
-                //タイムスタンプが同じの場合、ID順で並び替える
-
-                // 1. 日時が異なる場合は、日時の順序を最優先する
-                if (diff !== 0) {
-                    return sortVal === 'newest' ? diff : -diff;
+                // 1. ヘッダーアイコン横の件数を更新
+                const headerCountBadge = document.querySelector('.action-item-btn[href="favorites_Lstmain.php"] .cart-count');
+                if (headerCountBadge) {
+                    headerCountBadge.textContent = currentCount;
                 }
 
-                // 2. 日時が全く同じ場合（タイブレーク）：idの数値で並び替える
-                // 10はIDを十進数で計算するの10。
-                const idA = parseInt(a.id, 10);
-                const idB = parseInt(b.id, 10);
+                // 2. メインタイトルの件数を更新
+                const pageTitle = document.querySelector('h1');
+                if (pageTitle) {
+                    pageTitle.innerHTML = `❤️ お気に入り商品（${currentCount}件）`;
+                }
+            }
 
-                if (sortVal === 'newest') {
-                    return idB - idA; // 新しい順のときは ID が降順
-                } else {
-                    return idA - idB; // 古い順のときは ID が昇順
-                    }
-            });
+        // ① お気に入り商品の並び替えロジック
+        function sortFavorites() {
+            const sortVal = document.getElementById('sort-favorites').value;
+            const grid = document.querySelector('.product-grid');
+            const items = Array.from(grid.querySelectorAll('.product-card'));
 
-            // ソートされた順にDOMを再配置
-            items.forEach(item => grid.appendChild(item));
-        }
+            items.sort((a, b) => {
+            const dateA = new Date(a.getAttribute('data-added-at'));
+            const dateB = new Date(b.getAttribute('data-added-at'));
+            const diff = dateB - dateA;
+
+            if (diff !== 0) {
+                return sortVal === 'newest' ? diff : -diff;
+            }
+
+            const idA = parseInt(a.id, 10);
+            const idB = parseInt(b.id, 10);
+
+            return sortVal === 'newest' ? idB - idA : idA - idB;
+        });
+
+        items.forEach(item => grid.appendChild(item));
+    }
 
         // ページ読み込み時に初期ソートを実行（初期値：新しい順）
         window.addEventListener('DOMContentLoaded', () => {
@@ -222,38 +227,38 @@
         // ② お気に入り削除（件数更新機能を追加！）
         function removeFavorite(itemId) {
             if(confirm('この商品をお気に入りから削除してもよろしいですか？')) {
-                const item = document.getElementById(itemId);
+            const item = document.getElementById(itemId);
+            
+            const sendDeleteForm = () => {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'favorites_deletemain.php';
+
+                const inputPro = document.createElement('input');
+                inputPro.type = 'hidden';
+                inputPro.name = 'delete_item';
+                inputPro.value = itemId;
+
+                form.appendChild(inputPro);
+                document.body.appendChild(form);
+                form.submit();
+            };
+
+            if(item) {
+                item.style.transition = 'all 0.4s ease';
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.9)';
                 
-                const sendDeleteForm = () => {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = 'favorites_deletemain.php';
-
-                    const inputPro = document.createElement('input');
-                    inputPro.type = 'hidden';
-                    inputPro.name = 'delete_item';
-                    inputPro.value = itemId;
-
-                    form.appendChild(inputPro);
-                    document.body.appendChild(form);
-                    form.submit();
-                };
-
-                if(item) {
-                    item.style.transition = 'all 0.4s ease';
-                    item.style.opacity = '0';
-                    item.style.transform = 'scale(0.9)';
-                    
-                    setTimeout(() => {
-                        item.remove();
-                        updateFavoriteCount();
-                        sendDeleteForm();
-                    }, 400);
-                } else {
+                setTimeout(() => {
+                    item.remove();
+                    updateFavoriteCount(); // ★これでエラーにならず件数が減ります！
                     sendDeleteForm();
-                }                
-            }
+                }, 400);
+            } else {
+                sendDeleteForm();
+            }                
         }
+      }
     </script>
 
 </body>
