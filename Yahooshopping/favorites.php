@@ -1,21 +1,13 @@
 ﻿<?php 
-    /* インポート */
-    require_once('Beans.php');
+/* インポート */
+require_once('Beans.php');
 
-    /* データを受け取る */
-    session_start();
-    $favoriteList = array();
-    if (isset($_SESSION['favoriteList'])) {
-    $favoriteList = $_SESSION['favoriteList'];
-    }
-
-
-    $count = 0;
-    foreach ($favoriteList as $Beans):
-        $itemcount = $Beans->getproduct_favorites_id();
-        $count = $count + 1;
-    endforeach;
-
+/* データを受け取る */
+session_start();
+$favoriteList = array();
+if (isset($_SESSION['favoriteList'])) {
+ $favoriteList = $_SESSION['favoriteList'];
+}
 ?>
 
 
@@ -66,7 +58,7 @@
                     <a href="favorites_Lstmain.php" class="action-item-btn">
                         <span class="action-icon">❤</span>
                         <span class="action-label">お気に入り</span>
-                        <span class="cart-count"><?php echo $count; ?></span>
+                        <span class="cart-count">3</span>
                     </a>
                     <a href="browsing-history.html" class="action-item-btn">
                         <span class="action-icon">🕒</span>
@@ -91,7 +83,7 @@
         <!-- ページタイトルとお気に入り件数＆並び替え -->
         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 2px solid var(--color-primary); padding-bottom: 8px; flex-wrap: wrap; gap: 10px;">
             <h1 style="font-size: 1.5rem; font-weight: 700; color: var(--color-black); margin: 0;">
-                ❤️ お気に入り商品（<?php echo $count?>件）
+                ❤️ お気に入り商品
             </h1>
 
             <!-- 右側のコントロールエリア（並び替え ＆ 件数） -->
@@ -104,6 +96,11 @@
                         <option value="oldest">追加した日時の古い順</option>
                     </select>
                 </div>
+
+                <!-- お気に入り件数の表示（JSで動的変更できるように id="fav-count" を付与） -->
+                <span style="font-size: 0.9rem; color: #666; font-weight: 500;">
+                    現在のお気に入り：<strong id="fav-count" style="color: var(--color-primary); font-size: 1.1rem;">3</strong>
+                </span>
             </div>
         </div>
 
@@ -149,8 +146,7 @@
                         </button>
 
                         <!--商品を削除するボタン-->
-                        <button type="button" class="btn-delete" onclick="removeFavorite(<?php echo $productId; ?>)">🗑️</button>
-                    </div>
+                        <button type="button" class="btn-delete" onclick="removeFavorite(<?php echo $productId; ?>)">🗑️</button>                    </div>
 
                 </div>
             <?php endforeach; ?>
@@ -178,7 +174,6 @@
     <script>
         // ① お気に入り商品の並び替えロジック
         function sortFavorites() {
-         
             const sortVal = document.getElementById('sort-favorites').value;
             const grid = document.querySelector('.product-grid');
             // お気に入り商品を配列として取得
@@ -188,26 +183,12 @@
             items.sort((a, b) => {
                 const dateA = new Date(a.getAttribute('data-added-at'));
                 const dateB = new Date(b.getAttribute('data-added-at'));
-                const diff = dateB - dateA;
-
-
-                //タイムスタンプが同じの場合、ID順で並び替える
-
-                // 1. 日時が異なる場合は、日時の順序を最優先する
-                if (diff !== 0) {
-                    return sortVal === 'newest' ? diff : -diff;
-                }
-
-                // 2. 日時が全く同じ場合（タイブレーク）：idの数値で並び替える
-                // 10はIDを十進数で計算するの10。
-                const idA = parseInt(a.id, 10);
-                const idB = parseInt(b.id, 10);
 
                 if (sortVal === 'newest') {
-                    return idB - idA; // 新しい順のときは ID が降順
+                    return dateB - dateA; // 新しい順（降順）
                 } else {
-                    return idA - idB; // 古い順のときは ID が昇順
-                    }
+                    return dateA - dateB; // 古い順（昇順）
+                }
             });
 
             // ソートされた順にDOMを再配置
@@ -256,7 +237,7 @@
         }
         // 件数表示をリアルタイムで同期して更新する関数
         function updateFavoriteCount() {
-            const countEl = document.getElementById('$productId');
+            const countEl = document.getElementById('fav-count');
             const remainingItems = document.querySelectorAll('.product-grid .product-card');
             if (countEl) {
                 countEl.textContent = remainingItems.length;
