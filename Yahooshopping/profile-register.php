@@ -91,9 +91,9 @@
                 <div class="form-group">
                     <label class="form-label">性別<span class="badge-optional">任意</span></label>
                     <div class="gender-group">
-                        <label class="gender-label"><input type="radio" name="sex" value="male">男性</label>
-                        <label class="gender-label"><input type="radio" name="sex" value="female">女性</label>
-                        <label class="gender-label"><input type="radio" name="sex" value="other" checked>選択しない</label>
+                        <label class="gender-label"><input type="radio" name="sex" value="男">男性</label>
+                        <label class="gender-label"><input type="radio" name="sex" value="女">女性</label>
+                        <label class="gender-label"><input type="radio" name="sex" value="その他" checked>選択しない</label>
                     </div>
                 </div>
 
@@ -117,7 +117,7 @@
 
 
                 <div class="form-group">
-                    <input type="hidden" name="phone_Number" value="<?php echo htmlspecialchars($_POST['phone_Number']); ?>">
+                    <input type="hidden" name="phone_number" value="<?php echo htmlspecialchars($_POST['phone_number']); ?>">
                     <input type="hidden" name="mail_address" value="<?php echo htmlspecialchars($_POST['mail_address']); ?>">
                 </div>
 
