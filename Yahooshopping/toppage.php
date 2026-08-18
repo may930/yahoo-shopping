@@ -1,3 +1,35 @@
+<?php 
+    //ヘッダーに表示する件数をBeansから取得（カート、お気に入りも）
+
+    /* インポート */
+    require_once('Beans.php');
+    $Beans = new Beans();
+    /* データを受け取る */
+    session_start();
+    $favoriteList = array();
+    $toppageList = array();
+    $toppage_summer_List = array();
+    $toppage_food_List = array();
+
+    if (isset($_SESSION['favoriteList'])) {
+    $favoriteList = $_SESSION['favoriteList'];
+    }
+    if (isset($_SESSION['toppageList'])) {
+    $toppageList = $_SESSION['toppageList'];
+    }
+    if (isset($_SESSION['toppage_summer_List'])) {
+        $toppage_summer_List = $_SESSION['toppage_summer_List'];
+    }
+    if (isset($_SESSION['toppage_food_List'])) {
+        $toppage_food_List = $_SESSION['toppage_food_List'];
+    }
+
+    //お気に入りの件数
+    $count = count($favoriteList);
+    //ログイン状態のアカウントのユーザー名を取得
+    $userName = $_SESSION['user']['name'] ?? '';
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -16,16 +48,18 @@
             <div class="container header-top-inner">
                 <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
                 <nav class="header-top-nav">
-                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
+                    <!-- ログイン情報を取得して、～さんって表示する -->
+                    <span class="welcome-text">ようこそ、<strong><?php echo $userName; ?></strong> さん</span>
                 </nav>
             </div>
         </div>
 
         <div class="header-main">
             <div class="container header-main-inner">
-                <a href="index.html" class="logo">
+                <a href="toppage.php" class="logo">
                     <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
                 </a>
+                
                 <div class="search-bar">
                     <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
                     <button type="submit" class="search-btn" aria-label="検索">
@@ -42,10 +76,12 @@
                         <span class="action-label">カート</span>
                         <span class="cart-count">3</span>
                     </a>
+
+                    <!-- 表示する件数をDBから参照する -->
                     <a href="favorites.php" class="action-item-btn">
                         <span class="action-icon">❤</span>
                         <span class="action-label">お気に入り</span>
-                        <span class="cart-count">3</span>
+                        <span class="cart-count"><?php echo $count; ?></span>
                     </a>
                     <a href="browsing-history.html" class="action-item-btn">
                         <span class="action-icon">🕒</span>
@@ -67,6 +103,7 @@
     <main class="main-bg-gray">
         <div class="container">
 
+            <!-- 広告的な部分 -->
             <div class="slider-wrapper">
                 <div class="slider-container" id="slider">
                     <div class="slide-item slide-blue">
@@ -104,7 +141,7 @@
                     <div class="sidebar-box">
                         <h3 class="sidebar-title">カテゴリから探す</h3>
                         <ul class="sidebar-menu-list">
-                            <li><a href="product-detail.html"><span>レディースファッション</span><span class="arrow">＞</span></a></li>
+                            <li><a href="product-detail.php"><span>レディースファッション</span><span class="arrow">＞</span></a></li>
                             <li><a href="#"><span>メンズファッション</span><span class="arrow">＞</span></a></li>
                             <li><a href="#"><span>腕時計、アクセサリー</span><span class="arrow">＞</span></a></li>
                             <li><a href="#"><span>ベビー、キッズ、マタニティ</span><span class="arrow">＞</span></a></li>
@@ -123,61 +160,44 @@
                             <a href="ranking.html" class="view-all-link">すべて見る →</a>
                         </div>
 
+                        <!-- まだ正しく内容が表示できていない -->
+
+
+                        <!-- ここから商品の表示をＤＢから行う -->
                         <div class="product-grid-3" id="ranking-container">
-                            <div class="product-card rank-1">
-                                <div class="rank-badge">1</div>
-                                <a href="product-detail.html" class="product-img-wrap">
-                                    <img src="Image/衣類レディース　フロントタック.png" alt="商品画像" class="product-img" style="width: 100%; height: 200px; object-fit: cover; display: block; border-radius: 8px 8px 0 0;">
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">BRAND A</p>
-                                    <h3 class="product-name">フローラルプリント シフォンブラウス（透け感素材）</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★★</span>
-                                        <span class="rating-count">(128)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price">¥4,590 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add" onclick="location.href='cart.html'" aria-label="カートに追加">🛒</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card rank-2">
-                                <div class="rank-badge">2</div>
-                                <a href="#" class="product-img-wrap">
-                                    <div class="product-img">🎧</div>
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">BRAND B</p>
-                                    <h3 class="product-name">高音質 ワイヤレスノイズキャンセリングイヤホン</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★☆</span>
-                                        <span class="rating-count">(181)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price">¥4,980 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
+                            <?php foreach ($toppageList as $Beans): ?>
+                                <?php 
+                                    // データベースから取得した安全な値を変数にセット
+                                    $productId   = $Beans->getproduct_id();
+                                    $productName = htmlspecialchars($Beans->getproduct_name(), ENT_QUOTES, 'UTF-8');
+                                    $price       = number_format($Beans->getprice());
+                                    $image       = htmlspecialchars($Beans->getimage_url(), ENT_QUOTES, 'UTF-8');
+                                ?>
+
+                                <!-- ★ 1個分のカードテンプレート（これがループで自動増殖します） -->
+                                <div class="product-card" id="<?php echo $productId; ?>">
+                                    
+                                    <!-- 商品画像 -->
+                                    <img src="<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img">
+                                    
+                                    <!-- 商品情報 -->
+                                    <div class="product-info">
+                                        <h3 class="product-name"><?php echo $productName; ?></h3>
+                                        
+                                        <!-- 評価（スター）-->
+                                        <!-- 後から修正（レビューする機能が出来たら） -->
+                                        <div class="product-rating">
+                                            <span class="stars">★★★★☆</span>
+                                            <span class="rating-count">1,590</span>
+                                        </div>
+
+                                        <!-- 価格 -->
+                                        <div class="product-price">
+                                            ¥<?php echo $price; ?>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="product-card rank-3">
-                                <div class="rank-badge">3</div>
-                                <a href="#" class="product-img-wrap">
-                                    <div class="product-img">☕</div>
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">BRAND C</p>
-                                    <h3 class="product-name">こだわりの自家焙煎 プレミアムコーヒー豆 500g</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★★</span>
-                                        <span class="rating-count">(97)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price">¥2,400 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <?php endforeach; ?>
                         </div>
                     </section>
 
@@ -254,57 +274,39 @@
                         </div>
 
                         <div class="product-grid-3" id="seasonal-products" style="margin-top: 16px;">
-                            <div class="product-card">
-                                <a href="#" class="product-img-wrap" style="background-color: #e6f7ff;">
-                                    <img src="Image/手持ち扇風機.png" alt="商品画像" class="product-img" style="width: 100%; height: 200px; object-fit: cover; display: block; border-radius: 8px 8px 0 0;">
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">SUMMER COOL</p>
-                                    <h3 class="product-name">静音設計 パワフル携帯ハンディファン（USB充電式）</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★★</span>
-                                        <span class="rating-count">(340)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price">¥1,980 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <a href="#" class="product-img-wrap" style="background-color: #e6f7ff;">
-                                    <div class="product-img">🕶️</div>
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">EYE WEAR</p>
-                                    <h3 class="product-name">UV400カット 偏光スタイリッシュサングラス</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★☆</span>
-                                        <span class="rating-count">(56)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price">¥2,480 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <a href="#" class="product-img-wrap" style="background-color: #e6f7ff;">
-                                    <div class="product-img">🧊</div>
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">ICE RING</p>
-                                    <h3 class="product-name">28℃凍結 爽快冷感 クールネックリング（首元ひんやり）</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★★</span>
-                                        <span class="rating-count">(182)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price">¥1,280 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
+                            <?php foreach ($toppage_summer_List as $Beans): ?>
+                                    <?php 
+                                        // データベースから取得した安全な値を変数にセット
+                                        $productId   = $Beans->getproduct_id();
+                                        $productName = htmlspecialchars($Beans->getproduct_name(), ENT_QUOTES, 'UTF-8');
+                                        $price       = number_format($Beans->getprice());
+                                        $image       = htmlspecialchars($Beans->getimage_url(), ENT_QUOTES, 'UTF-8');
+                                    ?>
+
+                                    <!-- ★ 1個分のカードテンプレート（これがループで自動増殖します） -->
+                                    <div class="product-card" id="<?php echo $productId; ?>">
+                                        
+                                        <!-- 商品画像 -->
+                                        <img src="<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img">
+                                        
+                                        <!-- 商品情報 -->
+                                        <div class="product-info">
+                                            <h3 class="product-name"><?php echo $productName; ?></h3>
+                                            
+                                        <!-- 評価（スター）-->
+                                        <!-- 後から修正（レビューする機能が出来たら） -->
+                                        <div class="product-rating">
+                                            <span class="stars">★★★★☆</span>
+                                            <span class="rating-count">1,590</span>
+                                        </div>
+
+                                        <!-- 価格 -->
+                                        <div class="product-price">
+                                            ¥<?php echo $price; ?>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            <?php endforeach; ?>
                         </div>
                     </section>
 
@@ -315,58 +317,40 @@
                             <a href="#" class="view-all-link" style="color: #1a6e3a;">贅沢グルメをもっと見る →</a>
                         </div>
 
-                        <div class="product-grid-3" style="margin-top: 16px;">
-                            <div class="product-card">
-                                <a href="#" class="product-img-wrap" style="background-color: #fff9e6;">
-                                    <div class="product-img">🥩</div>
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">贅沢極み</p>
-                                    <h3 class="product-name">特選A5ランク 黒毛和牛ステーキ用（極厚2枚セット）</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★★</span>
-                                        <span class="rating-count">(74)</span>
+                        <div class="product-grid-3" id="seasonal-products" style="margin-top: 16px;">
+                            <?php foreach ($toppage_food_List as $Beans): ?>
+                                    <?php 
+                                        // データベースから取得した安全な値を変数にセット
+                                        $productId   = $Beans->getproduct_id();
+                                        $productName = htmlspecialchars($Beans->getproduct_name(), ENT_QUOTES, 'UTF-8');
+                                        $price       = number_format($Beans->getprice());
+                                        $image       = htmlspecialchars($Beans->getimage_url(), ENT_QUOTES, 'UTF-8');
+                                    ?>
+
+                                    <!-- ★ 1個分のカードテンプレート（これがループで自動増殖します） -->
+                                    <div class="product-card" id="<?php echo $productId; ?>">
+                                        
+                                        <!-- 商品画像 -->
+                                        <img src="<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img">
+                                        
+                                        <!-- 商品情報 -->
+                                        <div class="product-info">
+                                            <h3 class="product-name"><?php echo $productName; ?></h3>
+                                            
+                                        <!-- 評価（スター）-->
+                                        <!-- 後から修正（レビューする機能が出来たら） -->
+                                        <div class="product-rating">
+                                            <span class="stars">★★★★☆</span>
+                                            <span class="rating-count">1,590</span>
+                                        </div>
+
+                                        <!-- 価格 -->
+                                        <div class="product-price">
+                                            ¥<?php echo $price; ?>
+                                        </div>
                                     </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price">¥8,800 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <a href="#" class="product-img-wrap" style="background-color: #fff9e6;">
-                                    <div class="product-img">🍜</div>
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">ガッツリ麺</p>
-                                    <h3 class="product-name">濃厚ガッツリ豚骨醤油！本場ジロー系ラーメン（超極太麺・極厚チャーシュー付 3食入）</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★★</span>
-                                        <span class="rating-count">(215)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price">¥3,480 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <a href="#" class="product-img-wrap" style="background-color: #fff9e6;">
-                                    <div class="product-img">🦀</div>
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">北の海の幸</p>
-                                    <h3 class="product-name">北海道産 超特大本ズワイガニ脚（急速凍結 ボイル済 1kg）</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★☆</span>
-                                        <span class="rating-count">(93)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price">¥6,980 <span class="tax">税込</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
-                                    </div>
-                                </div>
-                            </div>
+                                 </div>
+                            <?php endforeach; ?>
                         </div>
                     </section>
 

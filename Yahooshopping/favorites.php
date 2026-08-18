@@ -45,7 +45,7 @@
 
         <div class="header-main">
             <div class="container header-main-inner">
-                <a href="index.html" class="logo">
+                <a href="toppage.php" class="logo">
                     <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
                 </a>
                 <div class="search-bar">
@@ -109,7 +109,7 @@
         </div>
 
 
-        <!-- 商品カードを並べるコンテナ（CSSグリッドやFlexboxで横並びにする） -->
+        <!-- 商品カードを並べるコンテナ -->
         <div class="product-grid">
 
             <?php foreach ($favoriteList as $Beans): ?>
