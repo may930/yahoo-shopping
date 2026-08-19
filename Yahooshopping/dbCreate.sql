@@ -25,7 +25,7 @@ create table user_account(
     user_id integer auto_increment primary key,
     name varchar(20) not null,
     name_kana varchar(20) not null,
-    phone_number varchar(20) not null unique,
+    phone_number varchar(50) not null unique,
     mail_address varchar(255) not null unique,
     password varchar(255) not null,
     user_name varchar(100) not null,

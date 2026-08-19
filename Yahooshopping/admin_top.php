@@ -2,8 +2,9 @@
 session_start();
 
 // 🔒 1. 未ログインチェック（producer_id があるか）
+// ※ login.html ではなく login_view.php に飛ばすように修正！
 if (empty($_SESSION['user']['producer_id']) && empty($_SESSION['producer']['producer_id'])) {
-    header('Location: login.html');
+    header('Location: login_view.php');
     exit();
 }
 
@@ -190,7 +191,7 @@ if (!empty($_SESSION['user']['producer_id'])) {
             <div class="admin-user-info">
                 <!-- 🔑 ログイン中のショップ名を動的表示！ -->
                 <span>ログイン中: <strong><?= htmlspecialchars($storeName, ENT_QUOTES, 'UTF-8') ?></strong> 様</span>
-                <a href="logout.php" class="logout-btn">ログアウト</a>
+                <a href="logout.php" class="logout-db logout-btn">ログアウト</a>
             </div>
         </div>
     </header>

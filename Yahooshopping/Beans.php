@@ -97,10 +97,8 @@ class Beans
 
     /* コンストラクタ */
     public function __construct()
-<<<<<<< HEAD
     {
         $this->is_producer = false;
-=======
     { //「_(アンダースコア)」2個
         $user_id = 0;
         $name_first = '';
@@ -186,15 +184,12 @@ class Beans
         $is_read = 0;
         $send_time = null;
         $view_time = null;    
->>>>>>> 813e1ccaed9b0fc6594f8315ceb06fdf948aaac3
     }
+}
 
     /* クリアメソッド */
     public function BeansClear()
     {
-<<<<<<< HEAD
-        $this->is_producer = false;
-=======
         $user_id = 0;
         $name_first = '';
         $name_second = '';
@@ -279,7 +274,6 @@ class Beans
         $is_read = 0;
         $send_time = null;
         $view_time = null;    
->>>>>>> 813e1ccaed9b0fc6594f8315ceb06fdf948aaac3
     }
 
     public function getuser_id() 
@@ -342,10 +336,6 @@ class Beans
     {
         return $this->mail_address;
     }           
-<<<<<<< HEAD
-    // 🔧 修正: setmail_address に修正
-=======
->>>>>>> 813e1ccaed9b0fc6594f8315ceb06fdf948aaac3
     public function setmail_address($mail_address) 
     {
         $this->mail_address = $mail_address;
