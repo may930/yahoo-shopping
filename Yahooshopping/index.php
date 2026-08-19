@@ -56,7 +56,7 @@
 
         <div class="header-main">
             <div class="container header-main-inner">
-                <a href="toppage.php" class="logo">
+                <a href="index.php" class="logo">
                     <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
                 </a>
                 
