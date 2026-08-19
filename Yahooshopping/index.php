@@ -56,7 +56,7 @@
 
         <div class="header-main">
             <div class="container header-main-inner">
-                <a href="index.php" class="logo">
+                <a href="index_Lstmain.php" class="logo">
                     <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
                 </a>
                 
@@ -78,7 +78,7 @@
                     </a>
 
                     <!-- 表示する件数をDBから参照する -->
-                    <a href="favorites.php" class="action-item-btn">
+                    <a href="favorites_Lstmain.php" class="action-item-btn">
                         <span class="action-icon">❤</span>
                         <span class="action-label">お気に入り</span>
                         <span class="cart-count"><?php echo $count; ?></span>

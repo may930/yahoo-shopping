@@ -2,7 +2,7 @@
 
 
 /* インポート */
-require_once('toppage_sql.php');
+require_once('index_sql.php');
 require_once('utilConnDB.php');
 /* インスタンス生成 */
 $toppage_sql = new TopPageSQL();
@@ -26,5 +26,5 @@ $_SESSION['toppage_summer_List'] = $toppage_summer_List;
 $_SESSION['toppage_food_List'] = $toppage_food_List;
 
 /* 次に実行するモジュール */
-header('Location: toppage.php');
+header('Location: index.php');
 ?>
