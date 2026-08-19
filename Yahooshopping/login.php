@@ -51,25 +51,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cmdBtn1'])) {
                 // セッションにセット
                 $_SESSION['Beans'] = $userBeans;
 
-                // 表示用の名前を取得
-                $userName = 'ユーザー';
-                if (method_exists($userBeans, 'getuser_name') && !empty($userBeans->getuser_name())) {
-                    $userName = $userBeans->getuser_name();
-                } elseif (method_exists($userBeans, 'getname') && !empty($userBeans->getname())) {
-                    $userName = $userBeans->getname();
-                }
-
                 // 出品者かどうか判定
                 $isProducer = false;
                 if (method_exists($userBeans, 'getis_producer')) {
                     $isProducer = $userBeans->getis_producer();
                 }
 
+                // 表示用の名前を取得（Beansに存在するメソッドだけを安全に呼び出す）
+                $userName = 'ユーザー';
+                if ($isProducer) {
+                    if (method_exists($userBeans, 'getstore_name') && !empty($userBeans->getstore_name())) {
+                        $userName = $userBeans->getstore_name();
+                    }
+                } else {
+                    if (method_exists($userBeans, 'getuser_name') && !empty($userBeans->getuser_name())) {
+                        $userName = $userBeans->getuser_name();
+                    } elseif (method_exists($userBeans, 'getname_first') && !empty($userBeans->getname_first())) {
+                        $userName = $userBeans->getname_first();
+                    }
+                }
+
+                // IDを取得
+                $userId = method_exists($userBeans, 'getuser_id') ? $userBeans->getuser_id() : '';
+
+                // 基本的なユーザー情報をセッションにセット
                 $_SESSION['user'] = [
-                    'id'          => method_exists($userBeans, 'getuser_id') ? $userBeans->getuser_id() : '',
                     'name'        => $userName,
                     'is_producer' => $isProducer
                 ];
+
+                // 出品者の場合は producer_id と store_name をセット
+                if ($isProducer) {
+                    $_SESSION['user']['producer_id'] = $userId;
+                    $_SESSION['user']['store_name']  = $userName;
+                } else {
+                    $_SESSION['user']['id'] = $userId;
+                }
 
                 // 🚀 出品者の場合は admin_top.php へ直行！
                 if ($isProducer) {
