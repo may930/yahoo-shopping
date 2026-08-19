@@ -159,10 +159,6 @@
                             <h2 class="main-section-title">売れ筋人気ランキング</h2>
                             <a href="ranking.html" class="view-all-link">すべて見る →</a>
                         </div>
-
-                        <!-- まだ正しく内容が表示できていない -->
-
-
                         <!-- ここから商品の表示をＤＢから行う -->
                         <div class="product-grid-3" id="ranking-container">
                             <?php foreach ($toppageList as $Beans): ?>
@@ -177,8 +173,9 @@
                                 <!-- ★ 1個分のカードテンプレート（これがループで自動増殖します） -->
                                 <div class="product-card" id="<?php echo $productId; ?>">
                                     
+
                                     <!-- 商品画像 -->
-                                    <img src="<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img">
+                                    <a href="product-detail.php"><img src="<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img"></a>
                                     
                                     <!-- 商品情報 -->
                                     <div class="product-info">
@@ -201,72 +198,6 @@
                         </div>
                     </section>
 
-
-                    <section class="ranking-section" style="margin-top: 40px;">
-                        <div class="section-header-row" style="border-bottom: 2px solid var(--color-primary); padding-bottom: 6px;">
-                            <h2 class="main-section-title" style="color: var(--color-black);">🔥 タイムセール開催中！</h2>
-                            <span style="font-size: 0.85rem; color: var(--color-danger); font-weight: 700;">残り時間わずか！</span>
-                        </div>
-
-                        <div class="product-grid-3" style="margin-top: 16px;">
-                            <div class="product-card">
-                                <div style="position: absolute; top: 8px; left: 8px; background: var(--color-danger); color: #fff; padding: 2px 6px; font-size: 0.75rem; font-weight: 700; border-radius: var(--radius-sm); z-index: 10;">10% OFF</div>
-                                <a href="#" class="product-img-wrap">
-                                    <div class="product-img">👗</div>
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">SALE ITEM</p>
-                                    <h3 class="product-name">サマーリネン マキシ丈フレアワンピース</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★☆</span>
-                                        <span class="rating-count">(42)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price" style="color: var(--color-danger);">¥3,980 <span style="font-size: 0.75rem; color: #999; text-decoration: line-through; margin-left: 4px;">¥4,420</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div style="position: absolute; top: 8px; left: 8px; background: var(--color-danger); color: #fff; padding: 2px 6px; font-size: 0.75rem; font-weight: 700; border-radius: var(--radius-sm); z-index: 10;">20% OFF</div>
-                                <a href="#" class="product-img-wrap">
-                                    <div class="product-img">🧳</div>
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">TRAVEL PRO</p>
-                                    <h3 class="product-name">超軽量 ダイヤルロック式 キャリーケース (35L)</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★★</span>
-                                        <span class="rating-count">(89)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price" style="color: var(--color-danger);">¥5,980 <span style="font-size: 0.75rem; color: #999; text-decoration: line-through; margin-left: 4px;">¥7,480</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="product-card">
-                                <div style="position: absolute; top: 8px; left: 8px; background: var(--color-danger); color: #fff; padding: 2px 6px; font-size: 0.75rem; font-weight: 700; border-radius: var(--radius-sm); z-index: 10;">半額!</div>
-                                <a href="#" class="product-img-wrap">
-                                    <div class="product-img">⌚</div>
-                                </a>
-                                <div class="product-info">
-                                    <p class="product-brand">DIGITAL TECH</p>
-                                    <h3 class="product-name">多機能 スマートウォッチ（防水・健康管理機能付き）</h3>
-                                    <div class="product-rating">
-                                        <span class="stars">★★★★☆</span>
-                                        <span class="rating-count">(214)</span>
-                                    </div>
-                                    <div class="product-price-row">
-                                        <span class="product-price" style="color: var(--color-danger);">¥2,980 <span style="font-size: 0.75rem; color: #999; text-decoration: line-through; margin-left: 4px;">¥5,960</span></span>
-                                        <button class="btn-cart-add" aria-label="カートに追加">🛒</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-
                     <section class="ranking-section" style="margin-top: 40px;">
                         <div class="section-header-row" style="border-bottom: 2px solid #00a0e9; padding-bottom: 6px;">
                             <h2 class="main-section-title" id="seasonal-title" style="color: var(--color-black);">☀️ 今年の夏を快適に！役立つ夏グッズ特集</h2>
@@ -287,7 +218,7 @@
                                     <div class="product-card" id="<?php echo $productId; ?>">
                                         
                                         <!-- 商品画像 -->
-                                        <img src="<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img">
+                                        <a href="product-detail.php"><img src="<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img"></a>
                                         
                                         <!-- 商品情報 -->
                                         <div class="product-info">
@@ -331,7 +262,7 @@
                                     <div class="product-card" id="<?php echo $productId; ?>">
                                         
                                         <!-- 商品画像 -->
-                                        <img src="<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img">
+                                        <a href="product-detail.php"><img src="<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img"></a>
                                         
                                         <!-- 商品情報 -->
                                         <div class="product-info">
