@@ -39,30 +39,7 @@ $utilConnDB->disconnect($pdo);
 </head>
 <body>
 
-    <header class="header">
-        <div class="header-top">
-            <div class="container header-top-inner">
-                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
-                <nav class="header-top-nav">
-                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
-                </nav>
-            </div>
-        </div>
-
-        <div class="header-main">
-            <div class="container header-main-inner">
-                <a href="index.php" class="logo">
-                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
-                </a>
-                <div class="header-actions">
-                    <a href="cart.php" class="action-item-btn">
-                        <span class="action-icon">🛒</span>
-                        <span class="action-label">カート</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+     <?php require_once('header.php'); ?>
 
     <main class="cart-container">
         <div class="cart-layout">

@@ -86,6 +86,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cmdBtn1'])) {
                     $_SESSION['user']['store_name']  = $userName;
                 } else {
                     $_SESSION['user']['id'] = $userId;
+
+                    // ★追加：一般ユーザーの場合は登録住所もセッションに保存
+    if (method_exists($userBeans, 'getname')) {
+        $_SESSION['user']['real_name'] = $userBeans->getname();
+    }
+    if (method_exists($userBeans, 'getzipcode')) {
+        $_SESSION['user']['zipcode'] = $userBeans->getzipcode();
+    }
+    if (method_exists($userBeans, 'getaddress')) {
+        $_SESSION['user']['address'] = $userBeans->getaddress();
+    }
                 }
 
                 // 🔑 新規登録側と同じように、DBに保持している詳細情報も
