@@ -7,42 +7,51 @@ try {
     $target_option_id = isset($_GET['option_id']) ? intval($_GET['option_id']) : 1;
 
     /* 
-       3. INNER JOIN を使って、
-          product_attributes_options と product テーブルを結合して一気に取得するばい！
+       3. 必要なカラムを個別に明確に指定して取得する
     */
-    $sql = "SELECT 
-                o.*, 
+        $sql = "SELECT 
+                p.product_id,
+                o.option_id,
+                o.variation_id,
+                o.option_name,
+                o.price,
+                o.stock,
                 p.product_name, 
                 p.information 
             FROM product_attributes_options AS o
-            INNER JOIN product AS p ON o.variation_id = p.product_id 
+            INNER JOIN product_attributes AS pa ON o.variation_id = pa.variation_id
+            INNER JOIN product AS p ON pa.product_id = p.product_id 
             WHERE o.option_id = :id";
             
     $stmt = $pdo->prepare($sql);
     $stmt->execute(['id' => $target_option_id]);
-    $product_data = $stmt->fetch();
+    $product_data = $stmt->fetch(PDO::FETCH_ASSOC);
 
     // データが万が一取れなかったときの安全対策
     if (!$product_data) {
         $stmt_fallback = $pdo->prepare("SELECT * FROM product_attributes_options WHERE option_id = :id");
         $stmt_fallback->execute(['id' => $target_option_id]);
-        $product_data = $stmt_fallback->fetch();
+        $product_data = $stmt_fallback->fetch(PDO::FETCH_ASSOC);
         
-        $product_data['product_name'] = $product_data['product_name'] ?? 'ストロング酒（仮）';
-        $product_data['information'] = $product_data['information'] ?? 'データベースから商品説明が取得できませんでした。';
+        if ($product_data) {
+            $product_data['product_name'] = $product_data['product_name'] ?? '商品名（仮）';
+            $product_data['information'] = $product_data['information'] ?? '商品説明が取得できませんでした。';
+        } else {
+            exit('指定された商品オプションが見つかりませんでした (option_id: ' . $target_option_id . ')');
+        }
     }
 
-    // 4. 同じバリエーショングループの選択肢（500ml, 750ml, 1000ml など）をすべて取得
+    // 4. 同じバリエーショングループの選択肢をすべて取得
     $stmt_all = $pdo->prepare("SELECT * FROM product_attributes_options WHERE variation_id = :variation_id");
     $stmt_all->execute(['variation_id' => $product_data['variation_id']]);
-    $all_options = $stmt_all->fetchAll();
+    $all_options = $stmt_all->fetchAll(PDO::FETCH_ASSOC);
 
-    // 5. 🛠️ 【追加】このオプションに紐づく画像をすべて取得
+    // 5. このオプションに紐づく画像をすべて取得
     $stmt_images = $pdo->prepare("SELECT image_url FROM product_images WHERE option_id = :option_id ORDER BY display_order ASC");
     $stmt_images->execute(['option_id' => $target_option_id]);
     $db_images = $stmt_images->fetchAll(PDO::FETCH_COLUMN);
 
-    // 画像パスの整形（localhost/ などを除去）
+    // 画像パスの整形
     $product_images = [];
     foreach ($db_images as $img) {
         if (!empty($img)) {
@@ -93,7 +102,7 @@ try {
                     </button>
                 </div>
                 <div class="header-actions">
-                    <a href="cart.html" class="action-item-btn">
+                    <a href="cart.php" class="action-item-btn">
                         <span class="action-icon">🛒</span>
                         <span class="action-label">カート</span>
                         <span class="cart-count">3</span>
@@ -127,7 +136,6 @@ try {
             </div>
 
             <div class="pd-container">
-                <!-- 🛠️ 画像表示エリアの動的対応 -->
                 <div class="pd-image-area">
                     <div style="width: 100%; height: 350px; display: flex; align-items: center; justify-content: center; background: #fff; border: 1px solid #e4e7ec; border-radius: 8px; overflow: hidden; padding: 10px;">
                         <?php if (!empty($product_images)): ?>
@@ -137,7 +145,6 @@ try {
                         <?php endif; ?>
                     </div>
 
-                    <!-- サムネイル一覧エリア -->
                     <?php if (count($product_images) > 0): ?>
                         <div class="pd-thumb-grid" style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;">
                             <?php foreach ($product_images as $index => $img): ?>
@@ -151,7 +158,6 @@ try {
 
                 <div class="pd-info-panel">
                     <p class="pd-brand">SUNTORY</p>
-                    <!-- 大元の「商品名」 ＋ 選ばれている「味やサイズ」をドッキング！ -->
                     <h1 class="pd-title">
                         <?= htmlspecialchars($product_data['product_name']) ?> 
                         (<?= htmlspecialchars($product_data['option_name']) ?>)
@@ -164,9 +170,7 @@ try {
                     </div>
 
                     <div class="pd-price-box">
-                        <!-- データベースから引っ張ってきた価格をフォーマットして表示！ -->
                         <p class="pd-price">¥<?= number_format($product_data['price']) ?> <span class="tax">税込</span></p>
-                        <!-- 残り在庫数を表示するエリア -->
                         <p style="font-size: 0.85rem; color: #d9534f; font-weight: bold; margin-top: 5px;">
                             🔥 残り在庫数: <?= htmlspecialchars($product_data['stock']) ?>個
                         </p>
@@ -174,7 +178,6 @@ try {
                     </div>
 
                     <div class="pd-options">
-                        <!-- データベースの「オプション（容量/種類など）」を動的にボタン出力！ -->
                         <div class="option-group">
                             <label class="option-label">サイズ・仕様: <span id="selectedSize"><?= htmlspecialchars($product_data['option_name']) ?></span></label>
                             <div class="option-buttons">
@@ -204,28 +207,28 @@ try {
                     </div>
 
                     <div class="pd-actions">
-                        <?php if ($product_data['stock'] > 0): ?>
-                            <button class="pd-btn-cart" onclick="location.href='cart.html'">🛒 カートに入れる</button>
-                        <?php else: ?>
-                            <button class="pd-btn-cart" disabled style="background-color: #ccc; cursor: not-allowed;">❌ 売り切れです</button>
-                        <?php endif; ?>
-                    </div>
+    <?php if ($product_data['stock'] > 0): ?>
+        <form method="post" action="cart-add.php">
+            <input type="hidden" name="option_id" value="<?= $target_option_id ?>">
+            <input type="hidden" name="quantity" id="qtyHidden" value="1">
+            <button type="submit" class="pd-btn-cart">🛒 カートに入れる</button>
+        </form>
+    <?php else: ?>
+        <button class="pd-btn-cart" disabled style="background-color: #ccc; cursor: not-allowed;">❌ 売り切れです</button>
+    <?php endif; ?>
+</div>
                 </div>
             </div>
 
-            <!-- 商品詳細説明エリア -->
             <section style="background: #fff; border: 1px solid #e4e7ec; border-radius: var(--radius-md); padding: 30px; margin-top: 30px; box-shadow: var(--shadow-card);">
                 <h2 style="font-size: 1.3rem; font-weight: 700; border-bottom: 2px solid var(--color-accent); padding-bottom: 8px; margin-bottom: 20px;">商品説明</h2>
-
                 <div style="line-height: 1.8; color: var(--color-black); font-size: 0.95rem;">
                     <p style="margin-bottom: 16px; font-weight: 500; white-space: pre-wrap;"><?= htmlspecialchars($product_data['information']) ?></p>
                 </div>
             </section>
 
-            <!-- 口コミ（レビュー）エリア -->
             <section id="reviews-section" style="background: #fff; border: 1px solid #e4e7ec; border-radius: var(--radius-md); padding: 30px; margin-top: 30px; margin-bottom: 30px; box-shadow: var(--shadow-card);">
                 <h2 style="font-size: 1.3rem; font-weight: 700; border-bottom: 2px solid var(--color-accent); padding-bottom: 8px; margin-bottom: 20px;">商品レビュー・口コミ</h2>
-
                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; background: #f7f9fa; padding: 20px; border-radius: var(--radius-sm); margin-bottom: 24px;">
                     <div style="display: flex; align-items: center; gap: 24px;">
                         <div style="text-align: center; border-right: 1px solid #e4e7ec; padding-right: 24px;">
@@ -237,7 +240,6 @@ try {
                             <p style="font-size: 0.85rem; color: #555; margin: 0;">購入したユーザーの多くが高い評価を寄せています。</p>
                         </div>
                     </div>
-
                     <button id="toggleFormBtn" style="padding: 10px 20px; background-color: var(--color-primary); color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px;">
                         ✍️ レビューを書く
                     </button>
@@ -327,7 +329,6 @@ try {
                     選択された評価のレビューはまだありません。
                 </div>
             </section>
-
         </div>
     </main>
 
@@ -350,18 +351,23 @@ try {
         </div>
     </footer>
 
-    <!-- JavaScript部 -->
     <script>
-        // 数量変更
         let qty = 1;
-        document.getElementById('qtyUp').addEventListener('click', () => {
-            if (qty < 9) { qty++; document.getElementById('qtyVal').textContent = qty; }
-        });
-        document.getElementById('qtyDown').addEventListener('click', () => {
-            if (qty > 1) { qty--; document.getElementById('qtyVal').textContent = qty; }
-        });
+document.getElementById('qtyUp').addEventListener('click', () => {
+    if (qty < 9) { 
+        qty++; 
+        document.getElementById('qtyVal').textContent = qty; 
+        document.getElementById('qtyHidden').value = qty;  // ★追加
+    }
+});
+document.getElementById('qtyDown').addEventListener('click', () => {
+    if (qty > 1) { 
+        qty--; 
+        document.getElementById('qtyVal').textContent = qty; 
+        document.getElementById('qtyHidden').value = qty;  // ★追加
+    }
+});
 
-        // サムネイル切り替え（メイン画像の差し替え）
         document.querySelectorAll('.pd-thumb').forEach(thumb => {
             thumb.addEventListener('click', () => {
                 document.querySelectorAll('.pd-thumb').forEach(t => t.classList.remove('active'));
@@ -373,9 +379,6 @@ try {
             });
         });
 
-        // ==========================================
-        // レビュー機能
-        // ==========================================
         const toggleFormBtn = document.getElementById('toggleFormBtn');
         const reviewFormContainer = document.getElementById('reviewFormContainer');
         const cancelFormBtn = document.getElementById('cancelFormBtn');
@@ -521,10 +524,10 @@ try {
             const items = Array.from(reviewsList.querySelectorAll('.review-item'));
 
             items.sort((a, b) => {
-                const ratingA = parseInt(a.getAttribute('data-rating'), 10);
-                const ratingB = parseInt(b.getAttribute('data-rating'), 10);
                 const dateA = new Date(a.getAttribute('data-date'));
                 const dateB = new Date(b.getAttribute('data-date'));
+                const ratingA = parseInt(a.getAttribute('data-rating'), 10);
+                const ratingB = parseInt(b.getAttribute('data-rating'), 10);
 
                 if (sortVal === 'date-desc') return dateB - dateA;
                 if (sortVal === 'date-asc') return dateA - dateB;

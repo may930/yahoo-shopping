@@ -89,12 +89,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cmdBtn1'])) {
                 }
 
                 // 🚀 出品者の場合は admin_top.php へ直行！
-                if ($isProducer) {
-                    header('Location: admin_top.php');
-                } else {
-                    header('Location: index.php');
-                }
-                exit();
+if ($isProducer) {
+    header('Location: admin_top.php');
+} else {
+    // ★変更：リダイレクト先が保存されていればそちらへ、無ければ従来通りindex.phpへ
+    if (isset($_SESSION['redirect_after_login'])) {
+        $redirect = $_SESSION['redirect_after_login'];
+        unset($_SESSION['redirect_after_login']); // 使い終わったら削除（重要）
+        header('Location: ' . $redirect);
+    } else {
+        header('Location: index.php');
+    }
+}
+exit();
             }
         }
 

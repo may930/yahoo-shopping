@@ -98,182 +98,96 @@ class Beans
     /* コンストラクタ */
     public function __construct()
     {
+        $this->BeansClear();
         $this->is_producer = false;
-    { //「_(アンダースコア)」2個
-        $user_id = 0;
-        $name_first = '';
-        $name_second = '';
-        $name_kana_first = '';
-        $name_kana_second = '';
-        $phone_number = '';
-        $mail_address = '';
-        $password = '';
-        $sex = '';
-        $birthday = null;
-        $zipcode = '';
-        $address = '';
-        $created_at = null;
-        $deleted_at = null;
-        $producer_id = 0;
-        $company_name = null;
-        $representative_name = '';
-        $store_name = '';
-        $store_name_kana = '';
-        $introduction = '';
-        $related_store = '';
-        $notes = '';
-        $store_open_day = null;
-        $category_id = 0;
-        $category_name = '';
-        $parent_category_id = null;
-        $product_id = 0;
-        $product_name = '';
-        $information = '';
-        $variation_id = null;
-        $variation_name = '';
-        $option_id = 0;
-        $option_name = '';
-        $price = 0;
-        $stock = 0;
-        $image_id = 0;
-        $image_url = '';
-        $display_order = 0;
-        $coupon_id = 0;
-        $coupon_name = '';
-        $discount_rate = 0;
-        $is_discount = 0;
-        $min_order_amount = 0;
-        $maximum_discount = 0;
-        $start_date = null;
-        $end_date = null;
-        $is_infinite = 0;
-        $max_use = 0;
-        $created_at = null;
-        $used_at = null;
-        $get_at = null;
-        $address_id = 0;
-        $shipping_name = '';
-        $cart_id = 0;
-        $quantity = 0;
-        $order_id = 0;
-        $order_date = null;
-        $coupon_discount_amount = 0;
-        $total_price = 0;
-        $pay = '';
-        $shipping_status = '';
-        $order_detail_id = 0;
-        $review_id = 0;
-        $rating = 0;
-        $title = '';
-        $comment = '';
-        $views_count = 0;
-        $like_count = 0;
-        $product_favorites_id = 0;
-        $add_at = null;
-        $producer_favorites_id = 0;
-        $inquiry_category_id = 0;
-        $inquiry_category_name = '';
-        $inquiry_id = 0;
-        $inquiry_contents = '';
-        $user_mailaddress = '';
-        $inquiry_at = null;
-        $privacy = 0;
-        $inquiry_history_id = 0;
-        $contents = '';
-        $sender = 0;
-        $is_read = 0;
-        $send_time = null;
-        $view_time = null;    
     }
-}
 
     /* クリアメソッド */
     public function BeansClear()
     {
-        $user_id = 0;
-        $name_first = '';
-        $name_second = '';
-        $name_kana_first = '';
-        $name_kana_second = '';
-        $phone_number = '';
-        $mail_address = '';
-        $password = '';
-        $sex = '';
-        $birthday = null;
-        $zipcode = '';
-        $address = '';
-        $created_at = null;
-        $deleted_at = null;
-        $producer_id = 0;
-        $company_name = null;
-        $representative_name = '';
-        $store_name = '';
-        $store_name_kana = '';
-        $introduction = '';
-        $related_store = '';
-        $notes = '';
-        $store_open_day = null;
-        $category_id = 0;
-        $category_name = '';
-        $parent_category_id = null;
-        $product_id = 0;
-        $product_name = '';
-        $information = '';
-        $variation_id = null;
-        $variation_name = '';
-        $option_id = 0;
-        $option_name = '';
-        $price = 0;
-        $stock = 0;
-        $image_id = 0;
-        $image_url = '';
-        $display_order = 0;
-        $coupon_id = 0;
-        $coupon_name = '';
-        $discount_rate = 0;
-        $is_discount = 0;
-        $min_order_amount = 0;
-        $maximum_discount = 0;
-        $start_date = null;
-        $end_date = null;
-        $is_infinite = 0;
-        $max_use = 0;
-        $created_at = null;
-        $used_at = null;
-        $get_at = null;
-        $address_id = 0;
-        $shipping_name = '';
-        $cart_id = 0;
-        $quantity = 0;
-        $order_id = 0;
-        $order_date = null;
-        $coupon_discount_amount = 0;
-        $total_price = 0;
-        $pay = '';
-        $shipping_status = '';
-        $order_detail_id = 0;
-        $review_id = 0;
-        $rating = 0;
-        $title = '';
-        $comment = '';
-        $views_count = 0;
-        $like_count = 0;
-        $product_favorites_id = 0;
-        $add_at = null;
-        $producer_favorites_id = 0;
-        $inquiry_category_id = 0;
-        $inquiry_category_name = '';
-        $inquiry_id = 0;
-        $inquiry_contents = '';
-        $user_mailaddress = '';
-        $inquiry_at = null;
-        $privacy = 0;
-        $inquiry_history_id = 0;
-        $contents = '';
-        $sender = 0;
-        $is_read = 0;
-        $send_time = null;
-        $view_time = null;    
+        $this->user_id = 0;
+        $this->name_first = '';
+        $this->name_second = '';
+        $this->name_kana_first = '';
+        $this->name_kana_second = '';
+        $this->phone_number = '';
+        $this->mail_address = '';
+        $this->password = '';
+        $this->sex = '';
+        $this->birthday = null;
+        $this->zipcode = '';
+        $this->address = '';
+        $this->created_at = null;
+        $this->deleted_at = null;
+        $this->producer_id = 0;
+        $this->company_name = null;
+        $this->representative_name = '';
+        $this->store_name = '';
+        $this->store_name_kana = '';
+        $this->introduction = '';
+        $this->related_store = '';
+        $this->notes = '';
+        $this->store_open_day = null;
+        $this->category_id = 0;
+        $this->category_name = '';
+        $this->parent_category_id = null;
+        $this->product_id = 0;
+        $this->product_name = '';
+        $this->information = '';
+        $this->variation_id = null;
+        $this->variation_name = '';
+        $this->option_id = 0;
+        $this->option_name = '';
+        $this->price = 0;
+        $this->stock = 0;
+        $this->image_id = 0;
+        $this->image_url = '';
+        $this->display_order = 0;
+        $this->coupon_id = 0;
+        $this->coupon_name = '';
+        $this->discount_rate = 0;
+        $this->is_discount = 0;
+        $this->min_order_amount = 0;
+        $this->maximum_discount = 0;
+        $this->start_date = null;
+        $this->end_date = null;
+        $this->is_infinite = 0;
+        $this->max_use = 0;
+        $this->used_at = null;
+        $this->get_at = null;
+        $this->address_id = 0;
+        $this->shipping_name = '';
+        $this->cart_id = 0;
+        $this->quantity = 0;
+        $this->order_id = 0;
+        $this->order_date = null;
+        $this->coupon_discount_amount = 0;
+        $this->total_price = 0;
+        $this->pay = '';
+        $this->shipping_status = '';
+        $this->order_detail_id = 0;
+        $this->review_id = 0;
+        $this->rating = 0;
+        $this->title = '';
+        $this->comment = '';
+        $this->views_count = 0;
+        $this->like_count = 0;
+        $this->product_favorites_id = 0;
+        $this->add_at = null;
+        $this->producer_favorites_id = 0;
+        $this->inquiry_category_id = 0;
+        $this->inquiry_category_name = '';
+        $this->inquiry_id = 0;
+        $this->inquiry_contents = '';
+        $this->user_mailaddress = '';
+        $this->inquiry_at = null;
+        $this->privacy = 0;
+        $this->inquiry_history_id = 0;
+        $this->contents = '';
+        $this->sender = 0;
+        $this->is_read = 0;
+        $this->send_time = null;
+        $this->view_time = null;    
     }
 
     public function getuser_id() 
@@ -840,7 +754,7 @@ class Beans
     {
         return $this->review_id;
     }           
-    public function setreview_id($review_id) 
+    public function setreview_id($rating) 
     {
         $this->review_id = $review_id;
     }
@@ -1041,9 +955,8 @@ class Beans
     }           
     public function setis_producer($is_producer) 
     {
-        $this->is_producer = $is_producer;
+        $this->is_producer = $this->is_producer;
     }
 
 }
-
 ?>
