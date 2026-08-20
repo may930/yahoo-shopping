@@ -1,3 +1,9 @@
+<?php
+$cart_session = $_SESSION['cart'] ?? [];
+$cart_total_count = array_sum($cart_session);
+?>
+<header class="header">
+
 <header class="header">
     <div class="header-top">
         <div class="container header-top-inner">
@@ -30,17 +36,19 @@
                 </button>
             </div>
             <div class="header-actions">
-                <a href="cart.html" class="action-item-btn">
-                    <span class="action-icon">🛒</span>
-                    <span class="action-label">カート</span>
-                    <span class="cart-count">3</span>
-                </a>
-                <a href="favorites.html" class="action-item-btn">
+                <a href="cart.php" class="action-item-btn">
+    <span class="action-icon">🛒</span>
+    <span class="action-label">カート</span>
+    <?php if ($cart_total_count > 0): ?>
+        <span class="cart-count"><?= $cart_total_count ?></span>
+    <?php endif; ?>
+</a>
+                <a href="favorites.php" class="action-item-btn">
                     <span class="action-icon">❤</span>
                     <span class="action-label">お気に入り</span>
                     <span class="cart-count">3</span>
                 </a>
-                <a href="browsing-history.html" class="action-item-btn">
+                <a href="browsing-history.php" class="action-item-btn">
                     <span class="action-icon">🕒</span>
                     <span class="action-label">閲覧履歴</span>
                 </a>

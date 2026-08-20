@@ -55,61 +55,10 @@ foreach ($cart_items as $item) {
 </head>
 <body class="checkout-body">
 
-    <header class="header">
-        <div class="header-top">
-            <div class="container header-top-inner">
-                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
-                <nav class="header-top-nav">
-                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
-                </nav>
-            </div>
-        </div>
-
-        <div class="header-main">
-            <div class="container header-main-inner">
-                <a href="index.html" class="logo">
-                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
-                </a>
-                <div class="search-bar">
-                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
-                    <button type="submit" class="search-btn" aria-label="検索">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.35-4.35" />
-                        </svg>
-                        <span>検索する</span>
-                    </button>
-                </div>
-                <div class="header-actions">
-                    <a href="cart.html" class="action-item-btn">
-                        <span class="action-icon">🛒</span>
-                        <span class="action-label">カート</span>
-                        <span class="cart-count">3</span>
-                    </a>
-                    <a href="favorites.html" class="action-item-btn">
-                        <span class="action-icon">❤</span>
-                        <span class="action-label">お気に入り</span>
-                        <span class="cart-count">3</span>
-                    </a>
-                    <a href="browsing-history.html" class="action-item-btn">
-                        <span class="action-icon">🕒</span>
-                        <span class="action-label">閲覧履歴</span>
-                    </a>
-                    <a href="order-history.html" class="action-item-btn">
-                        <span class="action-icon">⏱️</span>
-                        <span class="action-label">注文履歴</span>
-                    </a>
-                    <a href="mypage.html" class="action-item-btn">
-                        <span class="action-icon">👤</span>
-                        <span class="action-label">マイページ</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+     <?php require_once('header.php'); ?>
 
     <main class="checkout-container">
-        <form action="order-complete.html" method="GET" class="checkout-layout">
+        <form action="confirm.php" method="POST" class="checkout-layout">
 
             <div class="checkout-main-side">
 
@@ -119,6 +68,10 @@ foreach ($cart_items as $item) {
                         <label class="checkout-label">お名前</label>
                         <input type="text" class="form-input" placeholder="HCS 太郎" required>
                     </div>
+                    <div class="checkout-form-group" style="margin-top: 16px;">
+    <label class="checkout-label">郵便番号</label>
+    <input type="text" name="zipcode" class="form-input" placeholder="062-0031" required>
+</div>
                     <div class="checkout-form-group" style="margin-top: 16px;">
                         <label class="checkout-label">ご住所</label>
                         <input type="text" id="shippingAddress" class="form-input" placeholder="北海道札幌市中央区北1条西..." required>
@@ -134,14 +87,42 @@ foreach ($cart_items as $item) {
                     </div>
 
                     <div id="billingAddressBox" class="billing-address-input-box" style="display: none; margin-top: 16px;">
-                        <div class="checkout-form-group">
-                            <label class="checkout-label">請求先お名前</label>
-                            <input type="text" class="form-input" placeholder="請求先のお名前">
-                        </div>
-                        <div class="checkout-form-group" style="margin-top: 16px;">
-                            <label class="checkout-label">請求先ご住所</label>
-                            <input type="text" class="form-input" placeholder="請求先のご住所">
-                        </div>
+                        <?php $hasRegisteredAddress = !empty($_SESSION['user']['address']); ?>
+
+<?php if ($hasRegisteredAddress): ?>
+    <div class="checkout-form-group">
+        <label style="display:block; margin-bottom: 8px;">
+            <input type="radio" name="addressType" value="registered" checked onchange="toggleAddressInputs()">
+            登録済みの住所を使う
+        </label>
+        <p style="margin: 0 0 4px 24px; color: #555;">
+            <?= htmlspecialchars($_SESSION['user']['real_name'] ?? $_SESSION['user']['name']) ?> 様<br>
+            〒<?= htmlspecialchars($_SESSION['user']['zipcode']) ?><br>
+            <?= htmlspecialchars($_SESSION['user']['address']) ?>
+        </p>
+        <label style="display:block; margin-top: 12px;">
+            <input type="radio" name="addressType" value="new" onchange="toggleAddressInputs()">
+            新しい住所を入力する
+        </label>
+    </div>
+<?php else: ?>
+    <input type="hidden" name="addressType" value="new">
+<?php endif; ?>
+
+<div id="newAddressInputs" style="<?= $hasRegisteredAddress ? 'display:none;' : '' ?> margin-top: 16px;">
+    <div class="checkout-form-group">
+        <label class="checkout-label">お名前</label>
+        <input type="text" name="shipping_name" class="form-input" placeholder="HCS 太郎" <?= $hasRegisteredAddress ? '' : 'required' ?>>
+    </div>
+    <div class="checkout-form-group" style="margin-top: 16px;">
+        <label class="checkout-label">郵便番号</label>
+        <input type="text" name="zipcode" class="form-input" placeholder="062-0031" <?= $hasRegisteredAddress ? '' : 'required' ?>>
+    </div>
+    <div class="checkout-form-group" style="margin-top: 16px;">
+        <label class="checkout-label">ご住所</label>
+        <input type="text" id="shippingAddress" name="address" class="form-input" placeholder="北海道札幌市中央区北1条西..." <?= $hasRegisteredAddress ? '' : 'required' ?>>
+    </div>
+</div>
                     </div>
                 </section>
 
@@ -265,6 +246,11 @@ foreach ($cart_items as $item) {
                 giftBox.style.display = 'none';
             }
         }
+
+        function toggleAddressInputs() {
+    const isNew = document.querySelector('input[name="addressType"]:checked').value === 'new';
+    document.getElementById('newAddressInputs').style.display = isNew ? 'block' : 'none';
+}
     </script>
 </body>
 </html>
