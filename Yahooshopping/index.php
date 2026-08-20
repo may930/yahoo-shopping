@@ -139,14 +139,15 @@
 
                 <aside class="ys-sidebar">
                     <div class="sidebar-box">
+                        <!-- カテゴリのページに遷移するけど、親カテゴリをIDとして渡す -->
                         <h3 class="sidebar-title">カテゴリから探す</h3>
                         <ul class="sidebar-menu-list">
-                            <li><a href="product-detail.php"><span>レディースファッション</span><span class="arrow">＞</span></a></li>
-                            <li><a href="#"><span>メンズファッション</span><span class="arrow">＞</span></a></li>
-                            <li><a href="#"><span>腕時計、アクセサリー</span><span class="arrow">＞</span></a></li>
-                            <li><a href="#"><span>ベビー、キッズ、マタニティ</span><span class="arrow">＞</span></a></li>
-                            <li><a href="category.html"><span>食品</span><span class="arrow">＞</span></a></li>
-                            <li><a href="#"><span>ドリンク、水、お酒</span><span class="arrow">＞</span></a></li>
+                            <li><a href="category_ladies_Lstmain.php"><span>レディースファッション</span><span class="arrow">></span></a></li>
+                            <li><a href="category_mens_Lstmain.php"><span>メンズファッション</span><span class="arrow">></span></a></li>
+                            <li><a href="category_accessories_Lstmain.php"><span>腕時計、アクセサリー</span><span class="arrow">></span></a></li>
+                            <li><a href="category_kids_Lstmain.php"><span>ベビー、キッズ、マタニティ</span><span class="arrow">></span></a></li>
+                            <li><a href="category_food_Lstmain.php"><span>食品</span><span class="arrow">></span></a></li>
+                            <li><a href="category_drink_Lstmain.php"><span>ドリンク、水、お酒</span><span class="arrow">></span></a></li>
                             <li><a href="#" class="more-link">さらに表示する</a></li>
                         </ul>
                     </div>
