@@ -88,6 +88,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cmdBtn1'])) {
                     $_SESSION['user']['id'] = $userId;
                 }
 
+                // 🔑 新規登録側と同じように、DBに保持している詳細情報も
+                // 存在するメソッドだけ安全に呼び出してセッションへ格納する
+                if (method_exists($userBeans, 'getphone_number')) {
+                    $_SESSION['user']['phone_number'] = $userBeans->getphone_number();
+                }
+                if (method_exists($userBeans, 'getmail_address')) {
+                    $_SESSION['user']['mail_address'] = $userBeans->getmail_address();
+                }
+                if (!$isProducer) {
+                    if (method_exists($userBeans, 'getzipcode')) {
+                        $_SESSION['user']['zipcode'] = $userBeans->getzipcode();
+                    }
+                    if (method_exists($userBeans, 'getaddress')) {
+                        $_SESSION['user']['address'] = $userBeans->getaddress();
+                    }
+                    if (method_exists($userBeans, 'getsex')) {
+                        $_SESSION['user']['sex'] = $userBeans->getsex();
+                    }
+                }
+
                 // 🚀 出品者の場合は admin_top.php へ直行！
 if ($isProducer) {
     header('Location: admin_top.php');

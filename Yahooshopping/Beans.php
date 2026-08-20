@@ -8,6 +8,8 @@ class Beans
 {
     /* 変数 */
     private $user_id;
+    private $name;
+    private $user_name;
     private $name_first;
     private $name_second;
     private $name_kana_first;
@@ -98,96 +100,98 @@ class Beans
     /* コンストラクタ */
     public function __construct()
     {
-        $this->BeansClear();
         $this->is_producer = false;
     }
 
     /* クリアメソッド */
     public function BeansClear()
     {
-        $this->user_id = 0;
-        $this->name_first = '';
-        $this->name_second = '';
-        $this->name_kana_first = '';
-        $this->name_kana_second = '';
-        $this->phone_number = '';
-        $this->mail_address = '';
-        $this->password = '';
-        $this->sex = '';
+        $this->user_id = null;
+        $this->name = null;
+        $this->user_name = null;
+        $this->name_first = null;
+        $this->name_second = null;
+        $this->name_kana_first = null;
+        $this->name_kana_second = null;
+        $this->phone_number = null;
+        $this->mail_address = null;
+        $this->password = null;
+        $this->sex = null;
         $this->birthday = null;
-        $this->zipcode = '';
-        $this->address = '';
+        $this->zipcode = null;
+        $this->address = null;
         $this->created_at = null;
         $this->deleted_at = null;
-        $this->producer_id = 0;
+        $this->producer_id = null;
         $this->company_name = null;
-        $this->representative_name = '';
-        $this->store_name = '';
-        $this->store_name_kana = '';
-        $this->introduction = '';
-        $this->related_store = '';
-        $this->notes = '';
+        $this->representative_name = null;
+        $this->store_name = null;
+        $this->store_name_kana = null;
+        $this->introduction = null;
+        $this->related_store = null;
+        $this->notes = null;
         $this->store_open_day = null;
-        $this->category_id = 0;
-        $this->category_name = '';
+        $this->category_id = null;
+        $this->category_name = null;
         $this->parent_category_id = null;
-        $this->product_id = 0;
-        $this->product_name = '';
-        $this->information = '';
+        $this->product_id = null;
+        $this->product_name = null;
+        $this->information = null;
         $this->variation_id = null;
-        $this->variation_name = '';
-        $this->option_id = 0;
-        $this->option_name = '';
-        $this->price = 0;
-        $this->stock = 0;
-        $this->image_id = 0;
-        $this->image_url = '';
-        $this->display_order = 0;
-        $this->coupon_id = 0;
-        $this->coupon_name = '';
-        $this->discount_rate = 0;
-        $this->is_discount = 0;
-        $this->min_order_amount = 0;
-        $this->maximum_discount = 0;
+        $this->variation_name = null;
+        $this->option_id = null;
+        $this->option_name = null;
+        $this->price = null;
+        $this->stock = null;
+        $this->image_id = null;
+        $this->image_url = null;
+        $this->display_order = null;
+        $this->coupon_id = null;
+        $this->coupon_name = null;
+        $this->discount_rate = null;
+        $this->is_discount = null;
+        $this->min_order_amount = null;
+        $this->maximum_discount = null;
         $this->start_date = null;
         $this->end_date = null;
-        $this->is_infinite = 0;
-        $this->max_use = 0;
+        $this->is_infinite = null;
+        $this->max_use = null;
+        $this->created_at = null;
         $this->used_at = null;
         $this->get_at = null;
-        $this->address_id = 0;
-        $this->shipping_name = '';
-        $this->cart_id = 0;
-        $this->quantity = 0;
-        $this->order_id = 0;
+        $this->address_id = null;
+        $this->shipping_name = null;
+        $this->cart_id = null;
+        $this->quantity = null;
+        $this->order_id = null;
         $this->order_date = null;
-        $this->coupon_discount_amount = 0;
-        $this->total_price = 0;
-        $this->pay = '';
-        $this->shipping_status = '';
-        $this->order_detail_id = 0;
-        $this->review_id = 0;
-        $this->rating = 0;
-        $this->title = '';
-        $this->comment = '';
-        $this->views_count = 0;
-        $this->like_count = 0;
-        $this->product_favorites_id = 0;
+        $this->coupon_discount_amount = null;
+        $this->total_price = null;
+        $this->pay = null;
+        $this->shipping_status = null;
+        $this->order_detail_id = null;
+        $this->review_id = null;
+        $this->rating = null;
+        $this->title = null;
+        $this->comment = null;
+        $this->views_count = null;
+        $this->like_count = null;
+        $this->product_favorites_id = null;
         $this->add_at = null;
-        $this->producer_favorites_id = 0;
-        $this->inquiry_category_id = 0;
-        $this->inquiry_category_name = '';
-        $this->inquiry_id = 0;
-        $this->inquiry_contents = '';
-        $this->user_mailaddress = '';
+        $this->producer_favorites_id = null;
+        $this->inquiry_category_id = null;
+        $this->inquiry_category_name = null;
+        $this->inquiry_id = null;
+        $this->inquiry_contents = null;
+        $this->user_mailaddress = null;
         $this->inquiry_at = null;
-        $this->privacy = 0;
-        $this->inquiry_history_id = 0;
-        $this->contents = '';
-        $this->sender = 0;
-        $this->is_read = 0;
+        $this->privacy = null;
+        $this->inquiry_history_id = null;
+        $this->contents = null;
+        $this->sender = null;
+        $this->is_read = null;
         $this->send_time = null;
-        $this->view_time = null;    
+        $this->view_time = null;
     }
 
     public function getuser_id() 
@@ -234,6 +238,26 @@ class Beans
     public function setname_kana_second($name_kana_second) 
     {
         $this->name_kana_second = $name_kana_second;
+    }
+
+    // 🔑 user_account.name（loginSQL.phpが setname() で使用）
+    public function getname() 
+    {
+        return $this->name;
+    }           
+    public function setname($name) 
+    {
+        $this->name = $name;
+    }
+
+    // 🔑 user_account.user_name（表示名。loginSQL.php/login.phpが使用）
+    public function getuser_name() 
+    {
+        return $this->user_name;
+    }           
+    public function setuser_name($user_name) 
+    {
+        $this->user_name = $user_name;
     }
 
 
@@ -754,7 +778,7 @@ class Beans
     {
         return $this->review_id;
     }           
-    public function setreview_id($rating) 
+    public function setreview_id($review_id) 
     {
         $this->review_id = $review_id;
     }
@@ -955,8 +979,9 @@ class Beans
     }           
     public function setis_producer($is_producer) 
     {
-        $this->is_producer = $this->is_producer;
+        $this->is_producer = $is_producer;
     }
 
 }
+
 ?>
