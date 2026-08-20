@@ -43,9 +43,11 @@ class loginSQL
 
         foreach ($stmtP as $row) {
             $Beans = new Beans();
-            // producerテーブルのカラム（producer_id, store_name）をBeansにセット
+            // producerテーブルのカラムをBeansにセット
             if (method_exists($Beans, 'setuser_id'))      $Beans->setuser_id($row['producer_id']);
-            if (method_exists($Beans, 'setname'))         $Beans->setname($row['store_name']); // 店舗名を名前として扱う
+            if (method_exists($Beans, 'setproducer_id'))  $Beans->setproducer_id($row['producer_id']);
+            if (method_exists($Beans, 'setstore_name'))   $Beans->setstore_name($row['store_name']);
+            if (method_exists($Beans, 'setname'))         $Beans->setname($row['store_name']); // 店舗名を名前としても保持
             if (method_exists($Beans, 'setphone_number')) $Beans->setphone_number($row['phone_number']);
             if (method_exists($Beans, 'setmail_address')) $Beans->setmail_address($row['mail_address']);
             if (method_exists($Beans, 'setpassword'))     $Beans->setpassword($row['password']);

@@ -1,13 +1,22 @@
 ﻿<?php 
-/* インポート */
-require_once('Beans.php');
+    /* インポート */
+    require_once('Beans.php');
 
-/* データを受け取る */
-session_start();
-$favoriteList = array();
-if (isset($_SESSION['favoriteList'])) {
- $favoriteList = $_SESSION['favoriteList'];
-}
+    /* データを受け取る */
+    session_start();
+    $favoriteList = array();
+    if (isset($_SESSION['favoriteList'])) {
+    $favoriteList = $_SESSION['favoriteList'];
+    }
+
+
+    // $count = 0;
+    // foreach ($favoriteList as $Beans):
+    //     $itemcount = $Beans->getproduct_favorites_id();
+    //     $count = $count + 1;
+    // endforeach;
+
+    $count = count($favoriteList);
 ?>
 
 
@@ -36,7 +45,7 @@ if (isset($_SESSION['favoriteList'])) {
 
         <div class="header-main">
             <div class="container header-main-inner">
-                <a href="index.html" class="logo">
+                <a href="index.php" class="logo">
                     <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
                 </a>
                 <div class="search-bar">
@@ -58,7 +67,7 @@ if (isset($_SESSION['favoriteList'])) {
                     <a href="favorites_Lstmain.php" class="action-item-btn">
                         <span class="action-icon">❤</span>
                         <span class="action-label">お気に入り</span>
-                        <span class="cart-count">3</span>
+                        <span class="cart-count"><?php echo $count; ?></span>
                     </a>
                     <a href="browsing-history.html" class="action-item-btn">
                         <span class="action-icon">🕒</span>
@@ -83,7 +92,7 @@ if (isset($_SESSION['favoriteList'])) {
         <!-- ページタイトルとお気に入り件数＆並び替え -->
         <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 20px; border-bottom: 2px solid var(--color-primary); padding-bottom: 8px; flex-wrap: wrap; gap: 10px;">
             <h1 style="font-size: 1.5rem; font-weight: 700; color: var(--color-black); margin: 0;">
-                ❤️ お気に入り商品
+                ❤️ お気に入り商品（<?php echo $count?>件）
             </h1>
 
             <!-- 右側のコントロールエリア（並び替え ＆ 件数） -->
@@ -96,16 +105,11 @@ if (isset($_SESSION['favoriteList'])) {
                         <option value="oldest">追加した日時の古い順</option>
                     </select>
                 </div>
-
-                <!-- お気に入り件数の表示（JSで動的変更できるように id="fav-count" を付与） -->
-                <span style="font-size: 0.9rem; color: #666; font-weight: 500;">
-                    現在のお気に入り：<strong id="fav-count" style="color: var(--color-primary); font-size: 1.1rem;">3</strong>
-                </span>
             </div>
         </div>
 
 
-        <!-- 商品カードを並べるコンテナ（CSSグリッドやFlexboxで横並びにする） -->
+        <!-- 商品カードを並べるコンテナ -->
         <div class="product-grid">
 
             <?php foreach ($favoriteList as $Beans): ?>
@@ -146,7 +150,8 @@ if (isset($_SESSION['favoriteList'])) {
                         </button>
 
                         <!--商品を削除するボタン-->
-                        <button type="button" class="btn-delete" onclick="removeFavorite(<?php echo $productId; ?>)">🗑️</button>                    </div>
+                        <button type="button" class="btn-delete" onclick="removeFavorite('<?php echo $productId; ?>')">🗑️</button>
+                    </div>
 
                 </div>
             <?php endforeach; ?>
@@ -172,28 +177,47 @@ if (isset($_SESSION['favoriteList'])) {
 
     <!-- スクリプト処理 -->
     <script>
+        // ① お気に入り件数を動的に更新する関数（★追加）
+        function updateFavoriteCount() {
+                // 現在画面に残っている商品カードの数を数える
+                const currentCount = document.querySelectorAll('.product-card').length;
+
+                // 1. ヘッダーアイコン横の件数を更新
+                const headerCountBadge = document.querySelector('.action-item-btn[href="favorites_Lstmain.php"] .cart-count');
+                if (headerCountBadge) {
+                    headerCountBadge.textContent = currentCount;
+                }
+
+                // 2. メインタイトルの件数を更新
+                const pageTitle = document.querySelector('h1');
+                if (pageTitle) {
+                    pageTitle.innerHTML = `❤️ お気に入り商品（${currentCount}件）`;
+                }
+            }
+
         // ① お気に入り商品の並び替えロジック
         function sortFavorites() {
             const sortVal = document.getElementById('sort-favorites').value;
             const grid = document.querySelector('.product-grid');
-            // お気に入り商品を配列として取得
             const items = Array.from(grid.querySelectorAll('.product-card'));
 
-            // 各商品の `data-added-at`（追加日時）を元に比較してソート
             items.sort((a, b) => {
-                const dateA = new Date(a.getAttribute('data-added-at'));
-                const dateB = new Date(b.getAttribute('data-added-at'));
+            const dateA = new Date(a.getAttribute('data-added-at'));
+            const dateB = new Date(b.getAttribute('data-added-at'));
+            const diff = dateB - dateA;
 
-                if (sortVal === 'newest') {
-                    return dateB - dateA; // 新しい順（降順）
-                } else {
-                    return dateA - dateB; // 古い順（昇順）
-                }
-            });
+            if (diff !== 0) {
+                return sortVal === 'newest' ? diff : -diff;
+            }
 
-            // ソートされた順にDOMを再配置
-            items.forEach(item => grid.appendChild(item));
-        }
+            const idA = parseInt(a.id, 10);
+            const idB = parseInt(b.id, 10);
+
+            return sortVal === 'newest' ? idB - idA : idA - idB;
+        });
+
+        items.forEach(item => grid.appendChild(item));
+    }
 
         // ページ読み込み時に初期ソートを実行（初期値：新しい順）
         window.addEventListener('DOMContentLoaded', () => {
@@ -203,46 +227,38 @@ if (isset($_SESSION['favoriteList'])) {
         // ② お気に入り削除（件数更新機能を追加！）
         function removeFavorite(itemId) {
             if(confirm('この商品をお気に入りから削除してもよろしいですか？')) {
-                const item = document.getElementById(itemId);
+            const item = document.getElementById(itemId);
+            
+            const sendDeleteForm = () => {
+                const form = document.createElement('form');
+                form.method = 'POST';
+                form.action = 'favorites_deletemain.php';
+
+                const inputPro = document.createElement('input');
+                inputPro.type = 'hidden';
+                inputPro.name = 'delete_item';
+                inputPro.value = itemId;
+
+                form.appendChild(inputPro);
+                document.body.appendChild(form);
+                form.submit();
+            };
+
+            if(item) {
+                item.style.transition = 'all 0.4s ease';
+                item.style.opacity = '0';
+                item.style.transform = 'scale(0.9)';
                 
-                const sendDeleteForm = () => {
-                    const form = document.createElement('form');
-                    form.method = 'POST';
-                    form.action = 'favorites_deletemain.php';
-
-                    const inputPro = document.createElement('input');
-                    inputPro.type = 'hidden';
-                    inputPro.name = 'delete_item';
-                    inputPro.value = itemId;
-
-                    form.appendChild(inputPro);
-                    document.body.appendChild(form);
-                    form.submit();
-                };
-
-                if(item) {
-                    item.style.transition = 'all 0.4s ease';
-                    item.style.opacity = '0';
-                    item.style.transform = 'scale(0.9)';
-                    
-                    setTimeout(() => {
-                        item.remove();
-                        updateFavoriteCount();
-                        sendDeleteForm();
-                    }, 400);
-                } else {
+                setTimeout(() => {
+                    item.remove();
+                    updateFavoriteCount(); // ★これでエラーにならず件数が減ります！
                     sendDeleteForm();
-                }                
-            }
+                }, 400);
+            } else {
+                sendDeleteForm();
+            }                
         }
-        // 件数表示をリアルタイムで同期して更新する関数
-        function updateFavoriteCount() {
-            const countEl = document.getElementById('fav-count');
-            const remainingItems = document.querySelectorAll('.product-grid .product-card');
-            if (countEl) {
-                countEl.textContent = remainingItems.length;
-            }
-        }
+      }
     </script>
 
 </body>

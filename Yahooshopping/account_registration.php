@@ -15,7 +15,7 @@ require_once('utilConnDB.php');
 /* インスタンス生成 */
 $account_registrationSQL = new account_registrationSQL();
 $Beans = new Beans();
-$utilConnDB = new UtilConnDB();
+$utilConnDB = new utilConnDB();
 
 /* HTMLからデータを受け取る */
 $phone_number = isset($_POST['phone_number']) ? htmlspecialchars($_POST['phone_number'], ENT_QUOTES, 'utf-8') : '';
@@ -75,11 +75,9 @@ switch ($cmdBtnNo)
         $utilConnDB->disconnect($pdo);
         
         /* データを渡す */
-        session_start();
         $_SESSION['Beans'] = $Beans;
         break;
 }
 /* 次に実行するモジュール */
 header('Location: register-complete.html');
-?>
 ?>
