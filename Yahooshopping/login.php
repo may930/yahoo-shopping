@@ -86,15 +86,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cmdBtn1'])) {
                     $_SESSION['user']['store_name']  = $userName;
                 } else {
                     $_SESSION['user']['id'] = $userId;
+
+                    // ★追加：一般ユーザーの場合は登録住所もセッションに保存
+    if (method_exists($userBeans, 'getname')) {
+        $_SESSION['user']['real_name'] = $userBeans->getname();
+    }
+    if (method_exists($userBeans, 'getzipcode')) {
+        $_SESSION['user']['zipcode'] = $userBeans->getzipcode();
+    }
+    if (method_exists($userBeans, 'getaddress')) {
+        $_SESSION['user']['address'] = $userBeans->getaddress();
+    }
+                }
+
+                // 🔑 新規登録側と同じように、DBに保持している詳細情報も
+                // 存在するメソッドだけ安全に呼び出してセッションへ格納する
+                if (method_exists($userBeans, 'getphone_number')) {
+                    $_SESSION['user']['phone_number'] = $userBeans->getphone_number();
+                }
+                if (method_exists($userBeans, 'getmail_address')) {
+                    $_SESSION['user']['mail_address'] = $userBeans->getmail_address();
+                }
+                if (!$isProducer) {
+                    if (method_exists($userBeans, 'getzipcode')) {
+                        $_SESSION['user']['zipcode'] = $userBeans->getzipcode();
+                    }
+                    if (method_exists($userBeans, 'getaddress')) {
+                        $_SESSION['user']['address'] = $userBeans->getaddress();
+                    }
+                    if (method_exists($userBeans, 'getsex')) {
+                        $_SESSION['user']['sex'] = $userBeans->getsex();
+                    }
                 }
 
                 // 🚀 出品者の場合は admin_top.php へ直行！
-                if ($isProducer) {
-                    header('Location: admin_top.php');
-                } else {
-                    header('Location: index.php');
-                }
-                exit();
+if ($isProducer) {
+    header('Location: admin_top.php');
+} else {
+    // ★変更：リダイレクト先が保存されていればそちらへ、無ければ従来通りindex.phpへ
+    if (isset($_SESSION['redirect_after_login'])) {
+        $redirect = $_SESSION['redirect_after_login'];
+        unset($_SESSION['redirect_after_login']); // 使い終わったら削除（重要）
+        header('Location: ' . $redirect);
+    } else {
+        header('Location: index.php');
+    }
+}
+exit();
             }
         }
 

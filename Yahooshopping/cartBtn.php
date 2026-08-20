@@ -6,7 +6,7 @@ require_once('Beans.php');
 
 /* インスタンス生成 */
 $cartSQL    = new CartSQL();
-$utilConnDB = new UtilCommDB();
+$utilConnDB = new UtilConnDB();
 $Beans      = new Beans();
 
 /* DB接続 */
