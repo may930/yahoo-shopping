@@ -1,7 +1,7 @@
 <?php
-// クラスファイルの読み込み
-require_once 'utilCommDB.php';
-require_once 'srchBeans.php';
+// クラスファイルの読み込み（実際に存在するファイル名に修正）
+require_once 'utilConnDB.php';
+require_once 'Beans.php';
 
 session_start();
 
@@ -12,8 +12,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     // 2. フォームからの受け取り＆Beansへのセット
     $beans = new Beans();
     
-    // セッション等からログイン中のuser_idを取得（例: $_SESSION['user_id']）
-    $userId = $_SESSION['user_id'] ?? null; 
+    // セッション等からログイン中のuser_idを取得
+    // login.php / account_registration.php で $_SESSION['user']['id'] にセットしている
+    $userId = $_SESSION['user']['id'] ?? null; 
 
     if (!$userId) 
     {
@@ -36,15 +37,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
     $pdo = $db->connect();
 
     if ($pdo) 
-        {
+    {
         try 
         {
             // SQL文（UPDATE文）の作成
-            $sql = "UPDATE users SET 
-                        name_first = :name_first,
-                        name_second = :name_second,
-                        name_kana_first = :name_kana_first,
-                        name_kana_second = :name_kana_second,
+            // ※ user_account テーブルには name_first/name_second 等の列は無く、
+            //   name / name_kana の2列にまとめて保存する設計（account_registrationSQL.phpと同じ）
+            $sql = "UPDATE user_account SET 
+                        name = :name,
+                        name_kana = :name_kana,
                         phone_number = :phone_number,
                         mail_address = :mail_address,
                         zipcode = :zipcode,
@@ -55,10 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             $stmt = $pdo->prepare($sql);
 
             // Beansから値を取得してバインド（SQLインジェクション対策）
-            $stmt->bindValue(':name_first', $beans->getname_first(), PDO::PARAM_STR);
-            $stmt->bindValue(':name_second', $beans->getname_second(), PDO::PARAM_STR);
-            $stmt->bindValue(':name_kana_first', $beans->getname_kana_first(), PDO::PARAM_STR);
-            $stmt->bindValue(':name_kana_second', $beans->getname_kana_second(), PDO::PARAM_STR);
+            $stmt->bindValue(':name', $beans->getname_first() . $beans->getname_second(), PDO::PARAM_STR);
+            $stmt->bindValue(':name_kana', $beans->getname_kana_first() . $beans->getname_kana_second(), PDO::PARAM_STR);
             $stmt->bindValue(':phone_number', $beans->getphone_number(), PDO::PARAM_STR);
             $stmt->bindValue(':mail_address', $beans->getmail_address(), PDO::PARAM_STR);
             $stmt->bindValue(':zipcode', $beans->getzipcode(), PDO::PARAM_STR);
@@ -69,11 +68,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST')
             // クエリ実行
             $stmt->execute();
 
+            // コミット（utilConnDB::connect()内でbeginTransaction()しているため）
+            $db->commit($pdo);
+
+            // 🔑 セッション上の表示名も更新後の内容に合わせておく
+            $_SESSION['user']['name']         = $beans->getname_first() . $beans->getname_second();
+            $_SESSION['user']['phone_number'] = $beans->getphone_number();
+            $_SESSION['user']['mail_address'] = $beans->getmail_address();
+            $_SESSION['user']['zipcode']      = $beans->getzipcode();
+            $_SESSION['user']['address']      = $beans->getaddress();
+            $_SESSION['user']['sex']          = $beans->getsex();
+
             echo "登録情報を更新しました！";
 
         } 
         catch (PDOException $e) 
         {
+            $db->rollback($pdo);
             echo "更新処理に失敗しました: " . $e->getMessage();
         } 
         finally 
