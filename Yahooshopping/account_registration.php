@@ -63,8 +63,24 @@ switch ($cmdBtnNo)
         $recCount = $account_registrationSQL->insert($pdo, $Beans);
         if ($recCount == 1) 
         {
+            /* 今登録した会員のuser_idを取得(INSERT文のuser_idは0固定=auto_increment) */
+            $newUserId = $pdo->lastInsertId();
+
             $utilConnDB->commit($pdo); // コミット
             $Beans->BeansClear();
+
+            /* 🔑 header.php でログイン状態を表示するための情報をセッションに格納
+                   ※ login.php とキー構成を揃えている */
+            $_SESSION['user'] = [
+                'id'           => $newUserId,
+                'name'         => $name_first . $name_second,
+                'is_producer'  => false,
+                'phone_number' => $phone_number,
+                'mail_address' => $mail_address,
+                'zipcode'      => $zipcode,
+                'address'      => $address,
+                'sex'          => $sex
+            ];
         } 
         else 
         {

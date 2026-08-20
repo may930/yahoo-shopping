@@ -1,4 +1,48 @@
-﻿<!DOCTYPE html>
+﻿<?php
+session_start();
+
+// ログインしていなければログイン画面へ
+if (!isset($_SESSION['user'])) {
+    $_SESSION['redirect_after_login'] = 'checkout.php';
+    header('Location: login_view.php');
+    exit();
+}
+
+// ★ここから追加：カートの中身をDBから取得
+require_once('cartSQL.php');
+require_once('utilConnDB.php');
+
+$cartSQL    = new CartSQL();
+$utilConnDB = new UtilConnDB();
+$pdo        = $utilConnDB->connect();
+
+$cart_session = $_SESSION['cart'] ?? [];
+$option_ids   = array_keys($cart_session);
+
+$cart_items = [];
+if (!empty($option_ids)) {
+    $cart_items = $cartSQL->selectCartItems($pdo, $option_ids);
+}
+
+$utilConnDB->disconnect($pdo);
+
+// カートが空なら購入手続きに進めないのでカート画面に戻す
+if (empty($cart_items)) {
+    header('Location: cart.php');
+    exit();
+}
+
+// 合計金額・合計点数を計算
+$total_price = 0;
+$total_count = 0;
+foreach ($cart_items as $item) {
+    $quantity = $cart_session[$item['option_id']] ?? 1;
+    $total_price += $item['price'] * $quantity;
+    $total_count += $quantity;
+}
+?>
+
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -144,53 +188,49 @@
                 </section>
 
                 <section class="checkout-section-card">
-                    <h2 class="checkout-sec-title">5. 注文商品</h2>
-                    <div class="checkout-item-list">
+    <h2 class="checkout-sec-title">5. 注文商品</h2>
+    <div class="checkout-item-list">
 
-                        <div class="checkout-product-item">
-                            <div class="checkout-product-img-box">
-                                <img src="https://placehold.co/200x200/f8f9fa/ff5a00?text=Blouse" alt="商品画像">
-                            </div>
-                            <div class="checkout-product-info">
-                                <h4 class="checkout-product-name">ボリュームスリーブブラウス シルキータッチ</h4>
-                                <p class="checkout-product-meta">数量: 1 | ￥4,980</p>
-                            </div>
-                        </div>
+        <?php foreach ($cart_items as $item): ?>
+            <?php
+                $quantity = $cart_session[$item['option_id']] ?? 1;
+                $img_url = !empty($item['image_url']) ? preg_replace('/^localhost\/(Yahooshopping\/)?/i', '', $item['image_url']) : 'https://placehold.co/200x200/f8f9fa/ff5a00?text=NoImage';
+            ?>
+            <div class="checkout-product-item">
+                <div class="checkout-product-img-box">
+                    <img src="<?= htmlspecialchars($img_url) ?>" alt="商品画像">
+                </div>
+                <div class="checkout-product-info">
+                    <h4 class="checkout-product-name"><?= htmlspecialchars($item['product_name']) ?></h4>
+                    <p class="checkout-product-meta">数量: <?= $quantity ?> | ￥<?= number_format($item['price']) ?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
 
-                        <div class="checkout-product-item">
-                            <div class="checkout-product-img-box">
-                                <img src="https://placehold.co/200x200/f8f9fa/ff5a00?text=T-Shirt" alt="商品画像">
-                            </div>
-                            <div class="checkout-product-info">
-                                <h4 class="checkout-product-name">プレミアムコットン オーバーサイズTシャツ</h4>
-                                <p class="checkout-product-meta">数量: 1 | ￥2,980</p>
-                            </div>
-                        </div>
-
-                    </div>
-                </section>
+    </div>
+</section>
 
             </div>
 
             <div class="checkout-side-bar">
                 <div class="summary-sticky-card">
-                    <h3 class="summary-box-title">注文内容の確認</h3>
-                    <div class="summary-price-row">
-                        <span>商品合計</span>
-                        <span>￥7,960</span>
-                    </div>
-                    <div class="summary-price-row">
-                        <span>送料</span>
-                        <span style="color: #1a6e3a; font-weight: 700;">無料</span>
-                    </div>
-                    <div class="summary-divider"></div>
-                    <div class="summary-total-row">
-                        <span>ご請求金額</span>
-                        <span class="final-total-price">￥7,960</span>
-                    </div>
+    <h3 class="summary-box-title">注文内容の確認（<?= $total_count ?>点）</h3>
+    <div class="summary-price-row">
+        <span>商品合計</span>
+        <span>￥<?= number_format($total_price) ?></span>
+    </div>
+    <div class="summary-price-row">
+        <span>送料</span>
+        <span style="color: #1a6e3a; font-weight: 700;">無料</span>
+    </div>
+    <div class="summary-divider"></div>
+    <div class="summary-total-row">
+        <span>ご請求金額</span>
+        <span class="final-total-price">￥<?= number_format($total_price) ?></span>
+    </div>
 
-                    <button type="submit" class="checkout-submit-btn">注文内容の確認へ</button>
-                </div>
+    <button type="submit" class="checkout-submit-btn">注文内容の確認へ</button>
+</div>
             </div>
 
         </form>

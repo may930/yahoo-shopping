@@ -3,15 +3,15 @@
 
 class TopPageSQL{
 
-    /* トップページに表示する商品のジャンルによって変更する（夏におすすめの商品　食品　人気ランキングなど） */
+    /* トップページに表示する商品のジャンルによって変更する（夏におすすめの商品 食品 人気ランキングなど） */
 
     /* 人気商品の一覧表示 */
     public function select_popular_produt($pdo){
         require_once('Beans.php');       
         $toppageList = array();
         /* SQL文生成 */
-        /* 商品ID、商品名、商品画像、値段、売れた商品の数量(同じデータの合計) */
-        $sql = 'SELECT product.product_id ,product.product_name ,product_images.image_url ,product_attributes_options.price ,SUM(order_details.quantity) AS total_sold
+        /* 商品ID、オプションID、商品名、商品画像、値段、売れた商品の数量(同じデータの合計) */
+        $sql = 'SELECT product.product_id ,product_attributes_options.option_id ,product.product_name ,product_images.image_url ,product_attributes_options.price ,SUM(order_details.quantity) AS total_sold
                 FROM product_attributes_options ,product_attributes ,product ,product_images ,order_details
                 WHERE product.product_id = product_attributes.product_id
                 AND product_attributes.variation_id = product_attributes_options.variation_id
@@ -30,6 +30,7 @@ class TopPageSQL{
                 $Beans = new Beans();
             
                 $Beans->setproduct_id($row['product_id']);
+                $Beans->setoption_id($row['option_id']);
                 $Beans->setproduct_name ($row['product_name']);
                 $Beans->setimage_url ($row['image_url']);
                 $Beans->setprice ($row['price']);
@@ -42,9 +43,9 @@ class TopPageSQL{
     } 
 
 
-    private $summer_products_id = [22, 23, 24, 25, 26]; // 冷えピタ、汗拭きシートなど、実際のoption_id/product_idを列挙
+    private $summer_products_id = [22, 23, 24, 25, 26]; // 冷えピタ、汗拭きシートなど
 
-    //夏におすすめの商品
+//夏におすすめの商品
     function select_summer_products($pdo){
         require_once('Beans.php');       
         $toppage_summer_List = array();
@@ -53,28 +54,25 @@ class TopPageSQL{
             return $toppage_summer_List; // 配列が空なら何もせず空配列を返す
         }
 
-        //[]の数だけ増やす
         $placeholders = implode(',', array_fill(0, count($this->summer_products_id), '?'));
 
-        /* SQL文生成 */
-        /* 商品ID、商品名、商品画像、値段、*/
-        $sql = "SELECT product.product_id ,product.product_name ,product_images.image_url ,product_attributes_options.price
-                FROM product_attributes_options ,product_attributes ,product ,product_images
-                WHERE product.product_id = product_attributes.product_id 
-                AND product.product_id IN ($placeholders)
-                AND product_attributes.variation_id = product_attributes_options.variation_id
-                AND product_attributes_options.option_id = product_images.option_id
-                GROUP BY product.product_id, product.product_name
+        /* SQL文修正：GROUP BYをoption_id基準にする */
+        $sql = "SELECT product.product_id ,product_attributes_options.option_id ,product.product_name ,product_images.image_url ,product_attributes_options.price
+                FROM product_attributes_options 
+                JOIN product_attributes ON product_attributes_options.variation_id = product_attributes.variation_id
+                JOIN product ON product.product_id = product_attributes.product_id 
+                JOIN product_images ON product_attributes_options.option_id = product_images.option_id
+                WHERE product.product_id IN ($placeholders)
+                GROUP BY product_attributes_options.option_id
                 LIMIT 3;";
         $stmt = $pdo->prepare($sql);
        
-        /* SQL文実行 */
         $ret = $stmt->execute($this->summer_products_id);       
-        /* 検索結果をtoppageListに登録 */
         foreach ($stmt as $row) {
                 $Beans = new Beans();
             
                 $Beans->setproduct_id($row['product_id']);
+                $Beans->setoption_id($row['option_id']);
                 $Beans->setproduct_name ($row['product_name']);
                 $Beans->setimage_url ($row['image_url']);
                 $Beans->setprice ($row['price']);
@@ -85,7 +83,6 @@ class TopPageSQL{
         return $toppage_summer_List;
     }
 
-    private $food_products_id = [9, 10, 11, 12]; // 冷えピタ、汗拭きシートなど、実際のoption_id/product_idを列挙
     //食べ物でおすすめの商品
     function select_food_products($pdo){
         require_once('Beans.php');       
@@ -95,28 +92,25 @@ class TopPageSQL{
             return $toppage_food_List; // 配列が空なら何もせず空配列を返す
         }
 
-        //[]の数だけ増やす
         $placeholders = implode(',', array_fill(0, count($this->food_products_id), '?'));
 
-        /* SQL文生成 */
-        /* 商品ID、商品名、商品画像、値段、*/
-        $sql = "SELECT product.product_id ,product.product_name ,product_images.image_url ,product_attributes_options.price
-                FROM product_attributes_options ,product_attributes ,product ,product_images
-                WHERE product.product_id = product_attributes.product_id 
-                AND product.product_id IN ($placeholders)
-                AND product_attributes.variation_id = product_attributes_options.variation_id
-                AND product_attributes_options.option_id = product_images.option_id
-                GROUP BY product.product_id, product.product_name
+        /* SQL文修正：GROUP BYをoption_id基準にする */
+        $sql = "SELECT product.product_id ,product_attributes_options.option_id ,product.product_name ,product_images.image_url ,product_attributes_options.price
+                FROM product_attributes_options 
+                JOIN product_attributes ON product_attributes_options.variation_id = product_attributes.variation_id
+                JOIN product ON product.product_id = product_attributes.product_id 
+                JOIN product_images ON product_attributes_options.option_id = product_images.option_id
+                WHERE product.product_id IN ($placeholders)
+                GROUP BY product_attributes_options.option_id
                 LIMIT 3;";
         $stmt = $pdo->prepare($sql);
        
-        /* SQL文実行 */
         $ret = $stmt->execute($this->food_products_id);       
-        /* 検索結果をtoppageListに登録 */
         foreach ($stmt as $row) {
                 $Beans = new Beans();
             
                 $Beans->setproduct_id($row['product_id']);
+                $Beans->setoption_id($row['option_id']);
                 $Beans->setproduct_name ($row['product_name']);
                 $Beans->setimage_url ($row['image_url']);
                 $Beans->setprice ($row['price']);
@@ -126,6 +120,5 @@ class TopPageSQL{
        
         return $toppage_food_List;
     }
-
 }
 ?>

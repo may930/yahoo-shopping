@@ -5,7 +5,7 @@
             <nav class="header-top-nav">
                 <!-- 🔑 ログイン状態に応じた名前の切り替え -->
                 <?php if (isset($_SESSION['user'])): ?>
-                    <span class="welcome-text">ようこそ、<strong><?= htmlspecialchars($_SESSION['user']['name'] ?? $_SESSION['user']['store_name'] ?? 'ユーザー') ?></strong> さん</span>
+                    <span class="welcome-text">ようこそ、<strong><?= htmlspecialchars($_SESSION['user']['name'] ?? $_SESSION['user']['store_name']) ?></strong> さん</span>
                     <a href="logout.php" style="margin-left: 10px; color: #666; text-decoration: underline; font-size: 0.8rem;">ログアウト</a>
                 <?php else: ?>
                     <span class="welcome-text">ようこそ、<strong>ゲスト</strong> さん</span>
@@ -44,7 +44,7 @@
                     <span class="action-icon">🕒</span>
                     <span class="action-label">閲覧履歴</span>
                 </a>
-                <a href="order-history.html" class="action-item-btn">
+                <a href="order-history.php" class="action-item-btn">
                     <span class="action-icon">⏱️</span>
                     <span class="action-label">注文履歴</span>
                 </a>
