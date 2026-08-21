@@ -12,9 +12,8 @@ if ($option_id > 0 && isset($_SESSION['cart'][$option_id])) {
     } elseif ($action === 'minus') {
         if ($_SESSION['cart'][$option_id] > 1) { // 下限1個
             $_SESSION['cart'][$option_id]--;
-        } else {
-            // 1個の状態でさらにマイナスされたらカートから削除する場合はここで unset も可能
         }
+        // 1個未満にする操作は無視（削除は別途「削除」リンクで行う）
     }
 }
 

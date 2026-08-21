@@ -16,7 +16,7 @@ $addressType   = $_POST['addressType'] ?? 'new';
 $paymentMethod = $_POST['paymentMethod'] ?? '';
 
 if ($addressType === 'registered') {
-    // 登録済み住所を使う場合は、セッションの値を信頼して使う（改ざん防止のため）
+    // 登録済み住所を使う場合は、フォーム値ではなくセッション（サーバー側の値）を信頼する
     $shipping_name = $_SESSION['user']['real_name'] ?? $_SESSION['user']['name'] ?? '';
     $zipcode       = $_SESSION['user']['zipcode'] ?? '';
     $address       = $_SESSION['user']['address'] ?? '';
@@ -25,7 +25,6 @@ if ($addressType === 'registered') {
     $zipcode       = trim($_POST['zipcode'] ?? '');
     $address       = trim($_POST['address'] ?? '');
 }
-
 
 if (empty($shipping_name) || empty($zipcode) || empty($address) || empty($paymentMethod)) {
     header('Location: checkout.php');
@@ -76,6 +75,8 @@ foreach ($cart_items as $item) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>注文内容の最終確認 - Yahoo!ショッピング風</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
