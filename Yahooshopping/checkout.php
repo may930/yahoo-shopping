@@ -1,14 +1,14 @@
 ﻿<?php
 session_start();
 
-// ログインしていなければログイン画面へ
+// ログインしていなければログイン画面へ（戻り先を保存）
 if (!isset($_SESSION['user'])) {
     $_SESSION['redirect_after_login'] = 'checkout.php';
     header('Location: login_view.php');
     exit();
 }
 
-// ★ここから追加：カートの中身をDBから取得
+// カートの中身をDBから取得（表示・金額計算用）
 require_once('cartSQL.php');
 require_once('utilConnDB.php');
 
@@ -32,7 +32,6 @@ if (empty($cart_items)) {
     exit();
 }
 
-// 合計金額・合計点数を計算
 $total_price = 0;
 $total_count = 0;
 foreach ($cart_items as $item) {
@@ -40,6 +39,9 @@ foreach ($cart_items as $item) {
     $total_price += $item['price'] * $quantity;
     $total_count += $quantity;
 }
+
+// 登録済み住所があるかどうか
+$hasRegisteredAddress = !empty($_SESSION['user']['address']);
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +57,7 @@ foreach ($cart_items as $item) {
 </head>
 <body class="checkout-body">
 
-     <?php require_once('header.php'); ?>
+    <?php require_once('header.php'); ?>
 
     <main class="checkout-container">
         <form action="confirm.php" method="POST" class="checkout-layout">
@@ -64,17 +66,40 @@ foreach ($cart_items as $item) {
 
                 <section class="checkout-section-card">
                     <h2 class="checkout-sec-title">1. お届け先住所</h2>
-                    <div class="checkout-form-group">
-                        <label class="checkout-label">お名前</label>
-                        <input type="text" class="form-input" placeholder="HCS 太郎" required>
-                    </div>
-                    <div class="checkout-form-group" style="margin-top: 16px;">
-    <label class="checkout-label">郵便番号</label>
-    <input type="text" name="zipcode" class="form-input" placeholder="062-0031" required>
-</div>
-                    <div class="checkout-form-group" style="margin-top: 16px;">
-                        <label class="checkout-label">ご住所</label>
-                        <input type="text" id="shippingAddress" class="form-input" placeholder="北海道札幌市中央区北1条西..." required>
+
+                    <?php if ($hasRegisteredAddress): ?>
+                        <div class="checkout-form-group">
+                            <label style="display:block; margin-bottom: 8px;">
+                                <input type="radio" name="addressType" value="registered" checked onchange="toggleAddressInputs()">
+                                登録済みの住所を使う
+                            </label>
+                            <p style="margin: 0 0 4px 24px; color: #555;">
+                                <?= htmlspecialchars($_SESSION['user']['real_name'] ?? $_SESSION['user']['name']) ?> 様<br>
+                                〒<?= htmlspecialchars($_SESSION['user']['zipcode']) ?><br>
+                                <?= htmlspecialchars($_SESSION['user']['address']) ?>
+                            </p>
+                            <label style="display:block; margin-top: 12px;">
+                                <input type="radio" name="addressType" value="new" onchange="toggleAddressInputs()">
+                                新しい住所を入力する
+                            </label>
+                        </div>
+                    <?php else: ?>
+                        <input type="hidden" name="addressType" value="new">
+                    <?php endif; ?>
+
+                    <div id="newAddressInputs" style="<?= $hasRegisteredAddress ? 'display:none;' : '' ?> margin-top: 16px;">
+                        <div class="checkout-form-group">
+                            <label class="checkout-label">お名前</label>
+                            <input type="text" name="shipping_name" class="form-input" placeholder="HCS 太郎" <?= $hasRegisteredAddress ? '' : 'required' ?>>
+                        </div>
+                        <div class="checkout-form-group" style="margin-top: 16px;">
+                            <label class="checkout-label">郵便番号</label>
+                            <input type="text" name="zipcode" class="form-input" placeholder="062-0031" <?= $hasRegisteredAddress ? '' : 'required' ?>>
+                        </div>
+                        <div class="checkout-form-group" style="margin-top: 16px;">
+                            <label class="checkout-label">ご住所</label>
+                            <input type="text" id="shippingAddress" name="address" class="form-input" placeholder="北海道札幌市中央区北1条西..." <?= $hasRegisteredAddress ? '' : 'required' ?>>
+                        </div>
                     </div>
                 </section>
 
@@ -87,42 +112,14 @@ foreach ($cart_items as $item) {
                     </div>
 
                     <div id="billingAddressBox" class="billing-address-input-box" style="display: none; margin-top: 16px;">
-                        <?php $hasRegisteredAddress = !empty($_SESSION['user']['address']); ?>
-
-<?php if ($hasRegisteredAddress): ?>
-    <div class="checkout-form-group">
-        <label style="display:block; margin-bottom: 8px;">
-            <input type="radio" name="addressType" value="registered" checked onchange="toggleAddressInputs()">
-            登録済みの住所を使う
-        </label>
-        <p style="margin: 0 0 4px 24px; color: #555;">
-            <?= htmlspecialchars($_SESSION['user']['real_name'] ?? $_SESSION['user']['name']) ?> 様<br>
-            〒<?= htmlspecialchars($_SESSION['user']['zipcode']) ?><br>
-            <?= htmlspecialchars($_SESSION['user']['address']) ?>
-        </p>
-        <label style="display:block; margin-top: 12px;">
-            <input type="radio" name="addressType" value="new" onchange="toggleAddressInputs()">
-            新しい住所を入力する
-        </label>
-    </div>
-<?php else: ?>
-    <input type="hidden" name="addressType" value="new">
-<?php endif; ?>
-
-<div id="newAddressInputs" style="<?= $hasRegisteredAddress ? 'display:none;' : '' ?> margin-top: 16px;">
-    <div class="checkout-form-group">
-        <label class="checkout-label">お名前</label>
-        <input type="text" name="shipping_name" class="form-input" placeholder="HCS 太郎" <?= $hasRegisteredAddress ? '' : 'required' ?>>
-    </div>
-    <div class="checkout-form-group" style="margin-top: 16px;">
-        <label class="checkout-label">郵便番号</label>
-        <input type="text" name="zipcode" class="form-input" placeholder="062-0031" <?= $hasRegisteredAddress ? '' : 'required' ?>>
-    </div>
-    <div class="checkout-form-group" style="margin-top: 16px;">
-        <label class="checkout-label">ご住所</label>
-        <input type="text" id="shippingAddress" name="address" class="form-input" placeholder="北海道札幌市中央区北1条西..." <?= $hasRegisteredAddress ? '' : 'required' ?>>
-    </div>
-</div>
+                        <div class="checkout-form-group">
+                            <label class="checkout-label">請求先お名前</label>
+                            <input type="text" class="form-input" placeholder="請求先のお名前">
+                        </div>
+                        <div class="checkout-form-group" style="margin-top: 16px;">
+                            <label class="checkout-label">請求先ご住所</label>
+                            <input type="text" class="form-input" placeholder="請求先のご住所">
+                        </div>
                     </div>
                 </section>
 
@@ -169,49 +166,47 @@ foreach ($cart_items as $item) {
                 </section>
 
                 <section class="checkout-section-card">
-    <h2 class="checkout-sec-title">5. 注文商品</h2>
-    <div class="checkout-item-list">
-
-        <?php foreach ($cart_items as $item): ?>
-            <?php
-                $quantity = $cart_session[$item['option_id']] ?? 1;
-                $img_url = !empty($item['image_url']) ? preg_replace('/^localhost\/(Yahooshopping\/)?/i', '', $item['image_url']) : 'https://placehold.co/200x200/f8f9fa/ff5a00?text=NoImage';
-            ?>
-            <div class="checkout-product-item">
-                <div class="checkout-product-img-box">
-                    <img src="<?= htmlspecialchars($img_url) ?>" alt="商品画像">
-                </div>
-                <div class="checkout-product-info">
-                    <h4 class="checkout-product-name"><?= htmlspecialchars($item['product_name']) ?></h4>
-                    <p class="checkout-product-meta">数量: <?= $quantity ?> | ￥<?= number_format($item['price']) ?></p>
-                </div>
-            </div>
-        <?php endforeach; ?>
-
-    </div>
-</section>
+                    <h2 class="checkout-sec-title">5. 注文商品</h2>
+                    <div class="checkout-item-list">
+                        <?php foreach ($cart_items as $item): ?>
+                            <?php
+                                $quantity = $cart_session[$item['option_id']] ?? 1;
+                                $img_url = !empty($item['image_url']) ? preg_replace('/^localhost\/(Yahooshopping\/)?/i', '', $item['image_url']) : 'https://placehold.co/200x200/f8f9fa/ff5a00?text=NoImage';
+                            ?>
+                            <div class="checkout-product-item">
+                                <div class="checkout-product-img-box">
+                                    <img src="<?= htmlspecialchars($img_url) ?>" alt="商品画像">
+                                </div>
+                                <div class="checkout-product-info">
+                                    <h4 class="checkout-product-name"><?= htmlspecialchars($item['product_name']) ?>（<?= htmlspecialchars($item['option_name']) ?>）</h4>
+                                    <p class="checkout-product-meta">数量: <?= $quantity ?> | ￥<?= number_format($item['price']) ?></p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    </div>
+                </section>
 
             </div>
 
             <div class="checkout-side-bar">
                 <div class="summary-sticky-card">
-    <h3 class="summary-box-title">注文内容の確認（<?= $total_count ?>点）</h3>
-    <div class="summary-price-row">
-        <span>商品合計</span>
-        <span>￥<?= number_format($total_price) ?></span>
-    </div>
-    <div class="summary-price-row">
-        <span>送料</span>
-        <span style="color: #1a6e3a; font-weight: 700;">無料</span>
-    </div>
-    <div class="summary-divider"></div>
-    <div class="summary-total-row">
-        <span>ご請求金額</span>
-        <span class="final-total-price">￥<?= number_format($total_price) ?></span>
-    </div>
+                    <h3 class="summary-box-title">注文内容の確認（<?= $total_count ?>点）</h3>
+                    <div class="summary-price-row">
+                        <span>商品合計</span>
+                        <span>￥<?= number_format($total_price) ?></span>
+                    </div>
+                    <div class="summary-price-row">
+                        <span>送料</span>
+                        <span style="color: #1a6e3a; font-weight: 700;">無料</span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-total-row">
+                        <span>ご請求金額</span>
+                        <span class="final-total-price">￥<?= number_format($total_price) ?></span>
+                    </div>
 
-    <button type="submit" class="checkout-submit-btn">注文内容の確認へ</button>
-</div>
+                    <button type="submit" class="checkout-submit-btn">注文内容の確認へ</button>
+                </div>
             </div>
 
         </form>
@@ -227,30 +222,20 @@ foreach ($cart_items as $item) {
         function toggleBillingAddress() {
             const checkbox = document.getElementById('sameAsShipping');
             const billingBox = document.getElementById('billingAddressBox');
-
-            if (checkbox.checked) {
-                billingBox.style.display = 'none';
-            } else {
-                billingBox.style.display = 'block';
-            }
+            billingBox.style.display = checkbox.checked ? 'none' : 'block';
         }
 
-        // ギフト設定の表示・非表示を切り替える関数ばい！
         function toggleGiftOptions() {
             const checkbox = document.getElementById('isGift');
             const giftBox = document.getElementById('giftOptionsBox');
-
-            if (checkbox.checked) {
-                giftBox.style.display = 'block';
-            } else {
-                giftBox.style.display = 'none';
-            }
+            giftBox.style.display = checkbox.checked ? 'block' : 'none';
         }
 
         function toggleAddressInputs() {
-    const isNew = document.querySelector('input[name="addressType"]:checked').value === 'new';
-    document.getElementById('newAddressInputs').style.display = isNew ? 'block' : 'none';
-}
+            const checkedEl = document.querySelector('input[name="addressType"]:checked');
+            const isNew = checkedEl ? checkedEl.value === 'new' : true;
+            document.getElementById('newAddressInputs').style.display = isNew ? 'block' : 'none';
+        }
     </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // 1. データベース接続ファイルを読み込む
 require_once 'db.php';
 

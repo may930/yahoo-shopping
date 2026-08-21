@@ -11,6 +11,10 @@ require_once('utilConnDB.php');
 
 $producer_id = $_SESSION['user']['producer_id'];
 
+// ★デバッグ用
+var_dump($producer_id);
+var_dump($_SESSION['user']);
+
 $utilConnDB = new UtilConnDB();
 $pdo = $utilConnDB->connect();
 $ordersSQL = new AdminOrdersSQL();

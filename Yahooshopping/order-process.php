@@ -59,8 +59,6 @@ foreach ($cart_items as $item) {
 }
 
 try {
-    $pdo->beginTransaction();
-
     // 1. order_history に登録
     $sql = "INSERT INTO order_history 
                 (user_id, shipping_name, zipcode, address, order_date, coupon_id, coupon_discount_amount, total_price, pay, shipping_status)

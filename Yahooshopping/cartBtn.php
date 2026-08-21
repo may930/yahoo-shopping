@@ -1,7 +1,7 @@
 <?php
 /* インポート */
 require_once('cartSQL.php');
-require_once('utilCommDB.php');
+require_once('utilConnDB.php');
 require_once('Beans.php');
 
 /* インスタンス生成 */

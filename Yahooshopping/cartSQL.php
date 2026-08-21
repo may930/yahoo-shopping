@@ -29,9 +29,7 @@ class CartSQL
                 GROUP BY o.option_id";
 
         $stmt = $pdo->prepare($sql);
-$stmt->execute($option_ids);
-
-return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt->execute($option_ids);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
