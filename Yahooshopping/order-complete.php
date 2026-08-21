@@ -12,6 +12,7 @@ $order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ご注文完了 - Yahoo!ショッピング風</title>
     <link rel="stylesheet" href="style.css">
 </head>

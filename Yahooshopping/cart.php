@@ -39,7 +39,7 @@ $utilConnDB->disconnect($pdo);
 </head>
 <body>
 
-     <?php require_once('header.php'); ?>
+    <?php require_once('header.php'); ?>
 
     <main class="cart-container">
         <div class="cart-layout">
@@ -86,16 +86,16 @@ $utilConnDB->disconnect($pdo);
                                     </div>
                                 </div>
                                 <div class="cart-item-qty">
-    <form method="post" action="cart-update.php" class="qty-controller" style="display: flex; align-items: center; gap: 8px;">
-        <input type="hidden" name="option_id" value="<?= $option_id ?>">
-        <button type="submit" name="action" value="minus" class="qty-btn">−</button>
-        <span class="cart-qty-val" data-price="<?= $item['price'] ?>"><?= $quantity ?></span>
-        <button type="submit" name="action" value="plus" class="qty-btn">＋</button>
-    </form>
-</div>
+                                    <form method="post" action="cart-update.php" class="qty-controller" style="display: flex; align-items: center; gap: 8px;">
+                                        <input type="hidden" name="option_id" value="<?= $option_id ?>">
+                                        <button type="submit" name="action" value="minus" class="qty-btn">−</button>
+                                        <span class="cart-qty-val" data-price="<?= $item['price'] ?>"><?= $quantity ?></span>
+                                        <button type="submit" name="action" value="plus" class="qty-btn">＋</button>
+                                    </form>
+                                </div>
                                 <div class="cart-item-price">
-    <span class="price-currency">￥</span><span class="price-val"><?= number_format($item['price']) ?></span>
-</div>
+                                    <span class="price-currency">￥</span><span class="price-val"><?= number_format($item['price']) ?></span>
+                                </div>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>

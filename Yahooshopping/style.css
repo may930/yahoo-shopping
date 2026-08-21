@@ -1,7 +1,7 @@
 /* ==========================================================================
    RESET & CSS VARIABLES
    ========================================================================== */
-*, *::before, *::after {
+   *, *::before, *::after {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -779,6 +779,41 @@ body {
 
     .pd-btn-cart:hover {
         background: #e64f00;
+    }
+
+.pd-btn-favorite {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 0 20px;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: var(--radius-md);
+    background: var(--color-white);
+    color: #555;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: var(--font-sans);
+    cursor: pointer;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+
+    .pd-btn-favorite:hover {
+        border-color: #999;
+        color: var(--color-primary);
+    }
+
+    .pd-btn-favorite.active {
+        color: var(--color-primary);
+        border-color: var(--color-primary);
+        background: #fff4ee;
+    }
+
+    .pd-btn-favorite.active .heart-icon path {
+        fill: var(--color-primary);
+        stroke: var(--color-primary);
     }
 
 /* ==========================================================================

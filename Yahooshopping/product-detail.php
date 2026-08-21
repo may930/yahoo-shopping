@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 // 1. データベース接続ファイルを読み込む
 require_once 'db.php';
 
@@ -166,6 +167,14 @@ try {
     <?php else: ?>
         <button class="pd-btn-cart" disabled style="background-color: #ccc; cursor: not-allowed;">❌ 売り切れです</button>
     <?php endif; ?>
+
+    <button type="button" id="favoriteBtn" class="pd-btn-favorite" data-option-id="<?= $target_option_id ?>" onclick="toggleFavorite(this)">
+        <svg class="heart-icon" viewBox="0 0 24 24" width="20" height="20">
+            <path d="M12 21s-6.7-4.35-9.3-8.1C1.1 10.6 1 8.2 2.6 6.5 4.2 4.8 6.8 4.8 8.4 6.5L12 10.3l3.6-3.8c1.6-1.7 4.2-1.7 5.8 0 1.6 1.7 1.5 4.1-0.1 6.4C18.7 16.65 12 21 12 21z"
+                  fill="none" stroke="currentColor" stroke-width="1.8"/>
+        </svg>
+        <span id="favoriteLabel">お気に入り</span>
+    </button>
 </div>
                 </div>
             </div>
@@ -302,6 +311,52 @@ try {
     </footer>
 
     <script>
+        // ==== お気に入りボタン ====
+        (function () {
+            const btn = document.getElementById('favoriteBtn');
+            const label = document.getElementById('favoriteLabel');
+            const optionId = btn.dataset.optionId;
+            const storageKey = 'favorite_options'; // 例: {"1": true, "3": true}
+
+            function getFavorites() {
+                try {
+                    return JSON.parse(localStorage.getItem(storageKey)) || {};
+                } catch (e) {
+                    return {};
+                }
+            }
+
+            function applyState(isActive) {
+                btn.classList.toggle('active', isActive);
+                label.textContent = isActive ? 'お気に入り済み' : 'お気に入り';
+                btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+            }
+
+            // ページ読み込み時に保存済みの状態を反映
+            const favorites = getFavorites();
+            applyState(!!favorites[optionId]);
+
+            window.toggleFavorite = function (button) {
+                const favs = getFavorites();
+                const nowActive = !favs[optionId];
+
+                if (nowActive) {
+                    favs[optionId] = true;
+                } else {
+                    delete favs[optionId];
+                }
+                localStorage.setItem(storageKey, JSON.stringify(favs));
+                applyState(nowActive);
+
+                // サーバー側にも保存したい場合はここでAPIを呼ぶ
+                // fetch('favorite-toggle.php', {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({ option_id: optionId, favorited: nowActive })
+                // });
+            };
+        })();
+
         let qty = 1;
 document.getElementById('qtyUp').addEventListener('click', () => {
     if (qty < 9) { 
