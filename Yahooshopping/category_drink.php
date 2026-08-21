@@ -91,7 +91,7 @@
 
     <div class="category-banner-wrapper" style="width: 100%; height: 200px; background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat; display: flex; align-items: center; justify-content: flex-start;">
         <div class="container">
-            <h1 style="color: #fff; font-size: 2rem; font-weight: 700; margin-left: 20px; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">レディース</h1>
+            <h1 style="color: #fff; font-size: 2rem; font-weight: 700; margin-left: 20px; text-shadow: 1px 1px 5px rgba(0,0,0,0.5);">飲み物</h1>
         </div>
     </div>
 
@@ -105,8 +105,8 @@
                     <div class="sidebar-box">
                         <h3 class="sidebar-title">カテゴリ</h3>
                         <ul class="sidebar-menu-list">
-                            <li><a href="#"><span>水、清涼飲料水</span><span class="arrow">></span></a></li>
-                            <li><a href="#"><span>お酒</span><span class="arrow">></span></a></li>
+                            <li><a href="category_drink_softdrink_Lstmain.php"><span>水、お茶、清涼飲料水</span><span class="arrow">></span></a></li>
+                            <li><a href="category_drink_alcohol_Lstmain.php"><span>お酒</span><span class="arrow">></span></a></li>
                         </ul>
                     </div>
                 </aside>

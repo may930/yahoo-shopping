@@ -105,6 +105,9 @@
                     <div class="sidebar-box">
                         <h3 class="sidebar-title">カテゴリ</h3>
                         <ul class="sidebar-menu-list">
+                        <li><a href="category_accessories_necklace_Lstmain.php"><span>ネックレス</span><span class="arrow">></span></a></li>
+                        <li><a href="category_accessories_ring_Lstmain.php"><span>指輪</span><span class="arrow">></span></a></li>
+                        <li><a href="category_accessories_earrings_Lstmain.php"><span>ピアス</span><span class="arrow">></span></a></li>
                         </ul>
                     </div>
                 </aside>

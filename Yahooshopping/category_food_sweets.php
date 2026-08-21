@@ -105,11 +105,11 @@
                     <div class="sidebar-box">
                         <h3 class="sidebar-title">カテゴリ</h3>
                         <ul class="sidebar-menu-list">
-                            <li><a href="category_food_Lstmain.php"><span>すべて</span><span class="arrow">＞</span></a></li>
-                            <li><a href="category_food_cooking_Lstmain.php"><span>惣菜、料理</span><span class="arrow">＞</span></a></li>
-                            <li><a href="category_food_grain_Lstmain.php"><span>米、雑穀、粉類</span><span class="arrow">＞</span></a></li>
-                            <li><a href="category_food_seafood_Lstmain.php"><span>魚介類、海産物</span><span class="arrow">＞</span></a></li>
-                            <li><a href="category_food_meat_Lstmain.php"><span>肉、ハム、ソーセージ</span><span class="arrow">＞</span></a></li>
+                            <li><a href="category_food_Lstmain.php"><span>すべて</span><span class="arrow">></span></a></li>
+                            <li><a href="category_food_cooking_Lstmain.php"><span>惣菜、料理</span><span class="arrow">></span></a></li>
+                            <li><a href="category_food_grain_Lstmain.php"><span>米、雑穀、粉類</span><span class="arrow">></span></a></li>
+                            <li><a href="category_food_seafood_Lstmain.php"><span>魚介類、海産物</span><span class="arrow">></span></a></li>
+                            <li><a href="category_food_meat_Lstmain.php"><span>肉、ハム、ソーセージ</span><span class="arrow">></span></a></li>
                         </ul>
                     </div>
                 </aside>
