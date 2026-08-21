@@ -53,6 +53,17 @@ try {
     $stmt_images->execute(['option_id' => $target_option_id]);
     $db_images = $stmt_images->fetchAll(PDO::FETCH_COLUMN);
 
+    // 6. ログイン中のユーザーが、このオプションを既にお気に入り登録しているか確認
+    $is_favorited = false;
+    if (isset($_SESSION['user']['id'])) {
+        $stmt_fav = $pdo->prepare("SELECT product_favorites_id FROM product_favorites WHERE user_id = :user_id AND option_id = :option_id");
+        $stmt_fav->execute([
+            'user_id'   => $_SESSION['user']['id'],
+            'option_id' => $target_option_id
+        ]);
+        $is_favorited = (bool) $stmt_fav->fetch();
+    }
+
     // 画像パスの整形
     $product_images = [];
     foreach ($db_images as $img) {
@@ -168,12 +179,12 @@ try {
         <button class="pd-btn-cart" disabled style="background-color: #ccc; cursor: not-allowed;">❌ 売り切れです</button>
     <?php endif; ?>
 
-    <button type="button" id="favoriteBtn" class="pd-btn-favorite" data-option-id="<?= $target_option_id ?>" onclick="toggleFavorite(this)">
+    <button type="button" id="favoriteBtn" class="pd-btn-favorite<?= $is_favorited ? ' active' : '' ?>" data-option-id="<?= $target_option_id ?>" data-favorited="<?= $is_favorited ? '1' : '0' ?>" onclick="toggleFavorite(this)">
         <svg class="heart-icon" viewBox="0 0 24 24" width="20" height="20">
             <path d="M12 21s-6.7-4.35-9.3-8.1C1.1 10.6 1 8.2 2.6 6.5 4.2 4.8 6.8 4.8 8.4 6.5L12 10.3l3.6-3.8c1.6-1.7 4.2-1.7 5.8 0 1.6 1.7 1.5 4.1-0.1 6.4C18.7 16.65 12 21 12 21z"
                   fill="none" stroke="currentColor" stroke-width="1.8"/>
         </svg>
-        <span id="favoriteLabel">お気に入り</span>
+        <span id="favoriteLabel"><?= $is_favorited ? 'お気に入り済み' : 'お気に入り' ?></span>
     </button>
 </div>
                 </div>
@@ -311,49 +322,50 @@ try {
     </footer>
 
     <script>
-        // ==== お気に入りボタン ====
+        // ==== お気に入りボタン（DB連携） ====
         (function () {
             const btn = document.getElementById('favoriteBtn');
             const label = document.getElementById('favoriteLabel');
-            const optionId = btn.dataset.optionId;
-            const storageKey = 'favorite_options'; // 例: {"1": true, "3": true}
-
-            function getFavorites() {
-                try {
-                    return JSON.parse(localStorage.getItem(storageKey)) || {};
-                } catch (e) {
-                    return {};
-                }
-            }
 
             function applyState(isActive) {
                 btn.classList.toggle('active', isActive);
                 label.textContent = isActive ? 'お気に入り済み' : 'お気に入り';
                 btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                btn.dataset.favorited = isActive ? '1' : '0';
             }
 
-            // ページ読み込み時に保存済みの状態を反映
-            const favorites = getFavorites();
-            applyState(!!favorites[optionId]);
-
             window.toggleFavorite = function (button) {
-                const favs = getFavorites();
-                const nowActive = !favs[optionId];
+                const optionId = button.dataset.optionId;
+                button.disabled = true;
 
-                if (nowActive) {
-                    favs[optionId] = true;
-                } else {
-                    delete favs[optionId];
-                }
-                localStorage.setItem(storageKey, JSON.stringify(favs));
-                applyState(nowActive);
-
-                // サーバー側にも保存したい場合はここでAPIを呼ぶ
-                // fetch('favorite-toggle.php', {
-                //     method: 'POST',
-                //     headers: { 'Content-Type': 'application/json' },
-                //     body: JSON.stringify({ option_id: optionId, favorited: nowActive })
-                // });
+                fetch('favorites_insert.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: 'option_id=' + encodeURIComponent(optionId)
+                })
+                .then(res => {
+                    if (res.status === 401) {
+                        // 未ログインの場合はログイン画面へ誘導
+                        alert('お気に入り登録にはログインが必要です');
+                        window.location.href = 'login_view.php';
+                        return null;
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    if (!data) return;
+                    if (data.status === 'ok') {
+                        applyState(data.favorited);
+                    } else {
+                        alert(data.message || 'お気に入りの更新に失敗しました');
+                    }
+                })
+                .catch(() => {
+                    alert('通信エラーが発生しました');
+                })
+                .finally(() => {
+                    button.disabled = false;
+                });
             };
         })();
 

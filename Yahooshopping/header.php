@@ -42,7 +42,7 @@ $cart_total_count = array_sum($cart_session);
                         <span class="cart-count"><?= $cart_total_count ?></span>
                     <?php endif; ?>
                 </a>
-                <a href="favorites.html" class="action-item-btn">
+                <a href="favorites_Lstmain.php" class="action-item-btn">
                     <span class="action-icon">❤</span>
                     <span class="action-label">お気に入り</span>
                     <span class="cart-count">3</span>
