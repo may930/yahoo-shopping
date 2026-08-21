@@ -93,7 +93,6 @@
                             <li><a href="category_kids_Lstmain.php"><span>ベビー、キッズ、マタニティ</span><span class="arrow">></span></a></li>
                             <li><a href="category_food_Lstmain.php"><span>食品</span><span class="arrow">></span></a></li>
                             <li><a href="category_drink_Lstmain.php"><span>ドリンク、水、お酒</span><span class="arrow">></span></a></li>
-                            <li><a href="#" class="more-link">さらに表示する</a></li>
                         </ul>
                     </div>
                 </aside>

@@ -278,7 +278,85 @@
            
             return $category_drink_List;    
         }
-
+        //飲み物(水、お茶、清涼飲料水)
+        private $child_softdrink_id = [2,5]; ///product_idを列挙
+        public function child_softdrinks_puroduct($pdo){
+            require_once('Beans.php');       
+            $category_softdrink_List = array();
+    
+            if (empty($this->child_softdrink_id)) {
+                return $category_softdrink_List; // 配列が空なら何もせず空配列を返す
+            }
+    
+            //[]の数だけ増やす
+            $placeholders = implode(',', array_fill(0, count($this->child_softdrink_id), '?'));
+    
+            /* SQL文生成 */
+            /* 商品ID、商品名、商品画像、値段、*/
+            $sql = "SELECT product.product_id ,product.product_name ,product_images.image_url ,product_attributes_options.price
+                    FROM product_attributes_options ,product_attributes ,product ,product_images
+                    WHERE product.product_id = product_attributes.product_id 
+                    AND product.product_id IN ($placeholders)
+                    AND product_attributes.variation_id = product_attributes_options.variation_id
+                    AND product_attributes_options.option_id = product_images.option_id
+                    GROUP BY product.product_id, product.product_name;";
+            $stmt = $pdo->prepare($sql);
+            
+            /* SQL文実行 */
+            $ret = $stmt->execute($this->child_softdrink_id);       
+            foreach ($stmt as $row) {
+                    $Beans = new Beans();
+                
+                    $Beans->setproduct_id($row['product_id']);
+                    $Beans->setproduct_name ($row['product_name']);
+                    $Beans->setimage_url ($row['image_url']);
+                    $Beans->setprice ($row['price']);
+    
+                    $category_softdrink_List[] = $Beans;
+                }
+            
+            return $category_softdrink_List;    
+        }
+        //飲み物(お酒)
+        private $child_alcohol_id = [1]; ///product_idを列挙
+        public function child_alcohol_puroduct($pdo){
+            require_once('Beans.php');       
+            $category_alcohol_List = array();
+    
+            if (empty($this->child_alcohol_id)) {
+                return $category_alcohol_List; // 配列が空なら何もせず空配列を返す
+            }
+    
+            //[]の数だけ増やす
+            $placeholders = implode(',', array_fill(0, count($this->child_alcohol_id), '?'));
+    
+            /* SQL文生成 */
+            /* 商品ID、商品名、商品画像、値段、*/
+            $sql = "SELECT product.product_id ,product.product_name ,product_images.image_url ,product_attributes_options.price
+                    FROM product_attributes_options ,product_attributes ,product ,product_images
+                    WHERE product.product_id = product_attributes.product_id 
+                    AND product.product_id IN ($placeholders)
+                    AND product_attributes.variation_id = product_attributes_options.variation_id
+                    AND product_attributes_options.option_id = product_images.option_id
+                    GROUP BY product.product_id, product.product_name;";
+            $stmt = $pdo->prepare($sql);
+            
+            /* SQL文実行 */
+            $ret = $stmt->execute($this->child_alcohol_id);       
+            foreach ($stmt as $row) {
+                    $Beans = new Beans();
+                
+                    $Beans->setproduct_id($row['product_id']);
+                    $Beans->setproduct_name ($row['product_name']);
+                    $Beans->setimage_url ($row['image_url']);
+                    $Beans->setprice ($row['price']);
+    
+                    $category_alcohol_List[] = $Beans;
+                }
+            
+            return $category_alcohol_List;    
+        }
+        
         //レディース
         private $parent_ladies_id = [17,18,19,20,21]; ///product_idを列挙
         public function parent_ladies_puroduct($pdo){
@@ -397,6 +475,123 @@
                 }
            
             return $category_accessories_List;    
+        }
+        //アクセサリー（ネックレス）
+        private $child_accessories_necklace_id = [9]; ///product_idを列挙
+        public function child_accessories_necklace_puroduct($pdo){
+            require_once('Beans.php');       
+            $category_accessories_necklace_List = array();
+    
+            if (empty($this->child_accessories_necklace_id)) {
+                return $category_accessories_necklace_List; // 配列が空なら何もせず空配列を返す
+            }
+    
+            //[]の数だけ増やす
+            $placeholders = implode(',', array_fill(0, count($this->child_accessories_necklace_id), '?'));
+    
+            /* SQL文生成 */
+            /* 商品ID、商品名、商品画像、値段、*/
+            $sql = "SELECT product.product_id ,product.product_name ,product_images.image_url ,product_attributes_options.price
+                    FROM product_attributes_options ,product_attributes ,product ,product_images
+                    WHERE product.product_id = product_attributes.product_id 
+                    AND product.product_id IN ($placeholders)
+                    AND product_attributes.variation_id = product_attributes_options.variation_id
+                    AND product_attributes_options.option_id = product_images.option_id
+                    GROUP BY product.product_id, product.product_name;";
+            $stmt = $pdo->prepare($sql);
+            
+            /* SQL文実行 */
+            $ret = $stmt->execute($this->child_accessories_necklace_id);       
+            foreach ($stmt as $row) {
+                    $Beans = new Beans();
+                
+                    $Beans->setproduct_id($row['product_id']);
+                    $Beans->setproduct_name ($row['product_name']);
+                    $Beans->setimage_url ($row['image_url']);
+                    $Beans->setprice ($row['price']);
+    
+                    $category_accessories_necklace_List[] = $Beans;
+                }
+            
+            return $category_accessories_necklace_List;    
+        }        
+        //アクセサリー（指輪）
+        private $child_accessories_ring_id = [5]; ///product_idを列挙
+        public function child_accessories_ring_puroduct($pdo){
+            require_once('Beans.php');       
+            $category_accessories_ring_List = array();
+    
+            if (empty($this->child_accessories_ring_id)) {
+                return $category_accessories_ring_List; // 配列が空なら何もせず空配列を返す
+            }
+    
+            //[]の数だけ増やす
+            $placeholders = implode(',', array_fill(0, count($this->child_accessories_ring_id), '?'));
+    
+            /* SQL文生成 */
+            /* 商品ID、商品名、商品画像、値段、*/
+            $sql = "SELECT product.product_id ,product.product_name ,product_images.image_url ,product_attributes_options.price
+                    FROM product_attributes_options ,product_attributes ,product ,product_images
+                    WHERE product.product_id = product_attributes.product_id 
+                    AND product.product_id IN ($placeholders)
+                    AND product_attributes.variation_id = product_attributes_options.variation_id
+                    AND product_attributes_options.option_id = product_images.option_id
+                    GROUP BY product.product_id, product.product_name;";
+            $stmt = $pdo->prepare($sql);
+           
+            /* SQL文実行 */
+            $ret = $stmt->execute($this->child_accessories_ring_id);       
+            foreach ($stmt as $row) {
+                    $Beans = new Beans();
+                
+                    $Beans->setproduct_id($row['product_id']);
+                    $Beans->setproduct_name ($row['product_name']);
+                    $Beans->setimage_url ($row['image_url']);
+                    $Beans->setprice ($row['price']);
+    
+                    $category_accessories_ring_List[] = $Beans;
+                }
+           
+            return $category_accessories_ring_List;    
+        }        
+        //アクセサリー（ピアス）
+        private $child_accessories_earrings_id = [6]; ///product_idを列挙
+        public function child_accessories_earrings_puroduct($pdo){
+            require_once('Beans.php');       
+            $category_accessories_earrings_List = array();
+    
+            if (empty($this->child_accessories_earrings_id)) {
+                return $category_accessories_earrings_List; // 配列が空なら何もせず空配列を返す
+            }
+    
+            //[]の数だけ増やす
+            $placeholders = implode(',', array_fill(0, count($this->child_accessories_earrings_id), '?'));
+    
+            /* SQL文生成 */
+            /* 商品ID、商品名、商品画像、値段、*/
+            $sql = "SELECT product.product_id ,product.product_name ,product_images.image_url ,product_attributes_options.price
+                    FROM product_attributes_options ,product_attributes ,product ,product_images
+                    WHERE product.product_id = product_attributes.product_id 
+                    AND product.product_id IN ($placeholders)
+                    AND product_attributes.variation_id = product_attributes_options.variation_id
+                    AND product_attributes_options.option_id = product_images.option_id
+                    GROUP BY product.product_id, product.product_name;";
+            $stmt = $pdo->prepare($sql);
+           
+            /* SQL文実行 */
+            $ret = $stmt->execute($this->child_accessories_earrings_id);       
+            foreach ($stmt as $row) {
+                    $Beans = new Beans();
+                
+                    $Beans->setproduct_id($row['product_id']);
+                    $Beans->setproduct_name ($row['product_name']);
+                    $Beans->setimage_url ($row['image_url']);
+                    $Beans->setprice ($row['price']);
+    
+                    $category_accessories_earrings_List[] = $Beans;
+                }
+           
+            return $category_accessories_earrings_List;    
         }
 
 
