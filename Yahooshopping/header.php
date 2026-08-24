@@ -2,7 +2,6 @@
 // カート内の合計点数を計算（ヘッダーのバッジ表示用）
 $cart_session = $_SESSION['cart'] ?? [];
 $cart_total_count = array_sum($cart_session);
-session_start();
 $favoriteList = array();
 if (isset($_SESSION['favoriteList'])) {
 $favoriteList = $_SESSION['favoriteList'];
