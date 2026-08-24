@@ -46,7 +46,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
             <div style="text-align: center; margin-top: 24px; font-size: 0.85rem;">
                 <p style="color: #666;">アカウントをお持ちでないですか？</p>
-                <a href="register.html" style="color: var(--color-link); text-decoration: none; font-weight: 700; display: inline-block; margin-top: 4px;">新規会員登録はこちら</a>
+                <a href="register.php" style="color: var(--color-link); text-decoration: none; font-weight: 700; display: inline-block; margin-top: 4px;">新規会員登録はこちら</a>
             </div>
         </div>
     </main>
