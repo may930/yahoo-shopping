@@ -43,7 +43,7 @@
                 </div>
 
                 <div style="text-align: center; margin-top: 20px;">
-                    <a href="support-top.html" style="color: var(--color-link); text-decoration: none; font-size: 0.9rem;">
+                    <a href="support-top.php" style="color: var(--color-link); text-decoration: none; font-size: 0.9rem;">
                         ＜ お問い合わせTOPへ戻る
                     </a>
                 </div>
@@ -71,7 +71,7 @@
             alert('お問い合わせを受け付けました！\nカスタマーサポートからの返信をお待ちください。');
 
             // 問い合わせTOP画面へ戻る！
-            location.href = 'support-top.html';
+            location.href = 'support-top.php';
         });
     </script>
 

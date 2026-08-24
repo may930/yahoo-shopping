@@ -95,5 +95,5 @@ switch ($cmdBtnNo)
         break;
 }
 /* 次に実行するモジュール */
-header('Location: register-complete.html');
+header('Location: register-complete.php');
 ?>
