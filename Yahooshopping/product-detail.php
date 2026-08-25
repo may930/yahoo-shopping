@@ -197,6 +197,7 @@ try {
                 </div>
             </section>
 
+            <!-- レビュー関係 -->
             <section id="reviews-section" style="background: #fff; border: 1px solid #e4e7ec; border-radius: var(--radius-md); padding: 30px; margin-top: 30px; margin-bottom: 30px; box-shadow: var(--shadow-card);">
                 <h2 style="font-size: 1.3rem; font-weight: 700; border-bottom: 2px solid var(--color-accent); padding-bottom: 8px; margin-bottom: 20px;">商品レビュー・口コミ</h2>
                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; background: #f7f9fa; padding: 20px; border-radius: var(--radius-sm); margin-bottom: 24px;">
@@ -215,9 +216,11 @@ try {
                     </button>
                 </div>
 
+                <!-- 実際にレビューを書くことができる -->
                 <div id="reviewFormContainer" style="display: none; background: #fff; border: 2px dashed #ccc; border-radius: var(--radius-sm); padding: 20px; margin-bottom: 30px;">
                     <h3 style="font-size: 1.1rem; margin-top: 0; margin-bottom: 16px; font-weight: 700; color: #333;">この商品のレビューを投稿する</h3>
-                    <form id="reviewSubmitForm" style="display: flex; flex-direction: column; gap: 16px;">
+                    <form id="reviewSubmitForm" action=review_ins.php style="display: flex; flex-direction: column; gap: 16px;" method=post>
+                        <!-- 星の数 -->
                         <div>
                             <label style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">評価（星の数） <span style="color: red;">*</span></label>
                             <div style="display: flex; gap: 15px; font-size: 1.1rem;">
@@ -228,21 +231,17 @@ try {
                                 <label style="cursor: pointer;"><input type="radio" name="rating" value="1" style="margin-right: 4px;"><span style="color: #ffcc00;">★☆☆☆☆</span> 1</label>
                             </div>
                         </div>
-
                         <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                            <div style="flex: 1; min-width: 200px;">
-                                <label for="reviewerName" style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">ニックネーム <span style="color: red;">*</span></label>
-                                <input type="text" id="reviewerName" required placeholder="例：りりあちゃん さん" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                            </div>
+                            <!-- タイトル -->
                             <div style="flex: 2; min-width: 280px;">
                                 <label for="reviewTitle" style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">評価タイトル <span style="color: red;">*</span></label>
-                                <input type="text" id="reviewTitle" required placeholder="例：とても気に入りました！" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                                <input type="text" name=title id="reviewTitle" required placeholder="例：とても気に入りました！" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
                             </div>
                         </div>
-
+                        <!-- 本文 -->
                         <div>
                             <label for="reviewContent" style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">レビュー本文 <span style="color: red;">*</span></label>
-                            <textarea id="reviewContent" rows="4" required placeholder="商品の感想、気に入った点などを自由に書いてください" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea>
+                            <textarea id="reviewContent" name=contents rows="4" required placeholder="商品の感想、気に入った点などを自由に書いてください" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea>
                         </div>
 
                         <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px;">
@@ -252,7 +251,9 @@ try {
                     </form>
                 </div>
 
+                <!-- 表示するレビューの絞り込み、並び替え -->
                 <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; border-bottom: 1px solid #e4e7ec; padding-bottom: 12px;">
+                    <!-- 星の数で絞り込み -->
                     <div style="display: flex; gap: 8px; overflow-x: auto;">
                         <button class="review-filter-btn active" data-stars="all" style="padding: 6px 12px; border: 1px solid #ccc; background-color: #fff; border-radius: 20px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">すべて</button>
                         <button class="review-filter-btn" data-stars="5" style="padding: 6px 12px; border: 1px solid #ccc; background-color: #fff; border-radius: 20px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">★5のみ</button>
@@ -260,6 +261,7 @@ try {
                         <button class="review-filter-btn" data-stars="3" style="padding: 6px 12px; border: 1px solid #ccc; background-color: #fff; border-radius: 20px; font-size: 0.85rem; cursor: pointer; white-space: nowrap;">★3以下</button>
                     </div>
 
+                    <!-- 表示するレビューの並び替え -->
                     <div style="display: flex; align-items: center; gap: 8px;">
                         <label for="reviewSort" style="font-size: 0.85rem; color: #555; font-weight: 500; white-space: nowrap;">並び替え：</label>
                         <select id="reviewSort" style="padding: 6px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 0.85rem; cursor: pointer; background: #fff;">
@@ -271,7 +273,9 @@ try {
                     </div>
                 </div>
 
+                <!-- レビューを一覧で表示 -->
                 <div id="reviewsList" style="display: flex; flex-direction: column; gap: 20px;">
+                    <!-- 仮置きのレビュー -->
                     <div class="review-item" data-rating="5" data-date="2026-06-18" style="border-bottom: 1px solid #e4e7ec; padding-bottom: 20px;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                             <div>
@@ -321,6 +325,8 @@ try {
         </div>
     </footer>
 
+    
+    <!-- JavaScriptで制御 -->
     <script>
         // ==== お気に入りボタン（DB連携） ====
         (function () {
