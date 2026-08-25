@@ -22,5 +22,5 @@ if (ini_get("session.use_cookies")) {
 session_destroy();
 
 // 5. トップページ（index.php）に自動転送（リダイレクト）
-header('Location: index.php');
+header('Location: index_Lstmain.php');
 exit;
