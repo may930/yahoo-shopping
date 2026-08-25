@@ -16,7 +16,7 @@
     <main class="main-bg-gray">
         <div class="container">
             <div class="breadcrumb" style="margin-bottom: 20px;">
-                <a href="index.html">トップ</a> ＞ <a href="mypage.html">マイページ</a> ＞ <span>会員情報変更</span>
+                <a href="index.php">トップ</a> ＞ <a href="mypage.php">マイページ</a> ＞ <span>会員情報変更</span>
             </div>
 
             <div class="ys-main-layout">
@@ -25,11 +25,11 @@
                     <div class="sidebar-box">
                         <h3 class="sidebar-title" style="color: #ff5a00; font-weight: 700;">マイページメニュー</h3>
                         <ul class="sidebar-menu-list">
-                            <li><a href="mypage.html"><span>マイページトップ</span></a></li>
-                            <li><a href="edit-profile.html" style="font-weight: 700; color: #ff5a00; background: #fff5f0;"><span>定額確認・会員情報変更</span></a></li>
-                            <li><a href="#"><span>お気に入り商品</span><span class="arrow">＞</span></a></li>
-                            <li><a href="support-top.html"><span>お問合せ</span><span class="arrow">＞</span></a></li>
-                            <li><a href="#"><span>クーポン一覧</span><span class="arrow">＞</span></a></li>
+                            <li><a href="mypage.php"><span>マイページトップ</span></a></li>
+                            <li><a href="edit-profile.php" style="font-weight: 700; color: #ff5a00; background: #fff5f0;"><span>定額確認・会員情報変更</span></a></li>
+                            <li><a href="favorites.php"><span>お気に入り商品</span><span class="arrow">＞</span></a></li>
+                            <li><a href="support-top.php"><span>お問合せ</span><span class="arrow">＞</span></a></li>
+                            <li><a href="coupons.php"><span>クーポン一覧</span><span class="arrow">＞</span></a></li>
                         </ul>
                     </div>
                 </aside>
@@ -149,7 +149,7 @@
             if (!hasError) {
                 successMessage.style.display = 'block';
                 setTimeout(() => {
-                    location.href = 'mypage.html'; // 保存に成功したら自動でマイページに戻るばい！
+                    location.href = 'mypage.php'; // 保存に成功したら自動でマイページに戻るばい！
                 }, 2000);
             }
             return false;

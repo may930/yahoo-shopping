@@ -32,13 +32,13 @@
                     <div class="sidebar-box">
                         <h3 class="sidebar-title" style="color: var(--color-primary);">マイページメニュー</h3>
                         <ul class="sidebar-menu-list">
-                            <li><a href="mypage.html" class="is-active"><span>マイページトップ</span></a></li>
-                            <li><a href="edit-profile.html"><span>定額確認・会員情報変更</span><span class="arrow">＞</span></a></li>
-                            <li><a href="favorites.html"><span>お気に入り商品</span><span class="arrow">＞</span></a></li>
-                            <li><a href="support-top.html"><span>お問合せ</span><span class="arrow">＞</span></a></li>
+                            <li><a href="mypage.php" class="is-active"><span>マイページトップ</span></a></li>
+                            <li><a href="edit-profile.php"><span>定額確認・会員情報変更</span><span class="arrow">＞</span></a></li>
+                            <li><a href="favorites.php"><span>お気に入り商品</span><span class="arrow">＞</span></a></li>
+                            <li><a href="support-top.php"><span>お問合せ</span><span class="arrow">＞</span></a></li>
                             <li><a href="#"><span>クーポン一覧</span><span class="arrow">＞</span></a></li>
                             <li style="margin-top: 15px; border-top: 1px dashed #ddd; padding-top: 10px;">
-                                <a href="logout.html" class="sidebar-logout-btn" style="color: #ff3b30; font-weight: bold;">
+                                <a href="logout.php" class="sidebar-logout-btn" style="color: #ff3b30; font-weight: bold;">
                                     <span>🚪 ログアウト</span>
                                     <span class="arrow">＞</span>
                                 </a>
@@ -52,7 +52,7 @@
                     <div class="profile-card">
                         <div class="card-header-row">
                             <h3>👤 お客様の登録情報</h3>
-                            <a href="edit-profile.html" class="card-header-link">詳細・変更 ＞</a>
+                            <a href="edit-profile.php" class="card-header-link">詳細・変更 ＞</a>
                         </div>
                         <div class="info-grid">
                             <span class="info-label">ユーザー名</span>
@@ -142,7 +142,7 @@
                         <li><a href="#">ヘルプ・お問い合わせ</a></li>
                         <li><a href="#">ご意見・ご要望</a></li>
                         <li><a href="#">採用情報</a></li>
-                        <li><a href="edit-profile.html">会社概要・チーム紹介</a></li>
+                        <li><a href="edit-profile.php">会社概要・チーム紹介</a></li>
                         <li><a href="#">プライバシーポリシー</a></li>
                     </ul>
                 </div>
