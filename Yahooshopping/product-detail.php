@@ -3,6 +3,7 @@ session_start();
 
 // 1. データベース接続ファイルを読み込む
 require_once 'db.php';
+require_once('utilConnDB.php');
 
 try {
     // 2. URLから option_id を取得する（送られてこなかった場合はデフォルトで 1）
@@ -62,6 +63,25 @@ try {
             'option_id' => $target_option_id
         ]);
         $is_favorited = (bool) $stmt_fav->fetch();
+    }
+
+    // 7. ログイン中のユーザーが閲覧したものを閲覧履歴に登録
+    $option_id = $product_data['option_id'] ?? 0;
+    $user_id = $_SESSION['user']['id'] ?? null;
+    if ($user_id && $option_id) {
+        $utilConnDB = new UtilConnDB();
+        $pdo = $utilConnDB->connect();
+    
+        // 同じ商品を見たら、view_timeだけ「今」に更新する（新規商品はinsertで追加）
+        $sql = "INSERT INTO views_history (user_id, option_id, view_time)
+                VALUES (?, ?, CURRENT_TIMESTAMP)
+                ON DUPLICATE KEY UPDATE view_time = CURRENT_TIMESTAMP";
+    
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$user_id, $option_id]);
+    
+        $utilConnDB->commit($pdo);
+        $utilConnDB->disconnect($pdo);
     }
 
     // 画像パスの整形

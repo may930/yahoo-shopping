@@ -262,11 +262,11 @@ create table inquiry_history (
 /* 閲覧履歴テーブル */
 create table views_history (
     user_id integer,
-    product_id integer,
+    option_id integer,
     view_time timestamp default current_timestamp,
-    primary key(user_id, product_id),
+    primary key(user_id, option_id),
     foreign key (user_id) references user_account(user_id) on delete cascade,
-    foreign key (product_id) references product(product_id) on delete cascade
+    foreign key (option_id) references product_attributes_options(option_id) on delete cascade
 );
 
 

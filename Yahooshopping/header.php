@@ -52,7 +52,7 @@ $count = count($favoriteList);
                     <span class="action-label">お気に入り</span>
                     <span class="cart-count"><?php echo $count; ?></span>
                 </a>
-                <a href="browsing-history.php" class="action-item-btn">
+                <a href="browsing-history-Lstmain.php" class="action-item-btn">
                     <span class="action-icon">🕒</span>
                     <span class="action-label">閲覧履歴</span>
                 </a>

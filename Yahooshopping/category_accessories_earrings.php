@@ -122,7 +122,7 @@
                             $productName = htmlspecialchars($Beans->getproduct_name(), ENT_QUOTES, 'UTF-8');
                             $price       = number_format($Beans->getprice());
                             $image       = htmlspecialchars($Beans->getimage_url(), ENT_QUOTES, 'UTF-8');
-                ?>
+                        ?>
                         <!-- ★ 1個分のカードテンプレート（これがループで自動増殖します） -->
                         <div class="product-card" id="<?php echo $productId; ?>">
                             <!-- 商品画像 -->
