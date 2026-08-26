@@ -34,28 +34,5 @@
            
                 return $history_List;
         } 
-    
-
-
-
-        //コピーしてきただけ
-        public function history_all_delete($pdo){
-            try {
-                $sql = "DELETE FROM product_favorites
-                        WHERE product_favorites_id = ?";
-        
-                $stmt = $pdo->prepare($sql);
-        
-                $stmt->bindValue(1,$Beans->getproduct_favorites_id(),PDO::PARAM_INT);
-        
-                $stmt->execute();
-                return $stmt->rowCount();
-        
-            } catch (PDOException $e) {
-                echo $e->getMessage();
-                return 0;
-            } 
-    
-        }
     }
 ?>
