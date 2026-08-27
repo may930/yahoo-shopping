@@ -1,4 +1,35 @@
-﻿<!DOCTYPE html>
+﻿<?php
+session_start();
+require_once 'utilConnDB.php';
+require_once 'Beans.php';
+require_once 'mypage_SQL.php';
+// エスケープ関数
+if (!function_exists('h')) {
+    function h($str) {
+        return htmlspecialchars($str ?? '', ENT_QUOTES, 'UTF-8');
+    }
+}
+
+// ログインIDの取得
+$userId = $_SESSION['user_id'] ?? $_SESSION['user']['id'] ?? null;
+
+// $beans の初期化とDBからのデータ取得
+$beans = null;
+if ($userId) {
+    $db = new UtilConnDB();
+    $pdo = $db->connect();
+    
+    $mypageSql = new MypageSQL();
+    $beans = $mypageSql->selectById($pdo, $userId);
+    
+    $db->disconnect($pdo);
+}
+
+if (!$beans) {
+    $beans = new Beans();
+}
+?>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -12,14 +43,14 @@
 <body>
 
     <?php include 'header.php'; ?>
-    </header>
 
+    <!-- プロフィールバナー（動的に名前とIDを表示） -->
     <div class="profile-banner-wrapper">
         <div class="container profile-banner-inner">
             <div class="profile-banner-icon">👤</div>
             <div>
-                <h1 class="profile-banner-name">サンプル さんのマイページ</h1>
-                <p class="profile-banner-id">Yahoo! JAPAN ID: sample_user_2026</p>
+                <h1 class="profile-banner-name"><?= h($beans->getname()) ?> さんのマイページ</h1>
+                <p class="profile-banner-id">ユーザーID: <?= h($beans->getuser_id()) ?></p>
             </div>
         </div>
     </div>
@@ -49,6 +80,7 @@
 
                 <div class="ys-content-area" style="display: flex; flex-direction: column; gap: 20px;">
 
+                    <!-- 会員登録情報の参照表示エリア -->
                     <div class="profile-card">
                         <div class="card-header-row">
                             <h3>👤 お客様の登録情報</h3>
@@ -56,13 +88,19 @@
                         </div>
                         <div class="info-grid">
                             <span class="info-label">ユーザー名</span>
-                            <span class="info-value">サンプル さん</span>
+                            <span class="info-value"><?= h($beans->getname()) ?> さん</span>
 
                             <span class="info-label">メールアドレス</span>
-                            <span class="info-value normal">sample@example.com</span>
+                            <span class="info-value normal"><?= h($beans->getmail_address()) ?></span>
 
                             <span class="info-label">お届け先住所</span>
-                            <span class="info-value normal">〒060-0001 北海道札幌市中央区北1条西...</span>
+                            <span class="info-value normal">
+                                <?php if ($beans->getzipcode()): ?>
+                                    〒<?= h($beans->getzipcode()) ?> <?= h($beans->getaddress()) ?>
+                                <?php else: ?>
+                                    未登録
+                                <?php endif; ?>
+                            </span>
                         </div>
                     </div>
 
@@ -100,9 +138,7 @@
     <footer class="footer" style="padding-top: 30px;">
         <div class="container footer-inner" style="display: flex; flex-direction: column; gap: 30px;">
 
-            <!-- 【追加】上段：アプリDL（QR）とSNS公式アカウントのエリア -->
             <div class="footer-top-links" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #ddd; padding-bottom: 20px; flex-wrap: wrap; gap: 15px;">
-                <!-- App Store、Google Playへのサイト遷移が可能なQRを表示 -->
                 <div class="footer-app-qr" style="display: flex; align-items: center; gap: 10px;">
                     <div style="width: 50px; height: 50px; background: #ccc; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: bold; color: #333; border: 1px solid #aaa;">QRコード</div>
                     <div>
@@ -110,21 +146,18 @@
                         <p style="font-size: 0.75rem; color: #666; margin: 2px 0 0 0;">App Store / Google Play で配信中</p>
                     </div>
                 </div>
-                <!-- LINEのトップ画面、X(旧Twitter)アカウントに遷移可能 -->
                 <div class="footer-sns" style="display: flex; gap: 15px;">
                     <a href="#" style="text-decoration: none; font-size: 0.85rem; color: #06C755; font-weight: bold;">💬 LINE公式アカウント</a>
                     <a href="#" style="text-decoration: none; font-size: 0.85rem; color: #65BBE9; font-weight: bold;">Twitter公式アカウント</a>
                 </div>
             </div>
 
-            <!-- 中段：リンクの複数カラム -->
             <div style="display: flex; justify-content: space-between; flex-wrap: wrap; gap: 20px;">
                 <div class="footer-col">
                     <p class="footer-logo">Yahoo!ショッピング風サイト</p>
                     <p class="footer-tagline">毎日の生活をもっと豊かに、おトクに。</p>
                 </div>
 
-                <!-- 【追加・整理】ガイドライン・規約・ポリシー関係 -->
                 <div class="footer-col">
                     <h4 class="footer-heading">各種規約・ガイドライン</h4>
                     <ul class="footer-links">
@@ -135,7 +168,6 @@
                     </ul>
                 </div>
 
-                <!-- 【追加・整理】サポート・会社関係 -->
                 <div class="footer-col">
                     <h4 class="footer-heading">サポート・企業情報</h4>
                     <ul class="footer-links">
