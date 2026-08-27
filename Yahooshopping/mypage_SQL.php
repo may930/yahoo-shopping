@@ -11,33 +11,32 @@ class MypageSQL
             return null;
         }
 
-        /*まず一般ユーザー（user_account）を検索 */
-        $sql = 'SELECT * FROM user_account WHERE user_id = ?;';
+        /* 1. まず一般ユーザー（user_account）を検索 */
+        $sql = 'SELECT * FROM user_account WHERE user_id = :id;';
         $stmt = $pdo->prepare($sql);
-        $stmt->bindValue(1, $userId, PDO::PARAM_STR);
+        // 数値・文字列どちらのDB型でもヒットするようにバインド
+        $stmt->bindValue(':id', $userId);
         $stmt->execute();
     
         if ($row = $stmt->fetch(PDO::FETCH_ASSOC)) 
         {
             $Beans = new Beans();
             if (method_exists($Beans, 'setuser_id'))      $Beans->setuser_id($row['user_id'] ?? '');
-            if (method_exists($Beans, 'setname'))         $Beans->setname($row['name'] ?? '');
-            if (method_exists($Beans, 'setname_first'))   $Beans->setname_first($row['name'] ?? ''); // 画面表示用
-            if (method_exists($Beans, 'setmail_address')) $Beans->setmail_address($row['mail_address'] ?? '');
-            if (method_exists($Beans, 'setzipcode'))      $Beans->setzipcode($row['zipcode'] ?? '');   // 郵便番号
-            if (method_exists($Beans, 'setaddress'))      $Beans->setaddress($row['address'] ?? '');   // 住所
+            if (method_exists($Beans, 'setname'))         $Beans->setname($row['name'] ?? $row['user_name'] ?? '');
+            if (method_exists($Beans, 'setname_first'))   $Beans->setname_first($row['name'] ?? $row['user_name'] ?? '');
+            if (method_exists($Beans, 'setmail_address')) $Beans->setmail_address($row['mail_address'] ?? $row['mail'] ?? '');
+            if (method_exists($Beans, 'setzipcode'))      $Beans->setzipcode($row['zipcode'] ?? $row['postal_code'] ?? '');
+            if (method_exists($Beans, 'setaddress'))      $Beans->setaddress($row['address'] ?? '');
             if (method_exists($Beans, 'setphone_number')) $Beans->setphone_number($row['phone_number'] ?? '');
-            
-            // 一般ユーザーフラグ
             if (method_exists($Beans, 'setis_producer'))  $Beans->setis_producer(false);
         
-            return $Beans; // 一般ユーザーが見つかったら返却
+            return $Beans;
         }
 
-        /*一般ユーザーになければ出品者（producer）を検索 */
-        $sqlProducer = 'SELECT * FROM producer WHERE producer_id = ?;';
+        /* 2. 一般ユーザーになければ出品者（producer）を検索 */
+        $sqlProducer = 'SELECT * FROM producer WHERE producer_id = :id;';
         $stmtP = $pdo->prepare($sqlProducer);
-        $stmtP->bindValue(1, $userId, PDO::PARAM_STR);
+        $stmtP->bindValue(':id', $userId);
         $stmtP->execute();
 
         if ($row = $stmtP->fetch(PDO::FETCH_ASSOC)) 
@@ -49,17 +48,14 @@ class MypageSQL
             if (method_exists($Beans, 'setname'))         $Beans->setname($row['name'] ?? $row['store_name'] ?? '');
             if (method_exists($Beans, 'setname_first'))   $Beans->setname_first($row['name'] ?? $row['store_name'] ?? '');
             if (method_exists($Beans, 'setmail_address')) $Beans->setmail_address($row['mail_address'] ?? '');
-            if (method_exists($Beans, 'setzipcode'))      $Beans->setzipcode($row['zipcode'] ?? '');   // 郵便番号
-            if (method_exists($Beans, 'setaddress'))      $Beans->setaddress($row['address'] ?? '');   // 住所
+            if (method_exists($Beans, 'setzipcode'))      $Beans->setzipcode($row['zipcode'] ?? '');
+            if (method_exists($Beans, 'setaddress'))      $Beans->setaddress($row['address'] ?? '');
             if (method_exists($Beans, 'setphone_number')) $Beans->setphone_number($row['phone_number'] ?? '');
-            
-            // 出品者フラグを true に
             if (method_exists($Beans, 'setis_producer'))  $Beans->setis_producer(true);
 
-            return $Beans; // 出品者が見つかったら返却
+            return $Beans;
         }
     
-        return null; // どちらにもいなければ null
+        return null;
     } 
 }
-?>

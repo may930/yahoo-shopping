@@ -3,29 +3,45 @@ session_start();
 require_once 'utilConnDB.php';
 require_once 'Beans.php';
 require_once 'mypage_SQL.php';
-// エスケープ関数
-if (!function_exists('h')) {
+
+if (!function_exists('h')) 
+{
     function h($str) {
         return htmlspecialchars($str ?? '', ENT_QUOTES, 'UTF-8');
     }
 }
 
-// ログインIDの取得
-$userId = $_SESSION['user_id'] ?? $_SESSION['user']['id'] ?? null;
-
-// $beans の初期化とDBからのデータ取得
-$beans = null;
-if ($userId) {
-    $db = new UtilConnDB();
-    $pdo = $db->connect();
-    
-    $mypageSql = new MypageSQL();
-    $beans = $mypageSql->selectById($pdo, $userId);
-    
-    $db->disconnect($pdo);
+$userId = null;
+if (isset($_SESSION['user_id'])) 
+{
+    $userId = $_SESSION['user_id'];
+} elseif (isset($_SESSION['user']['id'])) 
+{
+    $userId = $_SESSION['user']['id'];
+} elseif (isset($_SESSION['user']['user_id'])) 
+{
+    $userId = $_SESSION['user']['user_id'];
+} elseif (isset($_SESSION['id'])) 
+{
+    $userId = $_SESSION['id'];
+} elseif (isset($_SESSION['user']) && !is_array($_SESSION['user'])) 
+{
+    $userId = $_SESSION['user'];
 }
 
-if (!$beans) {
+// 取得できなかった場合のみログイン画面へリダイレクト
+if (empty($userId)) {
+    header('Location: login.php');
+    exit();
+}
+$db = new UtilConnDB();
+$pdo = $db->connect();
+$mypageSql = new MypageSQL();
+$beans = $mypageSql->selectById($pdo, $userId);
+$db->disconnect($pdo);
+
+if (!$beans) 
+{
     $beans = new Beans();
 }
 ?>
@@ -42,7 +58,7 @@ if (!$beans) {
 </head>
 <body>
 
-    <?php include 'header.php'; ?>
+    <?php require_once('header.php'); ?>
 
     <!-- プロフィールバナー（動的に名前とIDを表示） -->
     <div class="profile-banner-wrapper">
