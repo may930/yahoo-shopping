@@ -11,63 +11,12 @@
 </head>
 <body>
 
-    <header class="header">
-        <div class="header-top">
-            <div class="container header-top-inner">
-                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
-                <nav class="header-top-nav">
-                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
-                </nav>
-            </div>
-        </div>
-
-        <div class="header-main">
-            <div class="container header-main-inner">
-                <a href="index.html" class="logo">
-                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
-                </a>
-                <div class="search-bar">
-                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
-                    <button type="submit" class="search-btn" aria-label="検索">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.35-4.35" />
-                        </svg>
-                        <span>検索する</span>
-                    </button>
-                </div>
-                <div class="header-actions">
-                    <a href="cart.html" class="action-item-btn">
-                        <span class="action-icon">🛒</span>
-                        <span class="action-label">カート</span>
-                        <span class="cart-count">3</span>
-                    </a>
-                    <a href="favorites.html" class="action-item-btn">
-                        <span class="action-icon">❤</span>
-                        <span class="action-label">お気に入り</span>
-                        <span class="cart-count">3</span>
-                    </a>
-                    <a href="browsing-history.html" class="action-item-btn">
-                        <span class="action-icon">🕒</span>
-                        <span class="action-label">閲覧履歴</span>
-                    </a>
-                    <a href="order-history.html" class="action-item-btn">
-                        <span class="action-icon">⏱️</span>
-                        <span class="action-label">注文履歴</span>
-                    </a>
-                    <a href="mypage.html" class="action-item-btn">
-                        <span class="action-icon">👤</span>
-                        <span class="action-label">マイページ</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+    <?php include 'header.php'; ?>
 
     <main class="main-bg-gray">
         <div class="container">
             <div class="breadcrumb" style="margin-bottom: 20px;">
-                <a href="index.html">トップ</a> ＞ <a href="mypage.html">マイページ</a> ＞ <span>会員情報変更</span>
+                <a href="index.php">トップ</a> ＞ <a href="mypage.php">マイページ</a> ＞ <span>会員情報変更</span>
             </div>
 
             <div class="ys-main-layout">
@@ -76,11 +25,11 @@
                     <div class="sidebar-box">
                         <h3 class="sidebar-title" style="color: #ff5a00; font-weight: 700;">マイページメニュー</h3>
                         <ul class="sidebar-menu-list">
-                            <li><a href="mypage.html"><span>マイページトップ</span></a></li>
-                            <li><a href="edit-profile.html" style="font-weight: 700; color: #ff5a00; background: #fff5f0;"><span>定額確認・会員情報変更</span></a></li>
-                            <li><a href="#"><span>お気に入り商品</span><span class="arrow">＞</span></a></li>
-                            <li><a href="support-top.html"><span>お問合せ</span><span class="arrow">＞</span></a></li>
-                            <li><a href="#"><span>クーポン一覧</span><span class="arrow">＞</span></a></li>
+                            <li><a href="mypage.php"><span>マイページトップ</span></a></li>
+                            <li><a href="edit-profile.php" style="font-weight: 700; color: #ff5a00; background: #fff5f0;"><span>定額確認・会員情報変更</span></a></li>
+                            <li><a href="favorites.php"><span>お気に入り商品</span><span class="arrow">＞</span></a></li>
+                            <li><a href="support-top.php"><span>お問合せ</span><span class="arrow">＞</span></a></li>
+                            <li><a href="coupons.php"><span>クーポン一覧</span><span class="arrow">＞</span></a></li>
                         </ul>
                     </div>
                 </aside>
@@ -124,7 +73,7 @@
                         </div>
 
                         <div style="display: flex; gap: 16px; justify-content: center; margin-top: 30px;">
-                            <button type="button" class="profile-save-btn" style="background: #e4e7ec; color: #333;" onclick="location.href='mypage.html'">キャンセル</button>
+                            <button type="button" class="profile-save-btn" style="background: #e4e7ec; color: #333;" onclick="location.href='mypage.php'">キャンセル</button>
                             <button type="submit" class="profile-save-btn" style="background: #ff5a00;">変更内容を保存する</button>
                         </div>
                         <div style="text-align: center;">
@@ -200,7 +149,7 @@
             if (!hasError) {
                 successMessage.style.display = 'block';
                 setTimeout(() => {
-                    location.href = 'mypage.html'; // 保存に成功したら自動でマイページに戻るばい！
+                    location.href = 'mypage.php'; // 保存に成功したら自動でマイページに戻るばい！
                 }, 2000);
             }
             return false;

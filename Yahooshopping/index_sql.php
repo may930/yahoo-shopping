@@ -84,6 +84,7 @@ class TopPageSQL{
     }
 
     //食べ物でおすすめの商品
+    private $food_products_id = [10,11,12]; 
     function select_food_products($pdo){
         require_once('Beans.php');       
         $toppage_food_List = array();

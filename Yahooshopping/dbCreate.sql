@@ -5,6 +5,7 @@ drop table if exists inquiry;
 drop table if exists inquiry_category;
 drop table if exists producer_favorites;
 drop table if exists product_favorites;
+drop table if exists review_likes;
 drop table if exists product_reviews;
 drop table if exists order_details;
 drop table if exists order_history;
@@ -200,6 +201,16 @@ create table product_reviews(
     foreign key (user_id) references user_account(user_id) on delete cascade
 );
 
+/* レビューへの「いいね」記録テーブル（誰がどのレビューにいいねしたか） */
+create table review_likes (
+    review_id integer not null,
+    user_id integer not null,
+    created_at timestamp default current_timestamp,
+    primary key (review_id, user_id),
+    foreign key (review_id) references product_reviews(review_id) on delete cascade,
+    foreign key (user_id) references user_account(user_id) on delete cascade
+);
+
 /* お気に入り商品テーブル */
 create table product_favorites (
     product_favorites_id integer auto_increment primary key,
@@ -262,11 +273,11 @@ create table inquiry_history (
 /* 閲覧履歴テーブル */
 create table views_history (
     user_id integer,
-    product_id integer,
+    option_id integer,
     view_time timestamp default current_timestamp,
-    primary key(user_id, product_id),
+    primary key(user_id, option_id),
     foreign key (user_id) references user_account(user_id) on delete cascade,
-    foreign key (product_id) references product(product_id) on delete cascade
+    foreign key (option_id) references product_attributes_options(option_id) on delete cascade
 );
 
 
@@ -290,7 +301,7 @@ create table views_history (
 
 /*user_account(ユーザID, 名前, 名前(カナ), 電話番号, メアド, パス, ユーザ名, 性別, 生年月日, 郵便番号, 住所, 入会日時, 退会日時)*/
 
-insert into user_account values('1', '松本翔聖', 'マツモトショウキ', '09016473912', 'arukusandbag@gmail.com', '1645', '歩くサンドバッグ', '男', '2005/07/24', '062-0031', '北海道札幌市豊平区西岡1条10丁目1-1-3', current_timestamp, null);
+insert into user_account values('1', '加藤太郎', 'カトウタロウ', '09012345678', 'kato_tarog@example.com', '1111', 'たろー', '男', '2005/05/13', '055-0138', '北海道札幌市中央区南1条1-1', current_timestamp, null);
 
 insert into user_account values('2', '佐藤優奈', 'サトウユウナ', '09023456789', 'yuna_satou@example.com', '5678', 'ゆな', '女', '2001/11/03', '100-0001', '東京都千代田区千代田1-1', current_timestamp, null);
 
@@ -302,7 +313,7 @@ insert into user_account values('4', '鈴木美咲', 'スズキミサキ', '0701
 
 /*producer(出品者ID, 電話番号, メアド, パス, 会社名, 郵便番号, 住所, 代表者名, ストア名, ストア名(フリガナ), ストア紹介, 関連ストア, 備考, 入会日時, 退会日時, ストア営業日)*/
 
-insert into producer values('1', '0118315511', '20247077-matsumotoshoki@hcs.ac.jp', 'killbye0921', '北海道情報専門学校', '003-0806', '北海道札幌市白石区菊水6条3丁目4-28', '宮西哲生', '宮西のかわいいラボ', 'ミヤニシノカワイイラボ', 'かわいいものを販売しています', 'なし', '発送に1週間ほどお時間いただきます。ご了承ください。', current_timestamp, null, '土日のみ');
+insert into producer values('1', '0118315511', 'hcs@exmple.com', 'hcshcshcs', '北海道情報専門学校', '003-0806', '北海道札幌市白石区菊水6条3丁目4-28', '宮西哲生', '宮西のかわいいラボ', 'ミヤニシノカワイイラボ', 'かわいいものを販売しています', 'なし', '発送に1週間ほどお時間いただきます。ご了承ください。', current_timestamp, null, '土日のみ');
 
 insert into producer values('2', '0312345678', 'tokyo_farm@example.com', 'farmtokyo2026', '東京オーガニックファーム', '101-0021', '東京都千代田区外神田1丁目2', '鈴木一郎', 'ナチュラルライフ', 'ナチュラルライフ', '新鮮な有機野菜や果物をお届けします', 'なし', 'クール便での発送となります。', current_timestamp, null, '年中無休');
 

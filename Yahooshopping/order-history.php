@@ -1,7 +1,7 @@
 ﻿<?php
 session_start();
 
-// ログインしている購入者かどうかをチェック（ログイン画面の仕様に合わせて適宜変更してね）
+// ログインしている購入者かどうかをチェック
 if (!isset($_SESSION['user'])) {
     header('Location: login_view.php');
     exit();
@@ -9,14 +9,14 @@ if (!isset($_SESSION['user'])) {
 
 require_once('utilConnDB.php');
 
-$user_id = $_SESSION['user']['user_id'] ?? 1; // セッションからユーザーIDを取得
+// セッションの 'id' または 'user_id' を取得する
+$user_id = $_SESSION['user']['id'] ?? $_SESSION['user']['user_id'] ?? 1;
 
 $utilConnDB = new UtilConnDB();
 $pdo = $utilConnDB->connect();
 
 // ログイン中のユーザーの注文履歴と詳細をデータベースから取得するSQL
-// order_history と order_details を結合して取得します
-$sql = 'SELECT h.*, d.product_name, d.quantity, d.price, d.option_name 
+$sql = 'SELECT h.*, d.product_name, d.quantity, d.price, d.option_name, d.option_id 
         FROM order_history h
         JOIN order_details d ON h.order_id = d.order_id
         WHERE h.user_id = ?
@@ -42,52 +42,7 @@ $utilConnDB->disconnect($pdo);
 </head>
 <body>
 
-    <header class="header">
-        <div class="header-top">
-            <div class="container header-top-inner">
-                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
-                <nav class="header-top-nav">
-                    <span class="welcome-text">ようこそ、<strong><?php echo htmlspecialchars($_SESSION['user']['name'] ?? 'サンプル', ENT_QUOTES, 'UTF-8'); ?></strong> さん</span>
-                </nav>
-            </div>
-        </div>
-
-        <div class="header-main">
-            <div class="container header-main-inner">
-                <a href="index.php" class="logo">
-                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
-                </a>
-                <div class="search-bar">
-                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
-                    <button type="submit" class="search-btn" aria-label="検索">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.35-4.35" />
-                        </svg>
-                        <span>検索する</span>
-                    </button>
-                </div>
-                <div class="header-actions">
-                    <a href="cart.php" class="action-item-btn">
-                        <span class="action-icon">🛒</span>
-                        <span class="action-label">カート</span>
-                    </a>
-                    <a href="favorites.php" class="action-item-btn">
-                        <span class="action-icon">❤</span>
-                        <span class="action-label">お気に入り</span>
-                    </a>
-                    <a href="my_history.php" class="action-item-btn">
-                        <span class="action-icon">⏱️</span>
-                        <span class="action-label">注文履歴</span>
-                    </a>
-                    <a href="mypage.php" class="action-item-btn">
-                        <span class="action-icon">👤</span>
-                        <span class="action-label">マイページ</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+<?php include 'header.php'; ?>
 
     <main class="container" style="margin-top: 30px; margin-bottom: 60px; max-width: 900px;">
 
@@ -108,7 +63,6 @@ $utilConnDB->disconnect($pdo);
         <?php else: ?>
             <?php foreach ($orderList as $order): ?>
                 <?php 
-                    // 注文日から年を取得（フィルタリング用）
                     $orderYear = date('Y', strtotime($order['order_date']));
                 ?>
                 <div class="order-card" data-year="<?php echo $orderYear; ?>" style="background: #fff; border: 1px solid #e4e7ec; border-radius: 8px; margin-bottom: 24px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
@@ -135,10 +89,10 @@ $utilConnDB->disconnect($pdo);
                     <div style="padding: 20px; display: flex; flex-direction: column; gap: 20px;">
                         <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
                             <div style="display: flex; align-items: center; gap: 8px;">
-                                <!-- 配送ステータスの表示切り替え -->
+                                <!-- ステータス表示 -->
                                 <?php if ($order['shipping_status'] === 'shipped'): ?>
                                     <span style="color: #007bff; font-weight: 700; font-size: 1.1rem;">🚚 発送済み</span>
-                                <?php elseif ($order['shipping_status'] === 'delicvered'): ?>
+                                <?php elseif ($order['shipping_status'] === 'delivered' || $order['shipping_status'] === 'delicvered'): ?>
                                     <span style="color: #28a745; font-weight: 700; font-size: 1.1rem;">✅ お届け済み</span>
                                 <?php else: ?>
                                     <span style="color: #ffc107; font-weight: 700; font-size: 1.1rem;">🟡 注文済み・出荷準備中</span>
@@ -151,7 +105,7 @@ $utilConnDB->disconnect($pdo);
                                 商品画像
                             </div>
                             <div style="flex-grow: 1;">
-                                <a href="#" class="js-product-title" style="color: #000; font-weight: 500; text-decoration: none; font-size: 0.95rem; display: block; margin-bottom: 4px; line-height: 1.4;">
+                                <a href="product-detail.php?option_id=<?php echo $order['option_id']; ?>" class="js-product-title" style="color: #000; font-weight: 500; text-decoration: none; font-size: 0.95rem; display: block; margin-bottom: 4px; line-height: 1.4;">
                                     <?php echo htmlspecialchars($order['product_name'], ENT_QUOTES, 'UTF-8'); ?>
                                     <?php if (!empty($order['option_name'])): ?>
                                         <br><small style="color: #666;">(<?php echo htmlspecialchars($order['option_name'], ENT_QUOTES, 'UTF-8'); ?>)</small>
@@ -161,7 +115,7 @@ $utilConnDB->disconnect($pdo);
                                 <p style="font-size: 0.9rem; font-weight: 700; color: #000; margin-top: 4px;">￥<?php echo number_format($order['price']); ?></p>
                             </div>
                             <div style="display: flex; flex-direction: column; gap: 8px; width: 160px; flex-shrink: 0;">
-                                <button class="btn-sub-action" style="padding: 8px; font-size: 0.85rem; width: 100%; cursor: pointer;">商品のレビューを書く</button>
+                                <a href="product-detail.php?option_id=<?php echo $order['option_id']; ?>#reviews-section" class="btn-sub-action" style="padding: 8px; font-size: 0.85rem; width: 100%; text-align: center; background: #f0f2f5; border: 1px solid #ccc; border-radius: 4px; color: #333; text-decoration: none; box-sizing: border-box; display: inline-block;">商品のレビューを書く</a>
                             </div>
                         </div>
                     </div>

@@ -110,7 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cmdBtn1'])) {
                         unset($_SESSION['redirect_after_login']);
                         header('Location: ' . $redirect);
                     } else {
-                        header('Location: index.php');
+                        header('Location: index_Lstmain.php');
                     }
                 }
                 exit();

@@ -66,5 +66,53 @@ class FavoriteSQL{
             echo $e->getMessage();
             return 0;
         } }
+
+    /* お気に入りに追加する（user_id + option_id） */
+    public function addFavorite($pdo, $Beans)
+    {
+        try {
+            $sql = "INSERT INTO product_favorites (user_id, option_id) VALUES (?, ?)";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(1, $Beans->getuser_id(), PDO::PARAM_INT);
+            $stmt->bindValue(2, $Beans->getoption_id(), PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->rowCount();
+        } catch (PDOException $e) {
+            // unique_user_product 制約違反（既に登録済み）等
+            return 0;
+        }
+    }
+
+    /* お気に入りを解除する（user_id + option_id） */
+    public function deleteByUserOption($pdo, $Beans)
+    {
+        try {
+            $sql = "DELETE FROM product_favorites WHERE user_id = ? AND option_id = ?";
+
+            $stmt = $pdo->prepare($sql);
+            $stmt->bindValue(1, $Beans->getuser_id(), PDO::PARAM_INT);
+            $stmt->bindValue(2, $Beans->getoption_id(), PDO::PARAM_INT);
+            $stmt->execute();
+
+            return $stmt->rowCount();
+        } catch (PDOException $e) {
+            return 0;
+        }
+    }
+
+    /* 既にお気に入り登録済みかどうか判定する */
+    public function isFavorited($pdo, $Beans)
+    {
+        $sql = "SELECT product_favorites_id FROM product_favorites WHERE user_id = ? AND option_id = ?";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->bindValue(1, $Beans->getuser_id(), PDO::PARAM_INT);
+        $stmt->bindValue(2, $Beans->getoption_id(), PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch() ? true : false;
+    }
 }
 ?>

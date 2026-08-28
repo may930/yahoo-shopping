@@ -11,64 +11,12 @@
 </head>
 <body class="register-body">
 
-    <header class="header">
-        <div class="header-top">
-            <div class="container header-top-inner">
-                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
-                <nav class="header-top-nav">
-                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
-                </nav>
-            </div>
-        </div>
-
-        <div class="header-main">
-            <div class="container header-main-inner">
-                <a href="index.html" class="logo">
-                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
-                </a>
-                <div class="search-bar">
-                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
-                    <button type="submit" class="search-btn" aria-label="検索">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.35-4.35" />
-                        </svg>
-                        <span>検索する</span>
-                    </button>
-                </div>
-                <div class="header-actions">
-                    <a href="cart.html" class="action-item-btn">
-                        <span class="action-icon">🛒</span>
-                        <span class="action-label">カート</span>
-                        <span class="cart-count">3</span>
-                    </a>
-                    <a href="favorites.html" class="action-item-btn">
-                        <span class="action-icon">❤</span>
-                        <span class="action-label">お気に入り</span>
-                        <span class="cart-count">3</span>
-                    </a>
-                    <a href="browsing-history.html" class="action-item-btn">
-                        <span class="action-icon">🕒</span>
-                        <span class="action-label">閲覧履歴</span>
-                    </a>
-                    <a href="order-history.html" class="action-item-btn">
-                        <span class="action-icon">⏱️</span>
-                        <span class="action-label">注文履歴</span>
-                    </a>
-                    <a href="mypage.html" class="action-item-btn">
-                        <span class="action-icon">👤</span>
-                        <span class="action-label">マイページ</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
-
+    <?php include 'header.php'; ?>
     <main class="register-container" style="margin-top: 40px; margin-bottom: 60px;">
         <div class="register-box" style="max-width: 600px;">
 
             <h1 class="register-title" style="font-size: 1.4rem; text-align: center; margin-bottom: 24px;">
-                ❓その他・ご意見
+                💳お支払いについて
             </h1>
 
             <form id="supportForm" class="form-grid">
@@ -77,7 +25,7 @@
                     <label kibun="form-label" for="supportSubject" style="font-weight: 700; margin-bottom: 8px; display: block;">
                         問い合わせ題名 <span class="badge-required" style="background-color: var(--color-primary); color: #fff; padding: 2px 6px; font-size: 0.75rem; border-radius: var(--radius-sm); margin-left: 6px;">必須</span>
                     </label>
-                    <input type="text" id="supportSubject" class="form-input" placeholder="" required>
+                    <input type="text" id="supportSubject" class="form-input" placeholder="例：支払方法が登録できない 等" required>
                 </div>
 
                 <div class="form-group" style="margin-top: 20px;">

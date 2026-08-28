@@ -11,58 +11,7 @@
 </head>
 <body class="register-body">
 
-    <header class="header">
-        <div class="header-top">
-            <div class="container header-top-inner">
-                <span class="header-notice">送料無料をお届け！お得なキャンペーン実施中</span>
-                <nav class="header-top-nav">
-                    <span class="welcome-text">ようこそ、<strong>サンプル</strong> さん</span>
-                </nav>
-            </div>
-        </div>
-
-        <div class="header-main">
-            <div class="container header-main-inner">
-                <a href="index.html" class="logo">
-                    <span class="logo-y">HCS!</span><span class="logo-s">ショッピング</span>
-                </a>
-                <div class="search-bar">
-                    <input type="text" placeholder="何をお探しですか？ 商品名、カテゴリ、ブランドから探す" aria-label="商品検索">
-                    <button type="submit" class="search-btn" aria-label="検索">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
-                            <circle cx="11" cy="11" r="8" />
-                            <path d="m21 21-4.35-4.35" />
-                        </svg>
-                        <span>検索する</span>
-                    </button>
-                </div>
-                <div class="header-actions">
-                    <a href="cart.html" class="action-item-btn">
-                        <span class="action-icon">🛒</span>
-                        <span class="action-label">カート</span>
-                        <span class="cart-count">3</span>
-                    </a>
-                    <a href="favorites.html" class="action-item-btn">
-                        <span class="action-icon">❤</span>
-                        <span class="action-label">お気に入り</span>
-                        <span class="cart-count">3</span>
-                    </a>
-                    <a href="browsing-history.html" class="action-item-btn">
-                        <span class="action-icon">🕒</span>
-                        <span class="action-label">閲覧履歴</span>
-                    </a>
-                    <a href="order-history.html" class="action-item-btn">
-                        <span class="action-icon">⏱️</span>
-                        <span class="action-label">注文履歴</span>
-                    </a>
-                    <a href="mypage.html" class="action-item-btn">
-                        <span class="action-icon">👤</span>
-                        <span class="action-label">マイページ</span>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </header>
+<?php include 'header.php'; ?>
 
     <main class="register-container" style="max-width: 900px;">
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; background: #ffffff; border: 1px solid #e4e7ec; border-radius: 8px; padding: 40px; box-shadow: 0 4px 12px rgba(0,0,0,0.03);">
@@ -97,6 +46,13 @@
                     </p>
 
                     <button type="submit" class="submit-btn">次へ</button>
+
+<div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e4e7ec; text-align: center;">
+    <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">お店を出店したい方はこちら</p>
+    <a href="producer_register.php" style="display: inline-block; padding: 10px 20px; background: #fff; color: #ff5a00; border: 1px solid #ff5a00; border-radius: 4px; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
+        ストア（出品者）として新規登録する ＞
+    </a>
+</div>
                 </form>
             </div>
 

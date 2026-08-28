@@ -2,6 +2,11 @@
 // カート内の合計点数を計算（ヘッダーのバッジ表示用）
 $cart_session = $_SESSION['cart'] ?? [];
 $cart_total_count = array_sum($cart_session);
+$favoriteList = array();
+if (isset($_SESSION['favoriteList'])) {
+$favoriteList = $_SESSION['favoriteList'];
+}
+$count = count($favoriteList);
 ?>
 <header class="header">
     <div class="header-top">
@@ -42,12 +47,14 @@ $cart_total_count = array_sum($cart_session);
                         <span class="cart-count"><?= $cart_total_count ?></span>
                     <?php endif; ?>
                 </a>
-                <a href="favorites.html" class="action-item-btn">
+                <a href="favorites_Lstmain.php" class="action-item-btn">
                     <span class="action-icon">❤</span>
                     <span class="action-label">お気に入り</span>
-                    <span class="cart-count">3</span>
+                    <?php if ($count > 0): ?>
+                        <span class="cart-count"><?php echo $count; ?></span>
+                    <?php endif; ?>
                 </a>
-                <a href="browsing-history.html" class="action-item-btn">
+                <a href="browsing-history-Lstmain.php" class="action-item-btn">
                     <span class="action-icon">🕒</span>
                     <span class="action-label">閲覧履歴</span>
                 </a>
