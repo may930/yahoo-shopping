@@ -696,85 +696,51 @@ insert into product_attributes_options values('40', '27', '12枚入り×2箱パ�
 /* product_images(画像ID, 選択肢ID, 画像URL, 表示順) */
 
 insert into product_images values('1', '1', 'Image/ストゼロ500.png', '1');
-
 insert into product_images values('2', '2', 'Image/ストゼロ750.png', '1');
-
 insert into product_images values('3', '3', 'Image/ストゼロドライ.png', '1');
-
 insert into product_images values('4', '4', 'Image/ミネラル550.png', '1');
-
 insert into product_images values('5', '5', 'Image/ミネラル2000.png', '1');
-
 insert into product_images values('6', '6', 'Image/枝豆1.jpg', '1');
-
 insert into product_images values('7', '7', 'Image/枝豆3.jpg', '1');
-
 insert into product_images values('8', '8', 'Image/ソーセージ.webp', '1');
-
 insert into product_images values('9', '9', 'Image/お茶500.jpg', '1');
-
 insert into product_images values('10', '10', 'Image/お茶2000.jpg', '1');
-
 insert into product_images values('11', '11', 'Image/コシヒカリ2.png', '1');
-
 insert into product_images values('12', '12', 'Image/コシヒカリ5.png', '1');
-
 insert into product_images values('13', '13', 'Image/チョコケーキ4.png', '1');
-
 insert into product_images values('14', '14', 'Image/チョコケーキ6.png', '1');
-
 insert into product_images values('15', '15', 'Image/みたらし5.png', '1');
-
 insert into product_images values('16', '16', 'Image/みたらし10.png', '1');
-
 insert into product_images values('17', '17', 'Image/アイス.webp', '1');
-
 insert into product_images values('18', '18', 'Image/岩手丸.png', '1');
-
 insert into product_images values('19', '19', 'Image/海鮮.webp', '1');
-
 insert into product_images values('20', '20', 'Image/肉.webp', '1');
 
+-- メンズファッション (商品13〜16 / 選択肢21〜28)
 insert into product_images values('21', '21', 'Image/衣類メンズ ダブルブレスト.png', '1');
-
-insert into product_images values('22', '22', 'Image/衣類メンズ ダブルブレスト.png', '1');
-
+insert into product_images values('22', '22', 'Image/衣類メンズ ダブルブレスト.png', '2');
 insert into product_images values('23', '23', 'Image/衣類メンズ テーラードジャケット.png', '1');
-
-insert into product_images values('24', '24', 'Image/衣類メンズ テーラードジャケット.png', '1');
-
+insert into product_images values('24', '24', 'Image/衣類メンズ テーラードジャケット.png', '2');
 insert into product_images values('25', '25', 'Image/衣類メンズ ドロップショルダー・ショートジャケット.png', '1');
-
-insert into product_images values('26', '26', 'Image/衣類メンズ ドロップショルダー・ショートジャケット.png', '1');
-
+insert into product_images values('26', '26', 'Image/衣類メンズ ドロップショルダー・ショートジャケット.png', '2');
 insert into product_images values('27', '27', 'Image/衣類メンズ ミリタリージャケット.png', '1');
+insert into product_images values('28', '28', 'Image/衣類メンズ ミリタリージャケット.png', '2');
 
-insert into product_images values('28', '28', 'Image/衣類メンズ ミリタリージャケット.png', '1');
-
+-- レディースファッション (商品17〜21 / 選択肢29〜34)
 insert into product_images values('29', '29', 'Image/衣類レディース オープンショルダーニットワンピース.png', '1');
-
 insert into product_images values('30', '30', 'Image/衣類レディース ビッグカラー.png', '1');
-
 insert into product_images values('31', '31', 'Image/衣類レディースフロントタック.png', '1');
-
 insert into product_images values('32', '32', 'Image/衣類レディース ヘンリーネック.png', '1');
-
 insert into product_images values('33', '33', 'Image/衣類レディース ボリュームスリーブカーディガン.png', '1');
+insert into product_images values('34', '34', 'Image/衣類レディース ボリュームスリーブカーディガン.png', '2');
 
-insert into product_images values('34', '34', 'Image/衣類レディース ボリュームスリーブカーディガン.png', '1');
-
+-- 暑さ対策・グッズ (商品22〜26 / 選択肢35〜40)
 insert into product_images values('35', '35', 'Image/汗拭きシート.webp', '1');
-
-insert into product_images values('36', '36', 'Image/手持ち扇風機.png', '1');
-
-insert into product_images values('37', '37', 'Image/手持ち扇風機.png', '1');
-
+insert into product_images values('36', '36', 'Image/手持ち扇風機.jpg', '1');
+insert into product_images values('37', '37', 'Image/手持ち扇風機.jpg', '2');
 insert into product_images values('38', '38', 'Image/日傘.webp', '1');
-
 insert into product_images values('39', '39', 'Image/魔法瓶.webp', '1');
-
 insert into product_images values('40', '40', 'Image/冷えピタ.webp', '1');
-
 
 
 /* coupons(クーポンID, 出品者ID, クーポン名, 割引率, 率or実数(is_discount), 最低金額, 上限額, 期限開始, 期限終了, 無制限, 使用回数, 作成日時) */
