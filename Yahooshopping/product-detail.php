@@ -4,6 +4,10 @@ session_start();
 // 1. データベース接続ファイルを読み込む
 require_once 'db.php';
 
+// レビュー投稿の結果メッセージ（review_ins.php からのリダイレクト用）
+$review_error = $_SESSION['review_error'] ?? null;
+unset($_SESSION['review_error']);
+
 try {
     // 2. URLから option_id を取得する（送られてこなかった場合はデフォルトで 1）
     $target_option_id = isset($_GET['option_id']) ? intval($_GET['option_id']) : 1;
@@ -84,6 +88,46 @@ try {
         }
     }
 
+    // 7. このオプションに投稿されたレビューを取得（閲覧数・いいね数、自分が既に押したかも含める）
+    $current_user_id = isset($_SESSION['user']['id']) ? (int)$_SESSION['user']['id'] : 0;
+    $stmt_reviews = $pdo->prepare(
+        "SELECT r.review_id, r.rating, r.title, r.comment, r.created_at, r.image_url,
+                COALESCE(r.views_count, 0) AS views_count,
+                (SELECT COUNT(*) FROM review_likes rl WHERE rl.review_id = r.review_id) AS like_count,
+                EXISTS (
+                    SELECT 1 FROM review_likes rl2
+                    WHERE rl2.review_id = r.review_id AND rl2.user_id = :current_user_id
+                ) AS liked_by_me,
+                u.user_name
+         FROM product_reviews r
+         INNER JOIN user_account u ON r.user_id = u.user_id
+         WHERE r.option_id = :option_id
+         ORDER BY r.created_at DESC"
+    );
+    $stmt_reviews->execute(['option_id' => $target_option_id, 'current_user_id' => $current_user_id]);
+    $reviews = $stmt_reviews->fetchAll(PDO::FETCH_ASSOC);
+
+    $review_count = count($reviews);
+    $review_avg = $review_count > 0
+        ? round(array_sum(array_column($reviews, 'rating')) / $review_count, 1)
+        : 0;
+
+    // 8. ページを開いた分だけ、表示した各レビューの閲覧数を+1する
+    if (!empty($reviews)) {
+        $reviewIds = array_column($reviews, 'review_id');
+        $placeholders = implode(',', array_fill(0, count($reviewIds), '?'));
+        $stmt_view = $pdo->prepare(
+            "UPDATE product_reviews SET views_count = COALESCE(views_count, 0) + 1 WHERE review_id IN ($placeholders)"
+        );
+        $stmt_view->execute($reviewIds);
+
+        // 画面表示にもすぐ反映させる
+        foreach ($reviews as &$rv_ref) {
+            $rv_ref['views_count']++;
+        }
+        unset($rv_ref);
+    }
+
 } catch (PDOException $e) {
     exit('データ取得に失敗しました: ' . $e->getMessage());
 }
@@ -98,6 +142,13 @@ try {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .like-btn.liked {
+            background: #ffe5d9 !important;
+            border-color: var(--color-accent) !important;
+            color: var(--color-black) !important;
+        }
+    </style>
 </head>
 <body>
 
@@ -139,8 +190,8 @@ try {
 
                     <div class="pd-rating-row">
                         <span class="stars" style="color: #ffcc00;">★★★★★</span>
-                        <span class="rating-avg" id="mainRatingAvg">4.7</span>
-                        <a href="#reviews-section" class="rating-link">レビュー<span id="mainReviewCount">128</span>件を見る</a>
+                        <span class="rating-avg" id="mainRatingAvg"><?= $review_count > 0 ? $review_avg : '-' ?></span>
+                        <a href="#reviews-section" class="rating-link">レビュー<span id="mainReviewCount"><?= $review_count ?></span>件を見る</a>
                     </div>
 
                     <div class="pd-price-box">
@@ -264,8 +315,8 @@ try {
                 <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; background: #f7f9fa; padding: 20px; border-radius: var(--radius-sm); margin-bottom: 24px;">
                     <div style="display: flex; align-items: center; gap: 24px;">
                         <div style="text-align: center; border-right: 1px solid #e4e7ec; padding-right: 24px;">
-                            <span style="font-size: 2.5rem; font-weight: 700; color: var(--color-black); line-height: 1;" id="summaryRatingAvg">4.7</span>
-                            <span style="display: block; font-size: 0.8rem; color: #666; margin-top: 4px;">総合評価（<span id="summaryReviewCount">128</span>件）</span>
+                            <span style="font-size: 2.5rem; font-weight: 700; color: var(--color-black); line-height: 1;" id="summaryRatingAvg"><?= $review_count > 0 ? $review_avg : '-' ?></span>
+                            <span style="display: block; font-size: 0.8rem; color: #666; margin-top: 4px;">総合評価（<span id="summaryReviewCount"><?= $review_count ?></span>件）</span>
                         </div>
                         <div>
                             <div class="stars" style="font-size: 1.2rem; margin-bottom: 4px; color: #ffcc00;">★★★★★</div>
@@ -277,9 +328,15 @@ try {
                     </button>
                 </div>
 
-                <div id="reviewFormContainer" style="display: none; background: #fff; border: 2px dashed #ccc; border-radius: var(--radius-sm); padding: 20px; margin-bottom: 30px;">
+                <div id="reviewFormContainer" style="display: <?= $review_error ? 'block' : 'none' ?>; background: #fff; border: 2px dashed #ccc; border-radius: var(--radius-sm); padding: 20px; margin-bottom: 30px;">
                     <h3 style="font-size: 1.1rem; margin-top: 0; margin-bottom: 16px; font-weight: 700; color: #333;">この商品のレビューを投稿する</h3>
-                    <form id="reviewSubmitForm" style="display: flex; flex-direction: column; gap: 16px;">
+                    <?php if ($review_error): ?>
+                        <p style="color: #c00; background: #fdecea; border: 1px solid #f5c2c0; border-radius: 4px; padding: 10px 14px; margin: 0 0 16px 0; font-size: 0.9rem;">
+                            <?= htmlspecialchars($review_error, ENT_QUOTES, 'UTF-8') ?>
+                        </p>
+                    <?php endif; ?>
+                    <form id="reviewSubmitForm" action="review_ins.php" method="post" style="display: flex; flex-direction: column; gap: 16px;">
+                        <input type="hidden" name="option_id" value="<?= (int)$target_option_id ?>">
                         <div>
                             <label style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">評価（星の数） <span style="color: red;">*</span></label>
                             <div style="display: flex; gap: 15px; font-size: 1.1rem;">
@@ -291,25 +348,19 @@ try {
                             </div>
                         </div>
 
-                        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
-                            <div style="flex: 1; min-width: 200px;">
-                                <label for="reviewerName" style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">ニックネーム <span style="color: red;">*</span></label>
-                                <input type="text" id="reviewerName" required placeholder="例：りりあちゃん さん" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                            </div>
-                            <div style="flex: 2; min-width: 280px;">
-                                <label for="reviewTitle" style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">評価タイトル <span style="color: red;">*</span></label>
-                                <input type="text" id="reviewTitle" required placeholder="例：とても気に入りました！" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                            </div>
+                        <div>
+                            <label for="reviewTitle" style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">評価タイトル <span style="color: red;">*</span></label>
+                            <input type="text" id="reviewTitle" name="title" required placeholder="例：とても気に入りました！" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
                         </div>
 
                         <div>
                             <label for="reviewContent" style="display: block; font-size: 0.9rem; font-weight: 700; margin-bottom: 6px;">レビュー本文 <span style="color: red;">*</span></label>
-                            <textarea id="reviewContent" rows="4" required placeholder="商品の感想、気に入った点などを自由に書いてください" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea>
+                            <textarea id="reviewContent" name="contents" rows="4" required placeholder="商品の感想、気に入った点などを自由に書いてください" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; resize: vertical;"></textarea>
                         </div>
 
                         <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 8px;">
                             <button type="button" id="cancelFormBtn" style="padding: 8px 16px; background-color: #f0f2f5; border: 1px solid #ccc; border-radius: 4px; cursor: pointer;">キャンセル</button>
-                            <button type="submit" style="padding: 8px 24px; background-color: var(--color-accent); color: var(--color-black); border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">投稿する</button>
+                            <button type="submit" name="cmdBtn1" value="1" style="padding: 8px 24px; background-color: var(--color-accent); color: var(--color-black); border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">投稿する</button>
                         </div>
                     </form>
                 </div>
@@ -334,27 +385,38 @@ try {
                 </div>
 
                 <div id="reviewsList" style="display: flex; flex-direction: column; gap: 20px;">
-                    <div class="review-item" data-rating="5" data-date="2026-06-18" style="border-bottom: 1px solid #e4e7ec; padding-bottom: 20px;">
-                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                            <div>
-                                <span class="stars" style="color: #ffcc00;">★★★★★</span>
-                                <strong style="margin-left: 8px; font-size: 0.95rem;">後味がすっきりで飲みやすい！</strong>
+                    <?php foreach ($reviews as $rv): ?>
+                        <?php
+                            $rv_rating   = (int)$rv['rating'];
+                            $rv_dateIso  = date('Y-m-d', strtotime($rv['created_at']));
+                            $rv_dateDisp = date('Y/m/d', strtotime($rv['created_at']));
+                            $rv_stars    = str_repeat('★', $rv_rating) . str_repeat('☆', 5 - $rv_rating);
+                        ?>
+                        <div class="review-item" data-rating="<?= $rv_rating ?>" data-date="<?= $rv_dateIso ?>" style="border-bottom: 1px solid #e4e7ec; padding-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                                <div>
+                                    <span class="stars" style="color: #ffcc00;"><?= $rv_stars ?></span>
+                                    <strong style="margin-left: 8px; font-size: 0.95rem;"><?= htmlspecialchars($rv['title'], ENT_QUOTES, 'UTF-8') ?></strong>
+                                </div>
+                                <span style="font-size: 0.8rem; color: #999;"><?= $rv_dateDisp ?></span>
                             </div>
-                            <span style="font-size: 0.8rem; color: #999;">2026/06/18</span>
-                        </div>
-                        <p style="font-size: 0.9rem; color: #444; line-height: 1.6; margin: 0 0 8px 0;">
-                            しっかり果汁感があってすごく美味しいです！配送もスピーディーで助かりました。リピ確定です！
-                        </p>
-                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                            <span style="font-size: 0.8rem; color: #777;">購入者：りりあちゃん さん</span>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <span style="font-size: 0.8rem; color: #666;">このレビューは参考になりましたか？</span>
-                                <button class="like-btn" onclick="handleLike(this)" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; background: #fff; border: 1px solid #ccc; border-radius: 14px; font-size: 0.8rem; cursor: pointer; color: #333; font-weight: 500; transition: all 0.2s;">
-                                    👍 <span class="like-count">12</span>
-                                </button>
+                            <p style="font-size: 0.9rem; color: #444; line-height: 1.6; margin: 0 0 8px 0;">
+                                <?= nl2br(htmlspecialchars($rv['comment'], ENT_QUOTES, 'UTF-8')) ?>
+                            </p>
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                                <span style="font-size: 0.8rem; color: #777;">
+                                    購入者：<?= htmlspecialchars($rv['user_name'], ENT_QUOTES, 'UTF-8') ?> さん
+                                    <span style="margin-left: 10px; color: #aaa;">👁 閲覧数 <?= (int)$rv['views_count'] ?></span>
+                                </span>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 0.8rem; color: #666;">このレビューは参考になりましたか？</span>
+                                    <button class="like-btn<?= $rv['liked_by_me'] ? ' liked' : '' ?>" onclick="handleLike(this)" data-review-id="<?= (int)$rv['review_id'] ?>" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; background: #fff; border: 1px solid #ccc; border-radius: 14px; font-size: 0.8rem; cursor: pointer; color: #333; font-weight: 500; transition: all 0.2s;">
+                                        👍 <span class="like-count"><?= (int)$rv['like_count'] ?></span>
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
 
                 <div id="noReviewMessage" style="display: none; text-align: center; padding: 30px; color: #666; font-size: 0.95rem;">
@@ -539,8 +601,8 @@ try {
         const summaryReviewCount = document.getElementById('summaryReviewCount');
         const summaryRatingAvg = document.getElementById('summaryRatingAvg');
 
-        let totalReviews = 128;
-        let totalScore = 4.7 * 128;
+        let totalReviews = <?= (int)$review_count ?>;
+        let totalScore = <?= (float)$review_avg ?> * <?= (int)$review_count ?>;
         let currentFilter = 'all'; 
 
         toggleFormBtn.addEventListener('click', () => {
@@ -551,70 +613,8 @@ try {
             reviewSubmitForm.reset();
         });
 
-        reviewSubmitForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const ratingVal = parseInt(document.querySelector('input[name="rating"]:checked').value, 10);
-            const nameVal = document.getElementById('reviewerName').value;
-            const titleVal = document.getElementById('reviewTitle').value;
-            const contentVal = document.getElementById('reviewContent').value;
-
-            const today = new Date();
-            const year = today.getFullYear();
-            const month = String(today.getMonth() + 1).padStart(2, '0');
-            const date = String(today.getDate()).padStart(2, '0');
-            const dateIso = `${year}-${month}-${date}`;
-            const dateStr = `${year}/${month}/${date}`;
-
-            const starString = '★'.repeat(ratingVal) + '☆'.repeat(5 - ratingVal);
-
-            const newReview = document.createElement('div');
-            newReview.className = 'review-item';
-            newReview.setAttribute('data-rating', ratingVal);
-            newReview.setAttribute('data-date', dateIso); 
-            newReview.style.borderBottom = '1px solid #e4e7ec';
-            newReview.style.paddingBottom = '20px';
-
-            newReview.innerHTML = `
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <div>
-                        <span class="stars" style="color: #ffcc00;">${starString}</span>
-                        <strong style="margin-left: 8px; font-size: 0.95rem;">${escapeHTML(titleVal)}</strong>
-                    </div>
-                    <span style="font-size: 0.8rem; color: #999;">${dateStr}</span>
-                </div>
-                <p style="font-size: 0.9rem; color: #444; line-height: 1.6; margin: 0 0 8px 0;">
-                    ${escapeHTML(contentVal).replace(/\n/g, '<br>')}
-                </p>
-                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-                    <span style="font-size: 0.8rem; color: #777;">購入者：${escapeHTML(nameVal)}</span>
-                    <div style="display: flex; align-items: center; gap: 8px;">
-                        <span style="font-size: 0.8rem; color: #666;">このレビューは参考になりましたか？</span>
-                        <button class="like-btn" onclick="handleLike(this)" style="display: inline-flex; align-items: center; gap: 4px; padding: 4px 12px; background: #fff; border: 1px solid #ccc; border-radius: 14px; font-size: 0.8rem; cursor: pointer; color: #333; font-weight: 500; transition: all 0.2s;">
-                            👍 <span class="like-count">0</span>
-                        </button>
-                    </div>
-                </div>
-            `;
-
-            reviewsList.appendChild(newReview);
-
-            totalReviews += 1;
-            totalScore += ratingVal;
-            const newAvg = (totalScore / totalReviews).toFixed(1);
-
-            mainReviewCount.textContent = totalReviews;
-            summaryReviewCount.textContent = totalReviews;
-            mainRatingAvg.textContent = newAvg;
-            summaryRatingAvg.textContent = newAvg;
-
-            reviewFormContainer.style.display = 'none';
-            reviewSubmitForm.reset();
-
-            reviewSortSelect.value = 'date-desc';
-            sortReviews();
-            setActiveFilter('all');
-        });
+        // 投稿フォームは review_ins.php へ通常送信（サーバー側でDB登録）されるため、
+        // ここでは特別な submit ハンドラは設定しない。
 
         function escapeHTML(str) {
             return str.replace(/[&<>'"]/g,
@@ -689,25 +689,56 @@ try {
         reviewSortSelect.addEventListener('change', sortReviews);
 
         function handleLike(button) {
+            if (button.disabled) return;
+
+            const reviewId = button.dataset.reviewId;
             const isLiked = button.classList.contains('liked');
+            const action = isLiked ? 'unlike' : 'like';
             const countSpan = button.querySelector('.like-count');
-            let currentCount = parseInt(countSpan.textContent, 10);
 
-            if (!isLiked) {
-                currentCount++;
-                button.classList.add('liked');
-                button.style.background = '#ffe5d9'; 
-                button.style.borderColor = 'var(--color-accent)';
-                button.style.color = 'var(--color-black)';
-            } else {
-                currentCount--;
-                button.classList.remove('liked');
-                button.style.background = '#fff';
-                button.style.borderColor = '#ccc';
-                button.style.color = '#333';
-            }
+            button.disabled = true;
 
-            countSpan.textContent = currentCount;
+            fetch('review_like.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: 'review_id=' + encodeURIComponent(reviewId) + '&action=' + encodeURIComponent(action)
+            })
+            .then(res => {
+                if (res.status === 401) {
+                    alert('いいねにはログインが必要です');
+                    window.location.href = 'login_view.php';
+                    return null;
+                }
+                return res.text().then(text => ({ ok: res.ok, status: res.status, text }));
+            })
+            .then(result => {
+                if (!result) return; // 401でログイン画面へ遷移した場合
+
+                const { ok, status, text } = result;
+                let data;
+                try {
+                    data = JSON.parse(text);
+                } catch (parseErr) {
+                    console.error('review_like.php returned non-JSON response:', status, text);
+                    alert('サーバーからの応答が不正です（status ' + status + '）。コンソールに詳細を出力しました。');
+                    return;
+                }
+
+                if (!ok || data.status !== 'ok') {
+                    alert(data.message || 'いいねの更新に失敗しました');
+                    return;
+                }
+
+                countSpan.textContent = data.like_count;
+                button.classList.toggle('liked', data.liked);
+            })
+            .catch(err => {
+                console.error('review_like.php fetch failed:', err);
+                alert('通信エラーが発生しました（コンソールに詳細を出力しました）');
+            })
+            .finally(() => {
+                button.disabled = false;
+            });
         }
 
         setActiveFilter('all');

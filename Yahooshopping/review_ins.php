@@ -2,7 +2,7 @@
 /*
 review_ins.php(レビュー登録 コントローラ)
 @author 自分の名前
-@version 3.0
+@version 3.1
 @date 作成日
 */
 
@@ -55,13 +55,8 @@ switch ($cmdBtnNo)
             break;
         }
 
-        /* DB接続 */
+        /* DB接続（接続失敗時は utilConnDB 内で die） */
         $pdo = $utilConnDB->connect();
-        if ($pdo === null)
-        {
-            $_SESSION['review_error'] = 'データベースに接続できませんでした。';
-            break;
-        }
 
         /* 購入済みか確認し、紐づける order_detail_id を取得 */
         $order_detail_id = $review_insSQL->findOrderDetailId($pdo, $user_id, $option_id);

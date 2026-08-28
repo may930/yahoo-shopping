@@ -1,8 +1,8 @@
 <?php
 /*
-review_insSQL.php(レビュー登録 SQLクラス)
+review_insSQL.php(レビュー登録・更新 SQLクラス)
 @author 自分の名前
-@version 3.0
+@version 3.1
 @date 作成日
 */
 class review_insSQL

@@ -200,6 +200,16 @@ create table product_reviews(
     foreign key (user_id) references user_account(user_id) on delete cascade
 );
 
+/* レビューへの「いいね」記録テーブル（誰がどのレビューにいいねしたか） */
+create table review_likes (
+    review_id integer not null,
+    user_id integer not null,
+    created_at timestamp default current_timestamp,
+    primary key (review_id, user_id),
+    foreign key (review_id) references product_reviews(review_id) on delete cascade,
+    foreign key (user_id) references user_account(user_id) on delete cascade
+);
+
 /* お気に入り商品テーブル */
 create table product_favorites (
     product_favorites_id integer auto_increment primary key,
