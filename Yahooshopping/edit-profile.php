@@ -73,7 +73,7 @@
                         </div>
 
                         <div style="display: flex; gap: 16px; justify-content: center; margin-top: 30px;">
-                            <button type="button" class="profile-save-btn" style="background: #e4e7ec; color: #333;" onclick="location.href='mypage.html'">キャンセル</button>
+                            <button type="button" class="profile-save-btn" style="background: #e4e7ec; color: #333;" onclick="location.href='mypage.php'">キャンセル</button>
                             <button type="submit" class="profile-save-btn" style="background: #ff5a00;">変更内容を保存する</button>
                         </div>
                         <div style="text-align: center;">

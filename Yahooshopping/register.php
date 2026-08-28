@@ -46,6 +46,13 @@
                     </p>
 
                     <button type="submit" class="submit-btn">次へ</button>
+
+<div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #e4e7ec; text-align: center;">
+    <p style="font-size: 0.85rem; color: #666; margin-bottom: 10px;">お店を出店したい方はこちら</p>
+    <a href="producer_register.php" style="display: inline-block; padding: 10px 20px; background: #fff; color: #ff5a00; border: 1px solid #ff5a00; border-radius: 4px; font-weight: bold; text-decoration: none; font-size: 0.9rem;">
+        ストア（出品者）として新規登録する ＞
+    </a>
+</div>
                 </form>
             </div>
 

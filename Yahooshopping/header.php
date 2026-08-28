@@ -50,9 +50,11 @@ $count = count($favoriteList);
                 <a href="favorites_Lstmain.php" class="action-item-btn">
                     <span class="action-icon">❤</span>
                     <span class="action-label">お気に入り</span>
-                    <span class="cart-count"><?php echo $count; ?></span>
+                    <?php if ($count > 0): ?>
+                        <span class="cart-count"><?php echo $count; ?></span>
+                    <?php endif; ?>
                 </a>
-                <a href="browsing-history.php" class="action-item-btn">
+                <a href="browsing-history-Lstmain.php" class="action-item-btn">
                     <span class="action-icon">🕒</span>
                     <span class="action-label">閲覧履歴</span>
                 </a>

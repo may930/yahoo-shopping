@@ -110,7 +110,7 @@
 
         <!-- お買い物を続けるボタン -->
         <div style="text-align: center; margin-top: 40px;">
-            <a href="index.html" class="btn-sub-action" style="text-decoration: none; padding: 12px 30px; font-weight: 500; display: inline-block;">
+            <a href="index_Lstmain.php" class="btn-sub-action" style="text-decoration: none; padding: 12px 30px; font-weight: 500; display: inline-block;">
                 トップページに戻ってお買い物を続ける
             </a>
         </div>

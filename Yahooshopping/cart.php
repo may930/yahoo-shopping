@@ -74,7 +74,7 @@ $utilConnDB->disconnect($pdo);
                                     <input type="checkbox" checked>
                                 </div>
                                 <div class="cart-item-img-box">
-                                    <img src="<?= htmlspecialchars($img_url) ?>" alt="商品画像" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                                    <a href="product-detail.php">< img src="<?= htmlspecialchars($img_url) ?>" alt="商品画像" style="max-width: 100%; max-height: 100%; object-fit: contain;">
                                 </div>
                                 <div class="cart-item-info">
                                     <h4 class="cart-item-name"><?= htmlspecialchars($item['product_name']) ?></h4>

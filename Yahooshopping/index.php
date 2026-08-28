@@ -100,7 +100,7 @@
                                 ?>
                                 <div class="product-card" id="<?php echo $productId; ?>">
                                     <a href="product-detail.php?option_id=<?php echo $optionId; ?>">
-                                        <img src="/yahoo-shopping/Yahooshopping/<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img">
+                                        <img src="<?php echo $image; ?>" alt="<?php echo $productName; ?>" class="product-img">
                                     </a>
                                     <div class="product-info">
                                         <h3 class="product-name"><?php echo $productName; ?></h3>
